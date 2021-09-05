@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/tabbar/tabbar_controller.dart';
+import 'package:bhagavad_gita/screens/tabbar/tabbar_controller.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {

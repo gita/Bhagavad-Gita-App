@@ -61,6 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               fit: BoxFit.fill),
                           borderRadius:
                               BorderRadius.circular(kDefaultCornerRadius)),
+                    ),
+                    Column(
+                      children: [
+                        Text('Verse of the day')
+                      ],
                     )
                   ],
                 ),
