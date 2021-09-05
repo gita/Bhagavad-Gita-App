@@ -46,8 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: (width - kDefaultPadding) * 0.526,
                 decoration: BoxDecoration(
-                    color: Colors.green,
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/home_verse_of_the_day.png'),
+                        fit: BoxFit.fill),
                     borderRadius: BorderRadius.circular(kDefaultCornerRadius)),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/black_layer.png'),
+                              fit: BoxFit.fill),
+                          borderRadius:
+                              BorderRadius.circular(kDefaultCornerRadius)),
+                    )
+                  ],
+                ),
               ),
             )
           ],
