@@ -1,5 +1,7 @@
+import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/widgets/verse_of_the_day_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -39,36 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            VerseOfTheDayWidget(),
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: kDefaultPadding * 0.5,
                   vertical: kDefaultPadding * 0.5),
-              child: Container(
-                height: (width - kDefaultPadding) * 0.526,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/home_verse_of_the_day.png'),
-                        fit: BoxFit.fill),
-                    borderRadius: BorderRadius.circular(kDefaultCornerRadius)),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/black_layer.png'),
-                              fit: BoxFit.fill),
-                          borderRadius:
-                              BorderRadius.circular(kDefaultCornerRadius)),
-                    ),
-                    Column(
-                      children: [
-                        Text('Verse of the day')
-                      ],
-                    )
-                  ],
-                ),
+              child: Column(
+                children: [
+                  
+                ],
               ),
             )
           ],
