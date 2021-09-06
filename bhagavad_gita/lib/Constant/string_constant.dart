@@ -5,4 +5,7 @@ class StringConstant {
   static String strTabbarTitleQuotes = 'Quotes'; 
   static String strTabbarTitleAbout = 'About'; 
   static String strVerseOfTheDay = 'VERSE OF THE DAY'; 
+  static String strLastRead = 'Last Read'; 
+  static String strVerseNo = 'verse 10.18'; 
+  static String strChapters = 'Chapters'; 
 }

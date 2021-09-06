@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 Color primaryColor = HexColor.fromHex('#F57903');
+Color primaryLightColor = HexColor.fromHex('#FFF5EA');
 Color whiteColor = HexColor.fromHex('#FFFFFF');
 Color appBarTitleColor = HexColor.fromHex('#0A0A0A');
 Color textLightGreyColor = HexColor.fromHex('#666666');
-
+Color greyScalBodyColor = HexColor.fromHex('#333333');
+Color greyScalLableColor = HexColor.fromHex('#666666');
+Color titleLableColor = HexColor.fromHex('#1A1A1A');
 
 
 extension HexColor on Color {

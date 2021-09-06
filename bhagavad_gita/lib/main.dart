@@ -30,7 +30,11 @@ class MyApp extends StatelessWidget {
               headline2: TextStyle(
                   color: appBarTitleColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w600)),
+                  fontWeight: FontWeight.w600),
+              subtitle1: TextStyle(
+                  color: appBarTitleColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400)),
           appBarTheme: AppBarTheme(
               color: Colors.white,
               elevation: 0,
