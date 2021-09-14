@@ -1,6 +1,9 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/chapter_list_tile_widget.dart';
 import 'package:bhagavad_gita/widgets/last_read_widget.dart';
 import 'package:bhagavad_gita/widgets/verse_of_the_day_widget.dart';
@@ -15,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final NavigationService navigationService = locator<NavigationService>();
+  
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -32,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           InkWell(
               onTap: () {
-                print('Tap on setting icon');
+                navigationService.pushNamed(r_Setting);
               },
               child: SvgPicture.asset('assets/icons/icn_settings.svg')),
           SizedBox(
@@ -88,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return ChapterListTileWidget(
                     index: index,
                     onTap: () {
-                      print("Chapter List time widget tap");
+                      navigationService.pushNamed(r_ChapterDetail);
                     },
                   );
                 }),

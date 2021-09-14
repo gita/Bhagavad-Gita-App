@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white),
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: r_Tabbar,
+      initialRoute: r_Onboarding,
     );
   }
 }

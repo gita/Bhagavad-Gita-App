@@ -1,7 +1,10 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/about_gita_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -33,9 +36,15 @@ class _TabScreenControllerState extends State<TabScreenController>
           child: menu(),
         ),
         body: TabBarView(
-            controller: tabController,
-            physics: NeverScrollableScrollPhysics(),
-            children: [HomeScreen(), Container(), Container(), Container()]),
+          controller: tabController,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            HomeScreen(),
+            SavedPage(),
+            QuotesScreen(),
+            AboutGitaScreen()
+          ],
+        ),
       ),
     );
   }
@@ -144,8 +153,8 @@ class _TabScreenControllerState extends State<TabScreenController>
                       width: 30,
                       height: 30,
                       child: Padding(
-                        padding:
-                            EdgeInsets.all(tabController.index == 3 ? 0.0 : 2.0),
+                        padding: EdgeInsets.all(
+                            tabController.index == 3 ? 0.0 : 2.0),
                         child: SvgPicture.asset(tabController.index == 3
                             ? 'assets/icons/icn_about_selected.svg'
                             : 'assets/icons/icn_about.svg'),

@@ -1,6 +1,9 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 
 class LastReadWidget extends StatelessWidget {
@@ -10,6 +13,7 @@ class LastReadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NavigationService navigationService = locator<NavigationService>();
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: kDefaultPadding, vertical: kDefaultPadding),
@@ -51,7 +55,7 @@ class LastReadWidget extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              print('Continue reading button tap');
+              navigationService.pushNamed(r_ContinueReading);
             },
             child: Container(
               height: 30,

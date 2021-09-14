@@ -1,11 +1,26 @@
+// ignore_for_file: unused_element
+
 import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/chapter_detail/chapter_detail_screen.dart';
+import 'package:bhagavad_gita/screens/chapter_detail/chapter_tableview.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/about_gita_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
+import 'package:bhagavad_gita/screens/on_board_screen/OnBoardingScreen_one.dart';
+import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
 import 'package:bhagavad_gita/screens/tabbar/tabbar_controller.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case r_Onboarding:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: OnbordingScreen(),
+        );
       case r_Tabbar:
         return _getPageRoute(
           routeName: settings.name!,
@@ -15,6 +30,41 @@ class AppRouter {
         return _getPageRoute(
           routeName: settings.name!,
           viewToShow: HomeScreen(),
+        );
+      case r_ContinueReading:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: ContinueReading(),
+        );
+      case r_ChapterDetail:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: ChapterDetailScreen(),
+        );
+      case r_ChapterTableView:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: ChapterTableViewScreen(),
+        );
+      case r_QuotesPage:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: QuotesScreen(),
+        );
+      case r_AboutGitaPage:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: AboutGitaScreen(),
+        );
+      case r_SavedPage:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: SavedPage(),
+        );
+      case r_Setting:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: SettingScreen(),
         );
       default:
         return MaterialPageRoute(
