@@ -18,10 +18,14 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Center(child: SvgPicture.asset("assets/icons/icon_back_arrow.svg", width: 20))),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Center(
+            child:
+                SvgPicture.asset("assets/icons/icon_back_arrow.svg", width: 20),
+          ),
+        ),
         actions: [
           SizedBox(width: kDefaultPadding),
           Spacer(),

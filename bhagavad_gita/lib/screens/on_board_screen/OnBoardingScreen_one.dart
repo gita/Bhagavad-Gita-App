@@ -7,6 +7,7 @@ import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/indicatorWidget.dart';
+import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
@@ -62,7 +63,6 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
             children: [
               Column(
                 children: [
-                  // SizedBox(height: kPadding * 10),
                   Expanded(
                     child: PageView.builder(
                       onPageChanged: _pageChange,
@@ -74,10 +74,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                       },
                     ),
                   ),
-                  // SizedBox(height: kPadding * 1),
                   PageIndicator(pagerIndex: pagerIndex, totalPages: 4),
                   SizedBox(
-                    height: kPadding * 8,
+                    height: kPadding * 7,
                   ),
                   pagerIndex == 3
                       ? InkWell(
@@ -163,138 +162,113 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          actions: [
-            Container(
-              height: MediaQuery.of(context).size.height / 100 * 80,
-              width: 1000,
-              decoration: BoxDecoration(
-                  // color: Color.fromRGBO(255, 255, 255, 1),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Stack(
-                children: [
-                  SvgPicture.asset("assets/icons/Top_Image_GetStarted.svg"),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: SvgPicture.asset(
-                        "assets/icons/Bottom_Image_GetStarted.svg"),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+        return Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: SingleChildScrollView(
+            child: AlertDialog(
+              actions: [
+                Container(
+                  height: MediaQuery.of(context).size.height / 100 * 80,
+                  width: 1000,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                  child: Stack(
                     children: [
-                      SizedBox(
-                        height: 30,
+                      SvgPicture.asset("assets/icons/Top_Image_GetStarted.svg"),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: SvgPicture.asset(
+                            "assets/icons/Bottom_Image_GetStarted.svg"),
                       ),
-                      SvgPicture.asset("assets/icons/abc_language.svg"),
-                      SizedBox(
-                        height: kPadding * 3,
-                      ),
-                      Text(
-                        StringConstant.strChooseLanguage,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(fontSize: 18, color: blackColor),
-                      ),
-                      SizedBox(
-                        height: kPadding * 1,
-                      ),
-                      Text(
-                        StringConstant.strDontWorry,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(fontSize: 14, color: textLightGreyColor),
-                      ),
-                      SizedBox(
-                        height: kPadding * 3.5,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: kPadding * 2.7, right: kPadding * 2.7),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 30,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: kPadding,
+                          SvgPicture.asset("assets/icons/abc_language.svg"),
+                          SizedBox(
+                            height: kPadding * 3,
+                          ),
+                          Text(
+                            StringConstant.strChooseLanguage,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(fontSize: 18, color: blackColor),
+                          ),
+                          SizedBox(
+                            height: kPadding * 1,
+                          ),
+                          Text(
+                            StringConstant.strDontWorry,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    fontSize: 14, color: textLightGreyColor),
+                          ),
+                          SizedBox(
+                            height: kPadding * 3.5,
+                          ),
+                          SearchBarWidget(),
+                          Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 20,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text("English"),
+                                  leading: Radio(
+                                    value: 1,
+                                    groupValue: val,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        val = lastPage;
+                                      });
+                                    },
+                                    activeColor: Colors.green,
+                                  ),
+                                );
+                              },
                             ),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                icon: Icon(
-                                  Icons.search,
-                                  color: blackColor,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(30),
+                            child: InkWell(
+                              onTap: () {
+                                navigationService.pushNamed(r_Tabbar);
+                              },
+                              child: Container(
+                                height: kPadding * 5,
+                                width: kPadding * 19,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(245, 121, 3, 1),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                hintText: StringConstant.strSearchLanguage,
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(color: textLightGreyColor),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 20,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text("English"),
-                              leading: Radio(
-                                value: 1,
-                                groupValue: val,
-                                onChanged: (value) {
-                                  setState(() {
-                                    val = lastPage;
-                                  });
-                                },
-                                activeColor: Colors.green,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(30),
-                        child: InkWell(
-                          onTap: () {
-                            navigationService.pushNamed(r_Tabbar);
-                          },
-                          child: Container(
-                            height: kPadding * 5,
-                            width: kPadding * 19,
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 121, 3, 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                StringConstant.strOkLetsGo,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w400,
+                                child: Center(
+                                  child: Text(
+                                    StringConstant.strOkLetsGo,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            ),
+          ),
         );
       },
     );
@@ -308,7 +282,7 @@ class SimplifiedPageOne extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: kPadding * 10),
+        SizedBox(height: kPadding * 9),
         SvgPicture.asset('assets/icons/img_simplified_one.svg'),
         SizedBox(height: kPadding * 5),
         Text(
@@ -335,16 +309,14 @@ class BeautifulDesignPageTwo extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset('assets/icons/img_beautiful_two.svg'),
-        SizedBox(
-          height: kPadding * 5,
-        ),
+        // SizedBox(height: kPadding * 4),
         Text(
           StringConstant.strBeautifulDesign,
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(
-          height: kPadding * 2,
+          height: kPadding,
         ),
         Text(
           StringConstant.strModernAndInteractive,
@@ -365,14 +337,14 @@ class ExploreEachVerePageThree extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: kPadding * 10),
+        SizedBox(height: kPadding * 7),
         SvgPicture.asset('assets/icons/img_exploreverse_three.svg'),
-        SizedBox(height: kPadding * 5),
+        SizedBox(height: kPadding * 3),
         Text(
           StringConstant.strExploreEachVerse,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
-        SizedBox(height: kPadding * 2),
+        SizedBox(height: kPadding),
         Text(
           StringConstant.strDiveDeepEachVerse,
           textAlign: TextAlign.center,
@@ -397,14 +369,14 @@ class MakeItOwnPageFour extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: kPadding * 10),
+        SizedBox(height: kPadding * 7),
         SvgPicture.asset('assets/icons/img_makeitowe_forth.svg'),
-        SizedBox(height: kPadding * 5),
+        SizedBox(height: kPadding * 3),
         Text(
           StringConstant.strMakeItYourOwn,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
-        SizedBox(height: kPadding * 2),
+        SizedBox(height: kPadding),
         Text(
           StringConstant.strShareMemories,
           textAlign: TextAlign.center,

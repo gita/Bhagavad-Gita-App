@@ -9,6 +9,7 @@ import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:bhagavad_gita/screens/on_board_screen/OnBoardingScreen_one.dart';
+import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
 import 'package:bhagavad_gita/screens/tabbar/tabbar_controller.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,11 @@ class AppRouter {
         return _getPageRoute(
           routeName: settings.name!,
           viewToShow: SettingScreen(),
+        );
+      case r_Language:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: LanguageSettingScreen(),
         );
       default:
         return MaterialPageRoute(

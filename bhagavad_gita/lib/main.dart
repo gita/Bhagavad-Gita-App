@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //// Set up locator service
   setupServiceLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,6 +37,7 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
               elevation: 0,
               titleTextStyle: TextStyle(color: appBarTitleColor),
+              // ignore: deprecated_member_use
               textTheme: TextTheme(
                   headline1: TextStyle(
                       color: appBarTitleColor,

@@ -21,14 +21,16 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
-        actions: [
-          SizedBox(width: kDefaultPadding),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: SvgPicture.asset("assets/icons/icon_back_arrow.svg"),
+        leading: InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Center(
+            child:
+                SvgPicture.asset("assets/icons/icon_back_arrow.svg", width: 20),
           ),
+        ),
+        actions: [
           Spacer(),
           TextButton(
             onPressed: () {},
@@ -40,12 +42,16 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                   .copyWith(fontSize: 18, fontWeight: FontWeight.w100),
             ),
           ),
-          SizedBox(width: kPadding),
           InkWell(
             onTap: () {
               navigationService.pushNamed(r_ChapterTableView);
             },
-            child: SvgPicture.asset('assets/icons/Icon_menu_bottom.svg'),
+            child: Container(
+              width: 40,
+              child: Center(
+                child: SvgPicture.asset('assets/icons/Icon_menu_bottom.svg'),
+              ),
+            ),
           ),
           SizedBox(width: kDefaultPadding),
         ],
@@ -53,12 +59,10 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
       body: Stack(
         children: [
           Positioned(
-            // top: MediaQuery.of(context).size.height / kPadding,
             child: SvgPicture.asset("assets/icons/flower_chapterDetail.svg"),
           ),
           Positioned(
             right: 0,
-            // top: MediaQuery.of(context).size.height / kPadding,
             child:
                 SvgPicture.asset("assets/icons/flower_chapterDetail_right.svg"),
           ),
@@ -111,31 +115,37 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: 10,
                       itemBuilder: (BuildContext context, index) {
-                        return Column(
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/icon_verseLogo.svg",
-                                ),
-                                SizedBox(width: kPadding),
-                                Text(
-                                  "Verse 1",
-                                  style: Theme.of(context).textTheme.headline2,
-                                ),
-                                Spacer(),
-                                SvgPicture.asset(
-                                  "assets/icons/icn_arrow_forward.svg",
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: kPadding),
-                            Text(
-                              "Dhṛtarāṣṭra said: O Sañjaya, after my sons and the sons of Pāṇḍu assembled in the place of pilgrimage at Kurukṣetra, desiring to fight, what did they do?",
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            Divider(height: kDefaultPadding * 2)
-                          ],
+                        return InkWell(
+                          onTap: () {
+                            print('Vrese Detail');
+                          },
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/icon_verseLogo.svg",
+                                  ),
+                                  SizedBox(width: kPadding),
+                                  Text(
+                                    "Verse 1",
+                                    style:
+                                        Theme.of(context).textTheme.headline2,
+                                  ),
+                                  Spacer(),
+                                  SvgPicture.asset(
+                                    "assets/icons/icn_arrow_forward.svg",
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: kPadding),
+                              Text(
+                                "Dhṛtarāṣṭra said: O Sañjaya, after my sons and the sons of Pāṇḍu assembled in the place of pilgrimage at Kurukṣetra, desiring to fight, what did they do?",
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              Divider(height: kDefaultPadding * 2)
+                            ],
+                          ),
                         );
                       },
                     )

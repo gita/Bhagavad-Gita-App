@@ -13,11 +13,13 @@ class _SavedPageState extends State<SavedPage> {
   final PageController controller = PageController();
   var isPageIndex = 0;
   void _pageChange(int index) {
-    setState(() {
-      isPageIndex = index;
-      controller.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
-    });
+    setState(
+      () {
+        isPageIndex = index;
+        controller.animateToPage(index,
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
+      },
+    );
   }
 
   @override
@@ -36,7 +38,6 @@ class _SavedPageState extends State<SavedPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        print('ritvik');
                         setState(() {
                           _pageChange(isPageIndex - 1);
                           isPageIndex = isPageIndex - 1;
