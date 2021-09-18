@@ -26,4 +26,6 @@ class StringConstant {
   static String strMakeItYourOwn = "Make It Your Own";
   static String strShareMemories =
       "Share, memorise and take notes on\nyour favourite verses.";
+  static String strShowMore = "SHOW MORE";
+  static String strShowLess = "SHOW LESS";
 }

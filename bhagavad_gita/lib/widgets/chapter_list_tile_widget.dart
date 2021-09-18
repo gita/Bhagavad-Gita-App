@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,10 +9,12 @@ class ChapterListTileWidget extends StatelessWidget {
     Key? key,
     required this.index,
     required this.onTap,
+    required this.chapter,
   }) : super(key: key);
 
   final int index;
   final Function onTap;
+  final Chapter chapter;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class ChapterListTileWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.0)),
                     child: Center(
                       child: Text(
-                        "${index + 1}",
+                        "${chapter.chapterNumber ?? index}",
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -55,7 +58,7 @@ class ChapterListTileWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Sraddhatraya Vibhaga Yoga',
+                        chapter.nameTranslated ?? "",
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -71,7 +74,7 @@ class ChapterListTileWidget extends StatelessWidget {
                             width: kDefaultPadding * 0.5,
                           ),
                           Text(
-                            '42 Verses',
+                            '${chapter.versesCount ?? ""} Verses',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!
@@ -84,7 +87,6 @@ class ChapterListTileWidget extends StatelessWidget {
                   ),
                   Spacer(),
                   Container(
-                    //color: Colors.pink,
                     child: Column(
                       children: [
                         SvgPicture.asset('assets/icons/icn_arrow_forward.svg'),

@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/chapter_list_tile_widget.dart';
@@ -11,6 +12,7 @@ import 'package:bhagavad_gita/widgets/last_read_widget.dart';
 import 'package:bhagavad_gita/widgets/verse_of_the_day_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,6 +23,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final NavigationService navigationService = locator<NavigationService>();
+
+  final tempQuery = gql("""
+    query {
+    allGitaChapters {
+      nodes {
+        chapterNumber
+        nameTranslated
+        slug
+        versesCount
+      }
+    }
+  }
+  """);
 
   @override
   Widget build(BuildContext context) {
@@ -89,18 +104,52 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 18,
-                itemBuilder: (context, index) {
-                  return ChapterListTileWidget(
-                    index: index,
-                    onTap: () {
-                      navigationService.pushNamed(r_ChapterDetail);
-                    },
+            Query(
+              options: QueryOptions(document: tempQuery),
+              builder: (
+                QueryResult result, {
+                Refetch? refetch,
+                FetchMore? fetchMore,
+              }) {
+                if (result.hasException) {
+                  print("ERROR : ${result.exception.toString()}");
+                  // return Text(result.exception.toString());
+                }
+                if (result.data == null) {
+                  return Container(
+                    height: 200,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                        strokeWidth: 2,
+                      ),
+                    ),
                   );
-                }),
+                }
+                Map<String, dynamic> node = result.data!;
+                Map<String, dynamic> allGitaChapters = node["allGitaChapters"];
+                List chapters = allGitaChapters["nodes"];
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: chapters.length,
+                  itemBuilder: (context, index) {
+                    Map<String, dynamic> chapterTemp = chapters[index];
+                    Chapter chapter = Chapter.fromJson(chapterTemp);
+                    print("Chapter $chapter");
+                    return ChapterListTileWidget(
+                      index: index,
+                      onTap: () {
+                        //Navigator.of(context).push(MaterialPageRoute(
+                        //    builder: (context) => ChapterDetailScreen()));
+                         navigationService.pushNamed(r_ChapterDetail, arguments: chapter.chapterNumber ?? 1);
+                      },
+                      chapter: chapter,
+                    );
+                  },
+                );
+              },
+            ),
             SizedBox(
               height: kDefaultPadding * 2,
             )
