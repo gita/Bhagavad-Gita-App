@@ -49,6 +49,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
           ) {
             nodes {
               description
+              verseId
             }
           }
         }
@@ -141,13 +142,14 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                         Map<String, dynamic>? res = result.data;
                         ChapterDetailData chapterDetailData =
                             ChapterDetailData.fromJson(res!);
+                        print("Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
                         print("API Response : $res");
                         return Column(
                           children: [
                             SizedBox(height: kDefaultPadding * 2),
                             Center(
                               child: Text(
-                                "Chapter ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
+                                "CHAPTER  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -186,7 +188,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                     });
                                   },
                                   child: Text(
-                                    isShowMoreChapterDetail ?  StringConstant.strShowLess : StringConstant.strShowMore,
+                                    isShowMoreChapterDetail
+                                        ? StringConstant.strShowLess
+                                        : StringConstant.strShowMore,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!

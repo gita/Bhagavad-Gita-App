@@ -142,7 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         //Navigator.of(context).push(MaterialPageRoute(
                         //    builder: (context) => ChapterDetailScreen()));
-                         navigationService.pushNamed(r_ChapterDetail, arguments: chapter.chapterNumber ?? 1);
+                        navigationService.pushNamed(r_ChapterDetail,
+                            arguments: chapter.chapterNumber ?? 1);
                       },
                       chapter: chapter,
                     );
@@ -150,9 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            SizedBox(
-              height: kDefaultPadding * 2,
-            )
+            SizedBox(height: kDefaultPadding * 2)
           ],
         ),
       ),

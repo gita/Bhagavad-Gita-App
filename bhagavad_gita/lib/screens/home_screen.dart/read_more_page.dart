@@ -1,6 +1,9 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -28,6 +31,7 @@ class _ContinueReadingState extends State<ContinueReading> {
     super.initState();
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
+
     verseDetailQuery = """
   query GetVerseDetailsById {
     gitaVerseById(id: ${widget.verseID}) {
@@ -114,7 +118,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                         FetchMore? fetchMore,
                       }) {
                         if (result.hasException) {
-                          // print("ERROR : ${result.exception.toString()}");
+                          print("ERROR : ${result.exception.toString()}");
                         }
                         if (result.data == null) {
                           return Container(
@@ -127,10 +131,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                             ),
                           );
                         }
-                        //Map<String, dynamic> verse = result.data!;
-                        //Map<String, dynamic> getaVerseDetail =
-                            //verse['getaVerseDetail'];
-                        //List chapter = getaVerseDetail["nodes"];
+                        Map<String, dynamic>? verse = result.data;
+                        Data data = Data.fromJson(verse!);
                         return Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -140,21 +142,21 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 height: kDefaultPadding,
                               ),
                               Text(
-                                "10",
+                                "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
                                 style: Theme.of(context).textTheme.headline1,
                               ),
                               SizedBox(
                                 height: kDefaultPadding,
                               ),
                               Text(
-                                "धृतराष्ट्र उवाच |\nधर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः |\nमामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ||1||",
+                                "${data.gitaVerseById!.text}",
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                        color: orangeColor,
-                                        height: lineSpacing * 1.5),
+                                      color: orangeColor,
+                                    ),
                               ),
                               SizedBox(
                                 height: kPadding * 3,
@@ -202,7 +204,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                               ),
                               SizedBox(height: kDefaultPadding),
                               Text(
-                                "Dhritarashtra said: O Sanjay, after gathering on the holy field of Kurukshetra, and desiring to fight, what did my sons and the sons of Pandu do?  ",
+                                data.gitaVerseById!.gitaTranslationsByVerseId!
+                                    .nodes![0].description!,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
@@ -235,18 +238,20 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 height: kDefaultPadding,
                               ),
                               Text(
-                                "The two armies had gathered on the battlefield of Kurukshetra, well prepared to fight a war that was inevitable. Still, in this verse, King Dhritarashtra asked Sanjay, what his sons and his brother Pandu’s sons were doing on the battlefield? It was apparent that they would fight, then why did he ask such a question?The blind King Dhritarashtra’s fondness for his own sons had clouded his spiritual wisdom and deviated him from the path of virtue. He had usurped the kingdom of Hastinapur from the rightful heirs; the Pandavas, sons of his brother Pandu. Feeling guilty of the injustice he had done towards his nephews, his conscience worried him about the outcome of this battle.The words dharma kṣhetre, the land of dharma (virtuous conduct) used by Dhritarashtra depict the dilemma he was experiencing.  Kurukshetra is described as kurukṣhetraṁ deva yajanam in the Shatapath Brahman, the Vedic textbook detailing rituals. It means “Kurukshetra is the sacrificial arena of the celestial gods.” Hence, it was regarded as the sacred land that nourished dharma. Dhritarashtra feared that the holy land might influence the minds of his sons. If it aroused the faculty of discrimination, they might turn away from killing their cousins and negotiate a truce. A peaceful settlement meant that the Pandavas would continue being a hindrance for them. He felt great displeasure at these possibilities, instead preferred that this war transpires. He was uncertain of the consequences of the war, yet desired to determine the fate of his sons. Therefore, he asked Sanjay about the activities of the two armies on the battleground.",
+                                data.gitaVerseById!.gitaCommentariesByVerseId!
+                                    .nodes![0].description!,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(height: lineSpacing),
-                              )
+                              ),
+                              SizedBox(height: kDefaultPadding * 5)
                             ],
                           ),
                         );
                       })),
               Positioned(
-                top: MediaQuery.of(context).size.height / 100 * 70,
+                top: MediaQuery.of(context).size.height / 100 * 71,
                 left: kDefaultPadding,
                 child: Container(
                   height: 48,
@@ -269,7 +274,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height / 100 * 70,
+                top: MediaQuery.of(context).size.height / 100 * 71,
                 right: kDefaultPadding,
                 child: Container(
                   height: 48,

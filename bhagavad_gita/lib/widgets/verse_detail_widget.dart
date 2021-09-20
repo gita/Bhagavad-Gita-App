@@ -2,7 +2,6 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,8 @@ class VerseDetailWidget extends StatelessWidget {
       onTap: () {
         // print('Vrese Detail Ritvik');
         navigationService.pushNamed(r_ContinueReading,
-            arguments: "${verse.verseNumber ?? 0}");
+            arguments:
+                "${verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}");
       },
       child: Column(
         children: [
