@@ -1,11 +1,11 @@
-class ChapterListResponseModel {
-    ChapterListResponseModel({
+class ChapterListModel {
+    ChapterListModel({
         this.data,
     });
 
     Data? data;
 
-    factory ChapterListResponseModel.fromJson(Map<String, dynamic> json) => ChapterListResponseModel(
+    factory ChapterListModel.fromJson(Map<String, dynamic> json) => ChapterListModel(
         data: Data.fromJson(json["data"]),
     );
 

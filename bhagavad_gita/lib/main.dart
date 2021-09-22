@@ -1,11 +1,11 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/routes/app_router.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'Constant/http_link_string.dart';
+import 'screens/tabbar/tabbar_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,7 +77,7 @@ class _FirstLoadPageState extends State<FirstLoadPage> {
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-      child: HomeScreen(),
+      child: TabScreenController(),
       client: client,
     );
   }

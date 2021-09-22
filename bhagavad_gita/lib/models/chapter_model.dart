@@ -1,27 +1,24 @@
 class Chapter {
-    Chapter({
-        this.chapterNumber,
-        this.nameTranslated,
-        this.slug,
-        this.versesCount,
-    });
+  Chapter({
+    this.chapterNumber,
+    this.nameTranslated,
+    this.versesCount,
+  });
 
-    int? chapterNumber;
-    String? nameTranslated;
-    String? slug;
-    int? versesCount;
+  int? chapterNumber;
+  String? nameTranslated;
+  int? versesCount;
+  bool? isExpanded = false;
 
-    factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
+  factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
         chapterNumber: json["chapterNumber"],
         nameTranslated: json["nameTranslated"],
-        slug: json["slug"],
         versesCount: json["versesCount"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "chapterNumber": chapterNumber,
         "nameTranslated": nameTranslated,
-        "slug": slug,
         "versesCount": versesCount,
-    };
+      };
 }

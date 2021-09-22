@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
       nodes {
         chapterNumber
         nameTranslated
-        slug
         versesCount
       }
     }
@@ -113,7 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
               }) {
                 if (result.hasException) {
                   print("ERROR : ${result.exception.toString()}");
-                  // return Text(result.exception.toString());
                 }
                 if (result.data == null) {
                   return Container(
@@ -140,8 +138,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ChapterListTileWidget(
                       index: index,
                       onTap: () {
-                        //Navigator.of(context).push(MaterialPageRoute(
-                        //    builder: (context) => ChapterDetailScreen()));
                         navigationService.pushNamed(r_ChapterDetail,
                             arguments: chapter.chapterNumber ?? 1);
                       },

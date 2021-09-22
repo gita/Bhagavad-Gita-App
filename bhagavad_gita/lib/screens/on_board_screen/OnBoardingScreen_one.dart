@@ -1,5 +1,3 @@
-// ignore_for_file: file_names, prefer_const_constructors, use_key_in_widget_constructors
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
