@@ -5,9 +5,13 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
+import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+
+import '../locator.dart';
 
 class VerseOfTheDayWidget extends StatefulWidget {
   const VerseOfTheDayWidget({
@@ -19,6 +23,7 @@ class VerseOfTheDayWidget extends StatefulWidget {
 }
 
 class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
+  final NavigationService navigationService = locator<NavigationService>();
   var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
 
@@ -99,7 +104,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                             BorderRadius.circular(kDefaultCornerRadius)),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(kDefaultPadding),
+                    padding: EdgeInsets.all(kDefaultPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -118,7 +123,20 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                         ),
                         Spacer(),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ContinueReading(
+                                    verseID: allVerseOTheDayResponseModel
+                                        .allVerseOfTheDays!.nodes![0].verseOrder
+                                        .toString(),
+                                  ),
+                                ),
+                              );
+                            });
+                          },
                           child: Text(
                             'READ MORE',
                             style: Theme.of(context)

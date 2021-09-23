@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
-import 'package:bhagavad_gita/models/verse_tableView_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/widgets/tableof_content_Chapter_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,6 +23,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
   late String verseTableView;
   bool isShowVerseNumberCount = false;
   List<Chapter> listChapters = [];
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -132,17 +131,54 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                               print('Tap');
                               setState(() {
                                 chapter.isExpanded = !chapter.isExpanded!;
-                                // listChapters[index].isExpanded =
-                                //     listChapters[index].isExpanded == null
-                                //         ? true
-                                //         : !listChapters[index].isExpanded!;
                               });
                             }),
                         AnimatedContainer(
-                          height: chapter.isExpanded! ? 100 : 0,
-                          color: Colors.pink,
-                          duration: Duration(milliseconds: 200),
-                        )
+                          height: chapter.isExpanded! ? 300 : 0,
+                          duration: Duration(milliseconds: 300),
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 5,
+                              crossAxisSpacing: kDefaultPadding * 2.8,
+                              mainAxisSpacing: kDefaultPadding * 2,
+                            ),
+                            itemCount: chapter.versesCount,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                },
+                                child: Container(
+                                  height: 32,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    color: selectedIndex == index
+                                        ? primaryLightColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      '${index + 1}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(
+                                              fontSize: 16,
+                                              color: selectedIndex == index
+                                                  ? orangeColor
+                                                  : textLightGreyColor),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Divider()
                       ],
                     );
                   },
@@ -156,73 +192,3 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
   }
 }
 
-class TableOfContentChapterWidget extends StatelessWidget {
-  final Chapter chapter;
-  final Function onTap;
-
-  const TableOfContentChapterWidget(
-      {Key? key, required this.chapter, required this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        onTap();
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: kDefaultPadding * 0.5,
-          ),
-          Row(
-            children: [
-              Text(
-                "CHAPTER ${chapter.chapterNumber ?? 0}",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 14),
-              ),
-              Spacer(),
-              Container(
-                height: 30,
-                width: 30,
-                child: Center(
-                  child:
-                      SvgPicture.asset("assets/icons/icon_downsidearrow.svg"),
-                ),
-              )
-            ],
-          ),
-          Text("${chapter.nameTranslated ?? ""}",
-              style: Theme.of(context).textTheme.subtitle1),
-          SizedBox(height: kDefaultPadding),
-          Row(
-            children: [
-              Container(
-                height: 9.33,
-                width: 12,
-                child: SvgPicture.asset("assets/icons/Icon_menu_bottom.svg",
-                    color: textLightGreyColor),
-              ),
-              SizedBox(width: kPadding),
-              Text(
-                "${chapter.versesCount ?? 0} verses",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontSize: 14, color: textLightGreyColor),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: kDefaultPadding * 0.5,
-          ),
-          Divider()
-        ],
-      ),
-    );
-  }
-}

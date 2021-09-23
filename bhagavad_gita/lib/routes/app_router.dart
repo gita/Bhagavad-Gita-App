@@ -36,7 +36,9 @@ class AppRouter {
         String verseNumber = settings.arguments as String;
         return _getPageRoute(
           routeName: settings.name!,
-          viewToShow: ContinueReading(verseID: verseNumber,),
+          viewToShow: ContinueReading(
+            verseID: verseNumber,
+          ),
         );
       case r_ChapterDetail:
         int chapterNumber = settings.arguments as int;
