@@ -21,7 +21,6 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
   late ValueNotifier<GraphQLClient> client;
   late String verseTableView;
-  bool isShowVerseNumberCount = false;
   List<Chapter> listChapters = [];
   int selectedIndex = 0;
 
@@ -140,7 +139,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 5,
-                              crossAxisSpacing: kDefaultPadding * 2.8,
+                              crossAxisSpacing: kDefaultPadding * 2,
                               mainAxisSpacing: kDefaultPadding * 2,
                             ),
                             itemCount: chapter.versesCount,
@@ -191,4 +190,3 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
     );
   }
 }
-

@@ -23,29 +23,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: 'Inter',
           textTheme: TextTheme(
+            headline1: TextStyle(
+                color: appBarTitleColor,
+                fontSize: 26,
+                fontWeight: FontWeight.w700),
+            headline2: TextStyle(
+                color: appBarTitleColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w600),
+            subtitle1: TextStyle(
+                color: appBarTitleColor,
+                fontSize: 16,
+                fontWeight: FontWeight.w400),
+          ),
+          appBarTheme: AppBarTheme(
+            color: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(color: appBarTitleColor),
+            // ignore: deprecated_member_use
+            textTheme: TextTheme(
               headline1: TextStyle(
                   color: appBarTitleColor,
                   fontSize: 26,
-                  fontWeight: FontWeight.w700),
-              headline2: TextStyle(
-                  color: appBarTitleColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-              subtitle1: TextStyle(
-                  color: appBarTitleColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400)),
-          appBarTheme: AppBarTheme(
-              color: Colors.white,
-              elevation: 0,
-              titleTextStyle: TextStyle(color: appBarTitleColor),
-              // ignore: deprecated_member_use
-              textTheme: TextTheme(
-                  headline1: TextStyle(
-                      color: appBarTitleColor,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Inter'))),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Inter'),
+            ),
+          ),
           primaryColor: primaryColor,
           scaffoldBackgroundColor: Colors.white),
       navigatorKey: locator<NavigationService>().navigatorKey,

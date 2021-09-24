@@ -1,80 +1,98 @@
-class Data {
-    Data({
-        this.gitaVerseById,
-    });
+class LastReadVerse {
+  String? verseID;
+  GitaVerseById? gitaVerseById;
 
-    GitaVerseById? gitaVerseById;
+  LastReadVerse({this.verseID, this.gitaVerseById});
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory LastReadVerse.fromJson(Map<String, dynamic> json) => LastReadVerse(
+      gitaVerseById: GitaVerseById.fromJson(json["gitaVerseById"]),
+      verseID: json["verseID"]);
+
+  Map<String, dynamic> toJson() => {
+        "verseID": verseID,
+        "gitaVerseById": gitaVerseById,
+      };
+}
+
+class VerseDetailData {
+  VerseDetailData({
+    this.gitaVerseById,
+  });
+
+  GitaVerseById? gitaVerseById;
+
+  factory VerseDetailData.fromJson(Map<String, dynamic> json) =>
+      VerseDetailData(
         gitaVerseById: GitaVerseById.fromJson(json["gitaVerseById"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "gitaVerseById": gitaVerseById!.toJson(),
-    };
-
+      };
 }
 
 class GitaVerseById {
-    GitaVerseById({
-        this.chapterNumber,
-        this.verseNumber,
-        this.text,
-        this.gitaTranslationsByVerseId,
-        this.gitaCommentariesByVerseId,
-    });
+  GitaVerseById({
+    this.chapterNumber,
+    this.verseNumber,
+    this.text,
+    this.gitaTranslationsByVerseId,
+    this.gitaCommentariesByVerseId,
+  });
 
-    int? chapterNumber;
-    int? verseNumber;
-    String? text;
-    GitaSByVerseId? gitaTranslationsByVerseId;
-    GitaSByVerseId? gitaCommentariesByVerseId;
+  int? chapterNumber;
+  int? verseNumber;
+  String? text;
+  GitaSByVerseId? gitaTranslationsByVerseId;
+  GitaSByVerseId? gitaCommentariesByVerseId;
 
-    factory GitaVerseById.fromJson(Map<String, dynamic> json) => GitaVerseById(
+  factory GitaVerseById.fromJson(Map<String, dynamic> json) => GitaVerseById(
         chapterNumber: json["chapterNumber"],
         verseNumber: json["verseNumber"],
         text: json["text"],
-        gitaTranslationsByVerseId: GitaSByVerseId.fromJson(json["gitaTranslationsByVerseId"]),
-        gitaCommentariesByVerseId: GitaSByVerseId.fromJson(json["gitaCommentariesByVerseId"]),
-    );
+        gitaTranslationsByVerseId:
+            GitaSByVerseId.fromJson(json["gitaTranslationsByVerseId"]),
+        gitaCommentariesByVerseId:
+            GitaSByVerseId.fromJson(json["gitaCommentariesByVerseId"]),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "chapterNumber": chapterNumber,
         "verseNumber": verseNumber,
         "text": text,
         "gitaTranslationsByVerseId": gitaTranslationsByVerseId!.toJson(),
         "gitaCommentariesByVerseId": gitaCommentariesByVerseId!.toJson(),
-    };
+      };
 }
 
 class GitaSByVerseId {
-    GitaSByVerseId({
-        this.nodes,
-    });
+  GitaSByVerseId({
+    this.nodes,
+  });
 
-    List<Node>? nodes;
+  List<Node>? nodes;
 
-    factory GitaSByVerseId.fromJson(Map<String, dynamic> json) => GitaSByVerseId(
+  factory GitaSByVerseId.fromJson(Map<String, dynamic> json) => GitaSByVerseId(
         nodes: List<Node>.from(json["nodes"].map((x) => Node.fromJson(x))),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "nodes": List<dynamic>.from(nodes!.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Node {
-    Node({
-        this.description,
-    });
+  Node({
+    this.description,
+  });
 
-    String? description;
+  String? description;
 
-    factory Node.fromJson(Map<String, dynamic> json) => Node(
+  factory Node.fromJson(Map<String, dynamic> json) => Node(
         description: json["description"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "description": description,
-    };
+      };
 }

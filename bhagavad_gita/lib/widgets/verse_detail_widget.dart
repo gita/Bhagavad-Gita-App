@@ -3,6 +3,7 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,10 +26,10 @@ class VerseDetailWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // print('Vrese Detail Ritvik');
         navigationService.pushNamed(r_ContinueReading,
             arguments:
                 "${verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}");
+        // verseDetailId();
       },
       child: Column(
         children: [

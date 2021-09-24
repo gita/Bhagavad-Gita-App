@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +125,12 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
-                            setState(() {
+                            navigationService.pushNamed(r_ContinueReading,
+                                arguments: allVerseOTheDayResponseModel
+                                    .allVerseOfTheDays!.nodes![0].verseOrder
+                                    .toString());
+
+                            /*setState(() {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -135,7 +141,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                   ),
                                 ),
                               );
-                            });
+                            });*/
                           },
                           child: Text(
                             'READ MORE',
@@ -230,18 +236,19 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               text:
                   '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber} | ',
               style: Theme.of(context).textTheme.headline2!.copyWith(
-                  color: primaryColor,
-                  fontSize: width * 0.037,
-                  //overflow: TextOverflow.ellipsis),
-              ),
+                    color: primaryColor,
+                    fontSize: width * 0.037,
+                    //overflow: TextOverflow.ellipsis),
+                  ),
               children: <TextSpan>[
                 TextSpan(
                   text:
                       '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description}',
                   style: Theme.of(context).textTheme.headline2!.copyWith(
-                      color: whiteColor,
-                      fontSize: width * 0.037,
-                      /*overflow: TextOverflow.ellipsis*/),
+                        color: whiteColor,
+                        fontSize:
+                            width * 0.037, /*overflow: TextOverflow.ellipsis*/
+                      ),
                 ),
               ],
             ),

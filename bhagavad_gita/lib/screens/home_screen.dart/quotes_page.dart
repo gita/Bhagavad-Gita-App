@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,6 +12,22 @@ class QuotesScreen extends StatefulWidget {
 }
 
 class _QuotesScreenState extends State<QuotesScreen> {
+  String quote = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getQuote();
+  }
+
+  getQuote() {
+    final random = Random();
+    var result = quotesList[random.nextInt(quotesList.length)];
+    setState(() {
+      quote = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -51,7 +70,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               child: Container(
                 width: 370,
                 child: Text(
-                  " Those who worship the devas will go to the realmof the devas; those who worship their ancestors will be united with them after death. Those who worship phantoms will become phantoms; but my devotees will come to me. Those who worship the devas will go to the realm of the devas; those who worship their ancestors will be united with them after death. Those who worship phantoms will become phantoms; but my devotees will come to me.",
+                  quote,
                   textAlign: TextAlign.left,
                   style: Theme.of(context)
                       .textTheme
@@ -63,22 +82,27 @@ class _QuotesScreenState extends State<QuotesScreen> {
             Positioned(
               bottom: kDefaultPadding,
               left: kDefaultPadding,
-              child: Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: textLightGreyColor,
-                      blurRadius: 10,
-                    )
-                  ],
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    "assets/icons/icon_slider_verse.svg",
+              child: InkWell(
+                onTap: () {
+                  getQuote();
+                },
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: textLightGreyColor,
+                        blurRadius: 10,
+                      )
+                    ],
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      "assets/icons/icon_slider_verse.svg",
+                    ),
                   ),
                 ),
               ),
@@ -86,22 +110,27 @@ class _QuotesScreenState extends State<QuotesScreen> {
             Positioned(
               bottom: kDefaultPadding,
               right: kDefaultPadding,
-              child: Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: textLightGreyColor,
-                      blurRadius: 10,
-                    )
-                  ],
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    "assets/icons/Icon_slider_verseNext.svg",
+              child: InkWell(
+                onTap: () {
+                  getQuote();
+                },
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: textLightGreyColor,
+                        blurRadius: 10,
+                      )
+                    ],
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      "assets/icons/Icon_slider_verseNext.svg",
+                    ),
                   ),
                 ),
               ),

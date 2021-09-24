@@ -1,16 +1,21 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:flutter/material.dart';
 
 class LastReadWidget extends StatelessWidget {
   const LastReadWidget({
     Key? key,
+    required this.lastReadVerse,
+    required this.onButtonTap,
   }) : super(key: key);
+
+  final LastReadVerse lastReadVerse;
+  final Function onButtonTap;
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: kDefaultPadding, vertical: kDefaultPadding),
@@ -28,7 +33,7 @@ class LastReadWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                StringConstant.strVerseNo,
+                "Verse ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -40,7 +45,8 @@ class LastReadWidget extends StatelessWidget {
             height: kDefaultPadding,
           ),
           Text(
-            'Dhṛtarāṣṭra said: O Sañjaya, after my sons and the sons of Pāṇḍu assembled in the place of pilgrimage at Kurukṣetra...',
+            lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
+                .description!,
             maxLines: 4,
             style: Theme.of(context)
                 .textTheme
@@ -51,7 +57,9 @@ class LastReadWidget extends StatelessWidget {
             height: kDefaultPadding,
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              onButtonTap();
+            },
             child: Container(
               height: 30,
               child: Text(

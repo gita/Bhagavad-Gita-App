@@ -7,6 +7,8 @@ import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:bhagavad_gita/widgets/last_read_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -54,6 +56,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   }
 
   double lineSpacing = 1.5;
+  LastReadVerse? lastReadVerse;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +135,11 @@ class _ContinueReadingState extends State<ContinueReading> {
                           );
                         }
                         Map<String, dynamic>? verse = result.data;
-                        Data data = Data.fromJson(verse!);
+                        VerseDetailData data = VerseDetailData.fromJson(verse!);
+                        lastReadVerse = LastReadVerse(
+                            verseID: widget.verseID,
+                            gitaVerseById: data.gitaVerseById!);
+                        SharedPref.saveLastRead(lastReadVerse!);
                         return Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -347,7 +354,11 @@ class _ContinueReadingState extends State<ContinueReading> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  if (lastReadVerse != null) {
+                    SharedPref.saveBookmarkVerse(lastReadVerse!);
+                  }
+                },
                 child: Container(
                   height: 48,
                   width: 70,
