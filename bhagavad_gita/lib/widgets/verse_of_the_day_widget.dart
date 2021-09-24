@@ -232,7 +232,8 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               style: Theme.of(context).textTheme.headline2!.copyWith(
                   color: primaryColor,
                   fontSize: width * 0.037,
-                  overflow: TextOverflow.ellipsis),
+                  //overflow: TextOverflow.ellipsis),
+              ),
               children: <TextSpan>[
                 TextSpan(
                   text:
@@ -240,7 +241,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                       color: whiteColor,
                       fontSize: width * 0.037,
-                      overflow: TextOverflow.ellipsis),
+                      /*overflow: TextOverflow.ellipsis*/),
                 ),
               ],
             ),
