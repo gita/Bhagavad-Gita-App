@@ -3,12 +3,12 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:bhagavad_gita/widgets/last_read_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -27,6 +27,9 @@ class _ContinueReadingState extends State<ContinueReading> {
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
   late ValueNotifier<GraphQLClient> client;
   late String verseDetailQuery;
+
+  bool isVerseSaved = false;
+  VerseNotes? verseNotes;
 
   @override
   void initState() {
@@ -53,6 +56,16 @@ class _ContinueReadingState extends State<ContinueReading> {
     }
   }
   """;
+
+    Future.delayed(Duration(milliseconds: 200), () async {
+      var result = await SharedPref.checkVerseIsSavedOrNot(widget.verseID);
+      var resultVerseNotes =
+          await SharedPref.checkVerseNotesIsSavedOrNot(widget.verseID);
+      setState(() {
+        isVerseSaved = result;
+        verseNotes = resultVerseNotes;
+      });
+    });
   }
 
   double lineSpacing = 1.5;
@@ -77,7 +90,11 @@ class _ContinueReadingState extends State<ContinueReading> {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                _onPressedEditButton(context);
+              });
+            },
             child: Text(
               "Aa",
               style: Theme.of(context)
@@ -340,31 +357,53 @@ class _ContinueReadingState extends State<ContinueReading> {
               ),
               InkWell(
                 onTap: () {
-                  setState(() {
-                    _onPressedEditButton(context);
-                  });
-                },
-                child: Container(
-                  height: 48,
-                  width: 70,
-                  child: Center(
-                    child:
-                        SvgPicture.asset("assets/icons/Icon_write_bottom.svg"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  if (lastReadVerse != null) {
-                    SharedPref.saveBookmarkVerse(lastReadVerse!);
+                  if (verseNotes == null) {
+                    VerseNotes temp = VerseNotes(
+                        verseID: widget.verseID,
+                        gitaVerseById: lastReadVerse!.gitaVerseById,
+                        verseNote: "");
+                    navigationService.pushNamed(r_AddNote, arguments: temp);
+                  } else {
+                    navigationService.pushNamed(r_AddNote,
+                        arguments: verseNotes);
                   }
                 },
                 child: Container(
                   height: 48,
                   width: 70,
                   child: Center(
-                    child:
-                        SvgPicture.asset("assets/icons/Icon_save_bottom.svg"),
+                      child: verseNotes == null
+                          ? SvgPicture.asset(
+                              "assets/icons/Icon_write_bottom.svg")
+                          : SvgPicture.asset(
+                              'assets/icons/Icon_fill_addNote.svg')),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  if (lastReadVerse != null) {
+                    if (isVerseSaved) {
+                      var result =
+                          await SharedPref.removeVerseFromSaved(widget.verseID);
+                      setState(() {
+                        isVerseSaved = !isVerseSaved;
+                      });
+                    } else {
+                      var result =
+                          await SharedPref.saveBookmarkVerse(lastReadVerse!);
+                      setState(() {
+                        isVerseSaved = !isVerseSaved;
+                      });
+                    }
+                  }
+                },
+                child: Container(
+                  height: 48,
+                  width: 70,
+                  child: Center(
+                    child: isVerseSaved
+                        ? SvgPicture.asset("assets/icons/Icon_saved_bottom.svg")
+                        : SvgPicture.asset("assets/icons/Icon_save_bottom.svg"),
                   ),
                 ),
               ),

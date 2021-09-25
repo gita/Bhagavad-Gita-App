@@ -110,6 +110,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                 ),
               ),
             ),
+            SizedBox(height: kDefaultPadding),
           ],
         ),
       ),

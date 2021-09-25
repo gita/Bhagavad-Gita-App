@@ -125,13 +125,14 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                     return Column(
                       children: [
                         TableOfContentChapterWidget(
-                            chapter: chapter,
-                            onTap: () {
-                              print('Tap');
-                              setState(() {
-                                chapter.isExpanded = !chapter.isExpanded!;
-                              });
-                            }),
+                          chapter: chapter,
+                          onTap: () {
+                            print('Tap');
+                            setState(() {
+                              chapter.isExpanded = !chapter.isExpanded!;
+                            });
+                          },
+                        ),
                         AnimatedContainer(
                           height: chapter.isExpanded! ? 300 : 0,
                           duration: Duration(milliseconds: 300),

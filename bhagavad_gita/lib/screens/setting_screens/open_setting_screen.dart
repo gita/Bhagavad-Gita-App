@@ -16,7 +16,9 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final NavigationService navigationService = locator<NavigationService>();
 
-  final bool isLangaugeSelecte = true;
+  bool isTranslationsource = false;
+  bool isCommentarySource = false;
+  bool isNotificationOn = false;
 
   List<bool> _switchValues = List.generate(7, (_) => false);
 
@@ -164,6 +166,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 onChanged: (value) {
                   setState(() {
                     _switchValues[1] = value;
+                    isTranslationsource = !isTranslationsource;
                   });
                 },
                 title: Text(
@@ -172,6 +175,30 @@ class _SettingScreenState extends State<SettingScreen> {
                       .textTheme
                       .subtitle2!
                       .copyWith(color: greyScalBodyColor),
+                ),
+              ),
+              AnimatedContainer(
+                height: isTranslationsource ? 70 : 0,
+                duration: Duration(milliseconds: 300),
+                child: Padding(
+                  padding: EdgeInsets.all(kPadding * 1.5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: textLightGreyColor),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: kPadding * 2, right: kDefaultPadding),
+                      child: Row(
+                        children: [
+                          Text('Sanskrit'),
+                          Spacer(),
+                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Divider(
@@ -183,6 +210,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 onChanged: (value) {
                   setState(() {
                     _switchValues[2] = value;
+                    isCommentarySource = !isCommentarySource;
                   });
                 },
                 title: Text(
@@ -191,6 +219,30 @@ class _SettingScreenState extends State<SettingScreen> {
                       .textTheme
                       .subtitle2!
                       .copyWith(color: greyScalBodyColor),
+                ),
+              ),
+              AnimatedContainer(
+                height: isCommentarySource ? 70 : 0,
+                duration: Duration(milliseconds: 300),
+                child: Padding(
+                  padding: EdgeInsets.all(kPadding * 1.5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: textLightGreyColor),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: kPadding * 2, right: kDefaultPadding),
+                      child: Row(
+                        children: [
+                          Text('Swami Chinmayananda (Hindi)'),
+                          Spacer(),
+                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Container(
@@ -216,6 +268,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 onChanged: (value) {
                   setState(() {
                     _switchValues[3] = value;
+                    isNotificationOn = !isNotificationOn;
                   });
                 },
                 title: Text(
@@ -224,6 +277,31 @@ class _SettingScreenState extends State<SettingScreen> {
                       .textTheme
                       .subtitle2!
                       .copyWith(color: greyScalBodyColor),
+                ),
+              ),
+              AnimatedContainer(
+                height: isNotificationOn ? 70 : 0,
+                duration: Duration(milliseconds: 300),
+                child: Padding(
+                  padding: EdgeInsets.all(kPadding * 1.5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: textLightGreyColor),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: kPadding * 2, right: kDefaultPadding),
+                      child: Row(
+                        children: [
+                          Text('Sanskrit'),
+                          Spacer(),
+                          SvgPicture.asset(
+                              'assets/icons/icon_downsidearrow.svg')
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

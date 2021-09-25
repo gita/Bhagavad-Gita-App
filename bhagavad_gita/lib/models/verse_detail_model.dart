@@ -1,6 +1,7 @@
 class LastReadVerse {
   String? verseID;
   GitaVerseById? gitaVerseById;
+  DateTime addedDate = DateTime.now();
 
   LastReadVerse({this.verseID, this.gitaVerseById});
 
