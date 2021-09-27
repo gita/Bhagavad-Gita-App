@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/locator.dart';
@@ -50,33 +48,36 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
           ),
         ),
         title: Text(
-          'Add note',
+          verseNotes.verseNote == "" ? 'Add Note' : 'Edit Note',
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         actions: [
           strNotes.length > 0
               ? Center(
                   child: InkWell(
-                  onTap: () async {
-                    verseNotes.verseNote = strNotes;
-                    await SharedPref.saveVerseNotes(verseNotes);
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 71,
-                    decoration: BoxDecoration(
-                        color: orangeColor,
-                        borderRadius: BorderRadius.circular(8.0)),
-                    child: Center(
-                        child: Text("Save",
-                            style:
-                                Theme.of(context).textTheme.headline2!.copyWith(
-                                      fontSize: 14,
-                                      color: whiteColor,
-                                    ))),
+                    onTap: () async {
+                      verseNotes.verseNote = strNotes;
+                      await SharedPref.saveVerseNotes(verseNotes);
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 71,
+                      decoration: BoxDecoration(
+                          color: orangeColor,
+                          borderRadius: BorderRadius.circular(8.0)),
+                      child: Center(
+                        child: Text(
+                          "Save",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(fontSize: 14, color: whiteColor),
+                        ),
+                      ),
+                    ),
                   ),
-                ))
+                )
               : Container(),
           SizedBox(
             width: kDefaultPadding,
@@ -87,8 +88,9 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: TextFormField(
+            initialValue: verseNotes.verseNote,
             maxLines: 10,
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: InputDecoration(border: InputBorder.none, hintText: "Please add your note here..."),
             onChanged: (String value) {
               setState(() {
                 strNotes = value;

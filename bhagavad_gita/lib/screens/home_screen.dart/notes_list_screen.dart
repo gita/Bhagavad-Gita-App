@@ -1,9 +1,12 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../locator.dart';
 
 class NotesVerseKistWidget extends StatefulWidget {
   @override
@@ -11,6 +14,7 @@ class NotesVerseKistWidget extends StatefulWidget {
 }
 
 class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
+  final NavigationService navigationService = locator<NavigationService>();
   List<VerseNotes> writeNotes = [];
   @override
   void initState() {
@@ -35,7 +39,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: writeNotes.length,
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
@@ -48,13 +52,24 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              'Verse 10.18',
+                              'Verse ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
                             InkWell(
                               onTap: () {
-                                showNoteDialog();
+                                showNoteDialog(onClickDelete: () async {
+                                  await SharedPref.removeVerseNotesFromSaved(
+                                      writeNotes[index].verseID!);
+                                  getNoteVerse();
+                                }, onClickGoToEdit: () {
+                                  navigationService.pushNamed(r_AddNote,
+                                      arguments: writeNotes[index]);
+                                }, onClickGoToVerse: () {
+                                  navigationService.pushNamed(r_ContinueReading,
+                                      arguments:
+                                          "${writeNotes[index].verseID ?? 0}");
+                                });
                               },
                               child: Container(
                                 height: kPadding * 2,
@@ -69,7 +84,13 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                         ),
                         SizedBox(height: kPadding * 1.5),
                         Text(
-                          'Dhṛtarāṣṭra said: O Sañjaya, after my sons and the sons of Pāṇḍu assembled in the place of...',
+                          writeNotes[index]
+                                  .gitaVerseById!
+                                  .gitaTranslationsByVerseId!
+                                  .nodes![0]
+                                  .description ??
+                              "",
+                          maxLines: 2,
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -89,7 +110,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             Container(
                               width: 290,
                               child: Text(
-                                'Apparently we had reached a great height in the atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. ',
+                                '${writeNotes[index].verseNote}',
                                 maxLines: 5,
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
@@ -109,7 +130,10 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
     );
   }
 
-  showNoteDialog() {
+  showNoteDialog(
+      {Function()? onClickDelete,
+      Function()? onClickGoToVerse,
+      Function()? onClickGoToEdit}) {
     return showGeneralDialog(
       barrierLabel: "Label",
       barrierDismissible: true,
@@ -136,7 +160,10 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                         SvgPicture.asset('assets/icons/icon_delete.svg'),
                         SizedBox(width: kDefaultPadding),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            onClickDelete!();
+                          },
                           child: Text(
                             'Delete',
                             style: Theme.of(context)
@@ -155,9 +182,12 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                           height: kPadding * 1.8,
                           width: kPadding * 1.8,
                         ),
-                        SizedBox(width: kDefaultPadding),
+                        SizedBox(width: kPadding),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            onClickGoToEdit!();
+                          },
                           child: Text(
                             'Edit',
                             textAlign: TextAlign.start,
@@ -175,7 +205,10 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                         SvgPicture.asset('assets/icons/icon_go_to_verse.svg'),
                         SizedBox(width: kDefaultPadding),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            onClickGoToVerse!();
+                          },
                           child: Text(
                             'Go to verse',
                             style: Theme.of(context)

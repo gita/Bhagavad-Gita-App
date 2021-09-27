@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/models/all_chapter_verse_model.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/tableof_content_Chapter_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -129,55 +133,21 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                           onTap: () {
                             print('Tap');
                             setState(() {
+                              listChapters.forEach((element) {
+                                element.isExpanded = false;
+                              });
                               chapter.isExpanded = !chapter.isExpanded!;
                             });
                           },
                         ),
-                        AnimatedContainer(
-                          height: chapter.isExpanded! ? 300 : 0,
-                          duration: Duration(milliseconds: 300),
-                          child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 5,
-                              crossAxisSpacing: kDefaultPadding * 2,
-                              mainAxisSpacing: kDefaultPadding * 2,
-                            ),
-                            itemCount: chapter.versesCount,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    selectedIndex = index;
-                                  });
-                                },
-                                child: Container(
-                                  height: 32,
-                                  width: 32,
-                                  decoration: BoxDecoration(
-                                    color: selectedIndex == index
-                                        ? primaryLightColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      '${index + 1}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline2!
-                                          .copyWith(
-                                              fontSize: 16,
-                                              color: selectedIndex == index
-                                                  ? orangeColor
-                                                  : textLightGreyColor),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        chapter.isExpanded == true
+                            ? AnimatedContainer(
+                                height: chapter.isExpanded! ? 300 : 0,
+                                duration: Duration(milliseconds: 300),
+                                child: TableOfContectVerseGridWidget(
+                                  chapter: chapter,
+                                ))
+                            : Container(),
                         Divider()
                       ],
                     );
@@ -189,5 +159,120 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
         ),
       ),
     );
+  }
+}
+
+class TableOfContectVerseGridWidget extends StatefulWidget {
+  const TableOfContectVerseGridWidget({Key? key, required this.chapter})
+      : super(key: key);
+
+  @override
+  _TableOfContectVerseGridWidgetState createState() =>
+      _TableOfContectVerseGridWidgetState();
+
+  final Chapter chapter;
+}
+
+class _TableOfContectVerseGridWidgetState
+    extends State<TableOfContectVerseGridWidget> {
+  final NavigationService navigationService = locator<NavigationService>();
+  final HttpLink httpLink = HttpLink(strGitaHttpLink);
+  late ValueNotifier<GraphQLClient> client;
+  late String strQueryVerseList;
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    client = ValueNotifier<GraphQLClient>(
+        GraphQLClient(link: httpLink, cache: GraphQLCache()));
+
+    strQueryVerseList = """
+    {
+  gitaChapterById(id: ${widget.chapter.chapterNumber ?? 0}) {
+    versesCount
+    gitaVersesByChapterId {
+      nodes {
+        id
+        verseNumber
+      }
+    }
+  }
+}
+    """;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Query(
+        options: QueryOptions(document: gql(strQueryVerseList)),
+        builder: (
+          QueryResult result, {
+          Refetch? refetch,
+          FetchMore? fetchMore,
+        }) {
+          if (result.hasException) {
+            print("ERROR : ${result.exception.toString()}");
+          }
+          if (result.data == null) {
+            return Container(
+              height: 200,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
+                  strokeWidth: 2,
+                ),
+              ),
+            );
+          }
+          Map<String, dynamic> node = result.data!;
+          String json = jsonEncode(node);
+          print("Verser list : $json");
+          GetAllChapterVerseResponseModel chapterVerse =
+              getAllChapterVerseResponseModelFromJson(json);
+          List<ChapterVerseInfo> verse =
+              chapterVerse.gitaChapterById!.gitaVersesByChapterId!.nodes!;
+
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              crossAxisSpacing: kDefaultPadding * 2,
+              mainAxisSpacing: kDefaultPadding * 2,
+            ),
+            itemCount: verse.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+
+                  navigationService.pushNamed(r_ContinueReading,
+                      arguments: "${verse[index].id}");
+                },
+                child: Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    color: selectedIndex == index
+                        ? primaryLightColor
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${verse[index].verseNumber ?? 0}',
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                          fontSize: 16,
+                          color: selectedIndex == index
+                              ? orangeColor
+                              : textLightGreyColor),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 }

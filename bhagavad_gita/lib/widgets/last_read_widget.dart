@@ -53,22 +53,17 @@ class LastReadWidget extends StatelessWidget {
                 .subtitle1!
                 .copyWith(color: greyScalLableColor),
           ),
-          SizedBox(
-            height: kDefaultPadding,
-          ),
-          InkWell(
-            onTap: () {
+          SizedBox(height: kPadding),
+          TextButton(
+            onPressed: () {
               onButtonTap();
             },
-            child: Container(
-              height: 30,
-              child: Text(
-                'CONTINUE READING',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline2!
-                    .copyWith(color: primaryColor, fontSize: width * 0.037),
-              ),
+            child: Text(
+              'CONTINUE READING',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2!
+                  .copyWith(color: primaryColor, fontSize: width * 0.037),
             ),
           )
         ],

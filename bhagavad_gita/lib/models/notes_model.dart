@@ -4,9 +4,9 @@ class VerseNotes {
   String? verseID;
   GitaVerseById? gitaVerseById;
   DateTime addedDate = DateTime.now();
-  String? verseNote;
+  String verseNote;
 
-  VerseNotes({this.verseID, this.gitaVerseById, this.verseNote});
+  VerseNotes({this.verseID, this.gitaVerseById, required this.verseNote});
 
   factory VerseNotes.fromJson(Map<String, dynamic> json) => VerseNotes(
       gitaVerseById: GitaVerseById.fromJson(json["gitaVerseById"]),

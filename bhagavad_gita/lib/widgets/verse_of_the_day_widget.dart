@@ -6,12 +6,10 @@ import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
-
 import '../locator.dart';
 
 class VerseOfTheDayWidget extends StatefulWidget {

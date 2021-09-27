@@ -73,9 +73,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                     ),
                   ),
                   PageIndicator(pagerIndex: pagerIndex, totalPages: 4),
-                  SizedBox(
-                    height: kPadding * 7,
-                  ),
+                  SizedBox(height: kPadding * 7),
                   pagerIndex == 3
                       ? InkWell(
                           onTap: () {
@@ -142,9 +140,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             ),
                           ],
                         ),
-                  SizedBox(
-                    height: kPadding * 2,
-                  ),
+                  SizedBox(height: kPadding * 2),
                 ],
               ),
             ],
@@ -378,9 +374,10 @@ class MakeItOwnPageFour extends StatelessWidget {
         Text(
           StringConstant.strShareMemories,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                color: textLightGreyColor,
-              ),
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(color: textLightGreyColor),
         ),
       ],
     );
