@@ -1,7 +1,6 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/line_space_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +23,8 @@ class BottomNavigationMenu extends StatefulWidget {
 class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
   final NavigationService navigationService = locator<NavigationService>();
 
+  final int colorMode = 0;
+
   double selectedLineSpacing = 1.5;
   @override
   void initState() {
@@ -43,7 +44,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
           Row(
             children: [
               Text(
-                "Font Size",
+                StringConstant.strFontSize,
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -51,7 +52,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(width: 175),
               Text(
-                "Font Family",
+                StringConstant.strFontFamily,
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -113,7 +114,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                         ),
                         child: Center(
                           child: Text(
-                            'Inter',
+                            StringConstant.strInter,
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!
@@ -132,7 +133,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Spacing",
+                StringConstant.strSpacing,
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -197,7 +198,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(height: 18),
               Text(
-                "Color Mode",
+                StringConstant.strColorMode,
                 style: Theme.of(context).textTheme.headline2,
               ),
               SizedBox(height: 10),
@@ -226,7 +227,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                           width: 32,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.white,
+                            color: whiteColor,
                           ),
                         ),
                       ),
@@ -250,13 +251,15 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                   ),
                   SizedBox(width: 24),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {});
+                    },
                     child: Container(
                       height: 32,
                       width: 32,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.black,
+                        color: blackColor,
                         border: Border.all(
                             style: BorderStyle.solid,
                             color: Colors.deepPurple.shade100,
@@ -279,7 +282,6 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
       builder: (context) {
         return Container(
           color: Color(0X80000000).withOpacity(0.80),
-          // height: height * 0.33,
           height: 350,
           child: Container(
             child: InterClick(),

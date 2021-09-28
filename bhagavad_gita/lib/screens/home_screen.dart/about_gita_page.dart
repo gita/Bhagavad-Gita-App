@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -48,14 +49,14 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'About',
+                          StringConstant.strAbout,
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(fontSize: 28, color: whiteColor),
                         ),
                         Text(
-                          'Gita',
+                          StringConstant.strGita,
                           textAlign: TextAlign.justify,
                           style: Theme.of(context)
                               .textTheme
@@ -88,7 +89,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       right: 0,
                       child: Container(
                         child: Text(
-                          "Unlike modern writing, The\nGita is not linear.",
+                          StringConstant.strUnlikeModernWriting,
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
@@ -110,7 +111,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Bhagavad Gita,',
+                          text: StringConstant.strBhagvadGita,
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
@@ -118,7 +119,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                         ),
                         TextSpan(
                             text:
-                                " also known as the Gita - 'The Song of The Lord' is a practical guide to one's life that guides one to re-organise their life, achieve inner peace and approach the Supreme Lord (the Ultimate Reality). It is a 700-verse text in Sanskrit which comprises chapters 23 through 40 in the Bhishma-Parva section of the Mahabharata.",
+                                StringConstant.strGitaStory,
                             style: Theme.of(context).textTheme.subtitle1)
                       ],
                     ),
@@ -131,7 +132,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        "STORY",
+                        StringConstant.strStory,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -142,7 +143,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                      "The Bhagavad Gita is a dialogue between Arjuna, a supernaturally gifted warrior and his guide and charioteer Lord Krishna on the battlefield of Kurukshetra. As both armies stand ready for the battle, the mighty warrior Arjuna, on observing the warriors on both sides becomes overwhelmed with grief and compassion due to the fear of losing his relatives and friends and the consequent sins attributed to killing his own relatives. So, he surrenders to Lord Krishna, seeking a solution. Thus, follows the wisdom of the Bhagavad Gita. ",
+                      StringConstant.strGitaStoryDetail,
                       style: Theme.of(context).textTheme.subtitle1),
                   SizedBox(height: kDefaultPadding * 1.5),
                   Row(
@@ -152,7 +153,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        "CONCLUSION",
+                        StringConstant.strConclusion,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -163,7 +164,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                    'Over 18 chapters, Gita packs an intense analysis of life, emotions and ambitions, discussion of various types of yoga, including Jnana, Bhakti, Karma and Raja, the difference between Self and the material body as well as the revelation of the Ultimate Purpose of Life.',
+                    StringConstant.strConclusionDetail,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: kDefaultPadding),

@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                "CHAPTER ${chapter.chapterNumber ?? 0}",
+                "${StringConstant.strCHAPTER} ${chapter.chapterNumber ?? 0}",
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
@@ -61,7 +62,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
                     ),
                     SizedBox(width: kPadding),
                     Text(
-                      "${chapter.versesCount ?? 0} verses",
+                      "${chapter.versesCount ?? 0} ${StringConstant.strVerse}",
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1!

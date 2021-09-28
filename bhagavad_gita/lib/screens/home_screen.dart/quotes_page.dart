@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/quotes.dart';
@@ -51,24 +50,29 @@ class _QuotesScreenState extends State<QuotesScreen> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.width / kDefaultPadding * 4,
-              right: MediaQuery.of(context).size.width / kDefaultPadding,
-              child: Container(
-                child: SvgPicture.asset("assets/icons/icon_shareQuotes.svg"),
+              top: width / kDefaultPadding * 4,
+              right: width / kDefaultPadding,
+              child: InkWell(
+                onTap: () {
+                  print('Shear Quote');
+                },
+                child: Container(
+                  child: SvgPicture.asset("assets/icons/icon_shareQuotes.svg"),
+                ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / kPadding * 2.3,
-              left: MediaQuery.of(context).size.width / kPadding * 0.5,
+              top: height / kPadding * 2.3,
+              left: width / kPadding * 0.5,
               child: Container(
                 child: SvgPicture.asset("assets/icons/icon_Quote.svg"),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / kPadding * 2.8,
-              left: MediaQuery.of(context).size.width / kPadding * 0.5,
+              top: height / kPadding * 2.8,
+              left: width / kPadding * 0.5,
               child: Container(
-                width: 370,
+                width: 360,
                 child: Text(
                   quote,
                   textAlign: TextAlign.left,

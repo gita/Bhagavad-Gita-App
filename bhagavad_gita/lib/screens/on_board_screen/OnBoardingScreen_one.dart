@@ -156,113 +156,107 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Scaffold(
-          resizeToAvoidBottomInset: true,
-          body: SingleChildScrollView(
-            child: AlertDialog(
-              actions: [
-                Container(
-                  height: MediaQuery.of(context).size.height / 100 * 80,
-                  width: 1000,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  child: Stack(
+        return AlertDialog(
+          actions: [
+            Container(
+              height: MediaQuery.of(context).size.height / 100 * 80,
+              width: 1000,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
+              child: Stack(
+                children: [
+                  SvgPicture.asset("assets/icons/Top_Image_GetStarted.svg"),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: SvgPicture.asset(
+                        "assets/icons/Bottom_Image_GetStarted.svg"),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      SvgPicture.asset("assets/icons/Top_Image_GetStarted.svg"),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: SvgPicture.asset(
-                            "assets/icons/Bottom_Image_GetStarted.svg"),
+                      SizedBox(
+                        height: 30,
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          SvgPicture.asset("assets/icons/abc_language.svg"),
-                          SizedBox(
-                            height: kPadding * 3,
-                          ),
-                          Text(
-                            StringConstant.strChooseLanguage,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(fontSize: 18, color: blackColor),
-                          ),
-                          SizedBox(
-                            height: kPadding * 1,
-                          ),
-                          Text(
-                            StringConstant.strDontWorry,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontSize: 14, color: textLightGreyColor),
-                          ),
-                          SizedBox(
-                            height: kPadding * 3.5,
-                          ),
-                          SearchBarWidget(),
-                          Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 20,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text("English"),
-                                  leading: Radio(
-                                    value: 1,
-                                    groupValue: val,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        val = lastPage;
-                                      });
-                                    },
-                                    activeColor: Colors.green,
-                                  ),
-                                );
-                              },
+                      SvgPicture.asset("assets/icons/abc_language.svg"),
+                      SizedBox(
+                        height: kPadding * 3,
+                      ),
+                      Text(
+                        StringConstant.strChooseLanguage,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(fontSize: 18, color: blackColor),
+                      ),
+                      SizedBox(
+                        height: kPadding * 1,
+                      ),
+                      Text(
+                        StringConstant.strDontWorry,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(fontSize: 14, color: textLightGreyColor),
+                      ),
+                      SizedBox(
+                        height: kPadding * 3.5,
+                      ),
+                      SearchBarWidget(),
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 20,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text("English"),
+                              leading: Radio(
+                                value: 1,
+                                groupValue: val,
+                                onChanged: (value) {
+                                  setState(() {
+                                    val = lastPage;
+                                  });
+                                },
+                                activeColor: Colors.green,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(30),
+                        child: InkWell(
+                          onTap: () {
+                            navigationService.pushNamed(r_Tabbar);
+                          },
+                          child: Container(
+                            height: kPadding * 5,
+                            width: kPadding * 19,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(245, 121, 3, 1),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(30),
-                            child: InkWell(
-                              onTap: () {
-                                navigationService.pushNamed(r_Tabbar);
-                              },
-                              child: Container(
-                                height: kPadding * 5,
-                                width: kPadding * 19,
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(245, 121, 3, 1),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    StringConstant.strOkLetsGo,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
+                            child: Center(
+                              child: Text(
+                                StringConstant.strOkLetsGo,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: whiteColor,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
+                ],
+              ),
+            )
+          ],
         );
       },
     );
@@ -303,15 +297,12 @@ class BeautifulDesignPageTwo extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset('assets/icons/img_beautiful_two.svg'),
-        // SizedBox(height: kPadding * 4),
         Text(
           StringConstant.strBeautifulDesign,
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
-        SizedBox(
-          height: kPadding,
-        ),
+        SizedBox(height: kPadding),
         Text(
           StringConstant.strModernAndInteractive,
           textAlign: TextAlign.center,

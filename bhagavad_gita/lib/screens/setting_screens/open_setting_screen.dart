@@ -1,7 +1,6 @@
-// ignore_for_file: unnecessary_statements
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              'Settings',
+              StringConstant.strSetting,
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -63,248 +62,244 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Column(
-            children: [
-              Container(
-                height: kPadding * 3,
+          Container(
+            height: kPadding * 3,
+            width: double.infinity,
+            color: Colors.orange[50],
+            child: Row(
+              children: [
+                SizedBox(width: kDefaultPadding),
+                Text(
+                  StringConstant.strLANGUAGE,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: settingColor,
+                        fontSize: 12,
+                        letterSpacing: 1,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(kDefaultPadding),
+            child: InkWell(
+              onTap: () {
+                navigationService.pushNamed(r_Language);
+              },
+              child: Container(
+                height: 40,
                 width: double.infinity,
-                color: Colors.orange[50],
-                child: Row(
-                  children: [
-                    SizedBox(width: kDefaultPadding),
-                    Text(
-                      'LANGUAGE',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                            color: settingColor,
-                            fontSize: 12,
-                            letterSpacing: 1,
-                          ),
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 0.5, color: textLightGreyColor),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(kDefaultPadding),
-                child: InkWell(
-                  onTap: () {
-                    navigationService.pushNamed(r_Language);
-                  },
-                  child: Container(
-                    height: 40,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Text('🇬🇧  English'),
-                          Spacer(),
-                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: kPadding * 3,
-                width: double.infinity,
-                color: Colors.orange[50],
-                child: Row(
-                  children: [
-                    SizedBox(width: kDefaultPadding),
-                    Text(
-                      'AUTHOR',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          color: settingColor, fontSize: 12, letterSpacing: 1),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: kPadding * 2, right: kPadding * 2, top: kPadding),
-                child: Row(
-                  children: [
-                    Text(
-                      'Hide/show languages in the verses.',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: textLightGreyColor, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-              SwitchListTile(
-                value: _switchValues[0],
-                onChanged: (value) {
-                  setState(() {
-                    _switchValues[0] = value;
-                  });
-                },
-                title: Text(
-                  'Verse Transliteration Language',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: greyScalBodyColor),
-                ),
-              ),
-              Divider(
-                indent: kPadding * 2,
-                endIndent: kPadding * 2,
-              ),
-              SwitchListTile(
-                value: _switchValues[1],
-                onChanged: (value) {
-                  setState(() {
-                    _switchValues[1] = value;
-                    isTranslationsource = !isTranslationsource;
-                  });
-                },
-                title: Text(
-                  'Verse Translation Source',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: greyScalBodyColor),
-                ),
-              ),
-              AnimatedContainer(
-                height: isTranslationsource ? 70 : 0,
-                duration: Duration(milliseconds: 300),
                 child: Padding(
-                  padding: EdgeInsets.all(kPadding * 1.5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Text('Sanskrit'),
-                          Spacer(),
-                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                        ],
-                      ),
-                    ),
+                  padding: EdgeInsets.only(
+                      left: kPadding * 2, right: kDefaultPadding),
+                  child: Row(
+                    children: [
+                      Text('🇬🇧  English'),
+                      Spacer(),
+                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                    ],
                   ),
                 ),
               ),
-              Divider(
-                indent: kPadding * 2,
-                endIndent: kPadding * 2,
-              ),
-              SwitchListTile(
-                value: _switchValues[2],
-                onChanged: (value) {
-                  setState(() {
-                    _switchValues[2] = value;
-                    isCommentarySource = !isCommentarySource;
-                  });
-                },
-                title: Text(
-                  'Verse Commentary Source',
+            ),
+          ),
+          Container(
+            height: kPadding * 3,
+            width: double.infinity,
+            color: Colors.orange[50],
+            child: Row(
+              children: [
+                SizedBox(width: kDefaultPadding),
+                Text(
+                  StringConstant.strAUTHOR,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                      color: settingColor, fontSize: 12, letterSpacing: 1),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                left: kPadding * 2, right: kPadding * 2, top: kPadding),
+            child: Row(
+              children: [
+                Text(
+                  StringConstant.strHideShowLanguage,
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle2!
-                      .copyWith(color: greyScalBodyColor),
+                      .subtitle1!
+                      .copyWith(color: textLightGreyColor, fontSize: 12),
                 ),
-              ),
-              AnimatedContainer(
-                height: isCommentarySource ? 70 : 0,
-                duration: Duration(milliseconds: 300),
+              ],
+            ),
+          ),
+          SwitchListTile(
+            value: _switchValues[0],
+            onChanged: (value) {
+              setState(() {
+                _switchValues[0] = value;
+              });
+            },
+            title: Text(
+              StringConstant.strVarseTranslationLanguage,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2!
+                  .copyWith(color: greyScalBodyColor),
+            ),
+          ),
+          Divider(
+            indent: kPadding * 2,
+            endIndent: kPadding * 2,
+          ),
+          SwitchListTile(
+            value: _switchValues[1],
+            onChanged: (value) {
+              setState(() {
+                _switchValues[1] = value;
+                isTranslationsource = !isTranslationsource;
+              });
+            },
+            title: Text(
+              StringConstant.strVerseTanslationSource,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2!
+                  .copyWith(color: greyScalBodyColor),
+            ),
+          ),
+          AnimatedContainer(
+            height: isTranslationsource ? 70 : 0,
+            duration: Duration(milliseconds: 300),
+            child: Padding(
+              padding: EdgeInsets.all(kPadding * 1.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 0.5, color: textLightGreyColor),
+                ),
                 child: Padding(
-                  padding: EdgeInsets.all(kPadding * 1.5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Text('Swami Chinmayananda (Hindi)'),
-                          Spacer(),
-                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                        ],
-                      ),
-                    ),
+                  padding: EdgeInsets.only(
+                      left: kPadding * 2, right: kDefaultPadding),
+                  child: Row(
+                    children: [
+                      Text('Sanskrit'),
+                      Spacer(),
+                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                    ],
                   ),
                 ),
               ),
-              Container(
-                height: kPadding * 3,
-                width: double.infinity,
-                color: Colors.orange[50],
-                child: Row(
-                  children: [
-                    SizedBox(width: kDefaultPadding),
-                    Text(
-                      'VERSE OF THE DAY',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                            color: settingColor,
-                            fontSize: 12,
-                            letterSpacing: 1,
-                          ),
-                    ),
-                  ],
+            ),
+          ),
+          Divider(
+            indent: kPadding * 2,
+            endIndent: kPadding * 2,
+          ),
+          SwitchListTile(
+            value: _switchValues[2],
+            onChanged: (value) {
+              setState(() {
+                _switchValues[2] = value;
+                isCommentarySource = !isCommentarySource;
+              });
+            },
+            title: Text(
+              StringConstant.strVerseCommentrySource,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2!
+                  .copyWith(color: greyScalBodyColor),
+            ),
+          ),
+          AnimatedContainer(
+            height: isCommentarySource ? 70 : 0,
+            duration: Duration(milliseconds: 300),
+            child: Padding(
+              padding: EdgeInsets.all(kPadding * 1.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 0.5, color: textLightGreyColor),
                 ),
-              ),
-              SwitchListTile(
-                value: _switchValues[3],
-                onChanged: (value) {
-                  setState(() {
-                    _switchValues[3] = value;
-                    isNotificationOn = !isNotificationOn;
-                  });
-                },
-                title: Text(
-                  'Notifications',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: greyScalBodyColor),
-                ),
-              ),
-              AnimatedContainer(
-                height: isNotificationOn ? 70 : 0,
-                duration: Duration(milliseconds: 300),
                 child: Padding(
-                  padding: EdgeInsets.all(kPadding * 1.5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Text('Sanskrit'),
-                          Spacer(),
-                          SvgPicture.asset(
-                              'assets/icons/icon_downsidearrow.svg')
-                        ],
-                      ),
-                    ),
+                  padding: EdgeInsets.only(
+                      left: kPadding * 2, right: kDefaultPadding),
+                  child: Row(
+                    children: [
+                      Text('Swami Chinmayananda (Hindi)'),
+                      Spacer(),
+                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
+          ),
+          Container(
+            height: kPadding * 3,
+            width: double.infinity,
+            color: Colors.orange[50],
+            child: Row(
+              children: [
+                SizedBox(width: kDefaultPadding),
+                Text(
+                  StringConstant.strVERSEOFTHEDAY,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: settingColor,
+                        fontSize: 12,
+                        letterSpacing: 1,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          SwitchListTile(
+            value: _switchValues[3],
+            onChanged: (value) {
+              setState(() {
+                _switchValues[3] = value;
+                isNotificationOn = !isNotificationOn;
+              });
+            },
+            title: Text(
+              StringConstant.strNotification,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2!
+                  .copyWith(color: greyScalBodyColor),
+            ),
+          ),
+          AnimatedContainer(
+            height: isNotificationOn ? 70 : 0,
+            duration: Duration(milliseconds: 300),
+            child: Padding(
+              padding: EdgeInsets.all(kPadding * 1.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 0.5, color: textLightGreyColor),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: kPadding * 2, right: kDefaultPadding),
+                  child: Row(
+                    children: [
+                      Text('Sanskrit'),
+                      Spacer(),
+                      SvgPicture.asset(
+                          'assets/icons/icon_downsidearrow.svg')
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

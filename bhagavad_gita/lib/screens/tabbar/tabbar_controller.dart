@@ -74,21 +74,21 @@ class _TabScreenControllerState extends State<TabScreenController>
                       child: SvgPicture.asset(tabController.index == 0
                           ? 'assets/icons/icn_home_selected.svg'
                           : 'assets/icons/icn_home.svg')),
-                  SizedBox(
-                    height: kDefaultPadding * 0.2,
+                  SizedBox(height: kDefaultPadding * 0.2),
+                  Text(
+                    StringConstant.strTabbarTitleHome,
+                    style: tabController.index == 0
+                        ? TextStyle(
+                            fontSize: 10,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 10,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
                   ),
-                  Text(StringConstant.strTabbarTitleHome,
-                      style: tabController.index == 0
-                          ? TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            )
-                          : TextStyle(
-                              fontSize: 10,
-                              color: textLightGreyColor,
-                              fontWeight: FontWeight.w500,
-                            )),
                 ],
               ),
             ),
@@ -101,21 +101,21 @@ class _TabScreenControllerState extends State<TabScreenController>
                       child: SvgPicture.asset(tabController.index == 1
                           ? 'assets/icons/icn_saved_selected.svg'
                           : 'assets/icons/icn_saved.svg')),
-                  SizedBox(
-                    height: kDefaultPadding * 0.2,
+                  SizedBox(height: kDefaultPadding * 0.2),
+                  Text(
+                    StringConstant.strTabbarTitleSaved,
+                    style: tabController.index == 1
+                        ? TextStyle(
+                            fontSize: 10,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 10,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
                   ),
-                  Text(StringConstant.strTabbarTitleSaved,
-                      style: tabController.index == 1
-                          ? TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            )
-                          : TextStyle(
-                              fontSize: 10,
-                              color: textLightGreyColor,
-                              fontWeight: FontWeight.w500,
-                            )),
                 ],
               ),
             ),
@@ -128,21 +128,21 @@ class _TabScreenControllerState extends State<TabScreenController>
                       child: SvgPicture.asset(tabController.index == 2
                           ? 'assets/icons/icon_quotes_selected.svg'
                           : 'assets/icons/icon_quotes.svg')),
-                  SizedBox(
-                    height: kDefaultPadding * 0.2,
+                  SizedBox(height: kDefaultPadding * 0.2),
+                  Text(
+                    StringConstant.strTabbarTitleQuotes,
+                    style: tabController.index == 2
+                        ? TextStyle(
+                            fontSize: 10,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 10,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
                   ),
-                  Text(StringConstant.strTabbarTitleQuotes,
-                      style: tabController.index == 2
-                          ? TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            )
-                          : TextStyle(
-                              fontSize: 10,
-                              color: textLightGreyColor,
-                              fontWeight: FontWeight.w500,
-                            )),
                 ],
               ),
             ),
@@ -150,30 +150,31 @@ class _TabScreenControllerState extends State<TabScreenController>
               child: Column(
                 children: [
                   Container(
-                      width: 30,
-                      height: 30,
-                      child: Padding(
-                        padding: EdgeInsets.all(
-                            tabController.index == 3 ? 0.0 : 2.0),
-                        child: SvgPicture.asset(tabController.index == 3
-                            ? 'assets/icons/icn_about_selected.svg'
-                            : 'assets/icons/icn_about.svg'),
-                      )),
-                  SizedBox(
-                    height: kDefaultPadding * 0.2,
+                    width: 30,
+                    height: 30,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.all(tabController.index == 3 ? 0.0 : 2.0),
+                      child: SvgPicture.asset(tabController.index == 3
+                          ? 'assets/icons/icn_about_selected.svg'
+                          : 'assets/icons/icn_about.svg'),
+                    ),
                   ),
-                  Text(StringConstant.strTabbarTitleAbout,
-                      style: tabController.index == 3
-                          ? TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            )
-                          : TextStyle(
-                              fontSize: 10,
-                              color: textLightGreyColor,
-                              fontWeight: FontWeight.w500,
-                            )),
+                  SizedBox(height: kDefaultPadding * 0.2),
+                  Text(
+                    StringConstant.strTabbarTitleAbout,
+                    style: tabController.index == 3
+                        ? TextStyle(
+                            fontSize: 10,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 10,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                  ),
                 ],
               ),
             ),

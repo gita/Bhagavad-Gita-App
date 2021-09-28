@@ -80,16 +80,16 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
           ),
           actions: [
             Spacer(),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Aa",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 18, fontWeight: FontWeight.w100),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {},
+            //   child: Text(
+            //     StringConstant.strAa,
+            //     style: Theme.of(context)
+            //         .textTheme
+            //         .headline1!
+            //         .copyWith(fontSize: 18, fontWeight: FontWeight.w100),
+            //   ),
+            // ),
             InkWell(
               onTap: () {
                 navigationService.pushNamed(r_ChapterTableView);
@@ -149,7 +149,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                             SizedBox(height: kDefaultPadding * 2),
                             Center(
                               child: Text(
-                                "CHAPTER  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
+                                "${StringConstant.strCHAPTER}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!

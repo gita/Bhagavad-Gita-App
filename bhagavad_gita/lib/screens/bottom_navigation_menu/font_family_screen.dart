@@ -1,4 +1,5 @@
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _InterClickState extends State<InterClick> {
                 ),
                 Spacer(),
                 Text(
-                  "Font Family",
+                  StringConstant.strFontFamily,
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                       color: Colors.black,
                       fontSize: 14,

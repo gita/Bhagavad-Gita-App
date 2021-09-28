@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -48,7 +49,9 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
           ),
         ),
         title: Text(
-          verseNotes.verseNote == "" ? 'Add Note' : 'Edit Note',
+          verseNotes.verseNote == ""
+              ? StringConstant.strAddNote
+              : StringConstant.strEditNote,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         actions: [
@@ -68,7 +71,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                           borderRadius: BorderRadius.circular(8.0)),
                       child: Center(
                         child: Text(
-                          "Save",
+                          StringConstant.strSave,
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -90,7 +93,9 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
           child: TextFormField(
             initialValue: verseNotes.verseNote,
             maxLines: 10,
-            decoration: InputDecoration(border: InputBorder.none, hintText: "Please add your note here..."),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: StringConstant.strPleaseAddYourNote),
             onChanged: (String value) {
               setState(() {
                 strNotes = value;

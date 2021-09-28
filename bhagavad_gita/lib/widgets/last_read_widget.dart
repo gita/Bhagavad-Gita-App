@@ -33,7 +33,7 @@ class LastReadWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "Verse ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
+                "${StringConstant.strVerse}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -59,7 +59,7 @@ class LastReadWidget extends StatelessWidget {
               onButtonTap();
             },
             child: Text(
-              'CONTINUE READING',
+              StringConstant.strContinueReading,
               style: Theme.of(context)
                   .textTheme
                   .headline2!

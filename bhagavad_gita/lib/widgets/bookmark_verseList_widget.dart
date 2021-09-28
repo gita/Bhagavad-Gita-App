@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -57,7 +58,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              'Verse ${listLastReadVerse[index].gitaVerseById!.chapterNumber}.${listLastReadVerse[index].gitaVerseById!.verseNumber}',
+                              '${StringConstant.strVerse} ${listLastReadVerse[index].gitaVerseById!.chapterNumber}.${listLastReadVerse[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
@@ -138,7 +139,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                           onClickDelete!();
                         },
                         child: Text(
-                          'Delete',
+                          StringConstant.strDelete,
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -158,7 +159,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                           onClickGoToVerse!();
                         },
                         child: Text(
-                          'Go to verse',
+                          StringConstant.strGoToVrese,
                           style: Theme.of(context)
                               .textTheme
                               .headline2!

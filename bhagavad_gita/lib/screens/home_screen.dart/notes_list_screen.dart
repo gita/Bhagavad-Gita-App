@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -52,7 +53,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              'Verse ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
+                              '${StringConstant.strVerse} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
@@ -135,10 +136,9 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
       Function()? onClickGoToVerse,
       Function()? onClickGoToEdit}) {
     return showGeneralDialog(
-      barrierLabel: "Label",
+      barrierLabel: "",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.7),
-      // transitionDuration: Duration(milliseconds: 700),
       context: context,
       pageBuilder: (context, anim1, anim2) {
         return Align(
@@ -165,7 +165,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickDelete!();
                           },
                           child: Text(
-                            'Delete',
+                            StringConstant.strDelete,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
@@ -189,7 +189,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToEdit!();
                           },
                           child: Text(
-                            'Edit',
+                            StringConstant.strEdit,
                             textAlign: TextAlign.start,
                             style: Theme.of(context)
                                 .textTheme
@@ -210,7 +210,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToVerse!();
                           },
                           child: Text(
-                            'Go to verse',
+                            StringConstant.strGoToVrese,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

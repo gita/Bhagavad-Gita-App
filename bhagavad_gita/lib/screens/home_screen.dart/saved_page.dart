@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/notes_list_screen.dart';
 import 'package:bhagavad_gita/widgets/bookmark_verseList_widget.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _SavedPageState extends State<SavedPage> {
                         });
                       },
                       child: Text(
-                        'Bookmarks',
+                        StringConstant.strBookMark,
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 16,
                               color: isPageIndex == 0
@@ -77,7 +78,7 @@ class _SavedPageState extends State<SavedPage> {
                         });
                       },
                       child: Text(
-                        'Notes',
+                        StringConstant.strNotes,
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 16,
                               color: isPageIndex == 1

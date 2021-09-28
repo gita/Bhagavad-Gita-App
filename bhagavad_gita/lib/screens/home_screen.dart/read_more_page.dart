@@ -3,6 +3,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -96,7 +97,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               });
             },
             child: Text(
-              "Aa",
+              StringConstant.strAa,
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -212,7 +213,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    "TRANSLATION",
+                                    StringConstant.strTRANSLATION,
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
@@ -245,7 +246,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    "COMMENTARY",
+                                    StringConstant.strCOMMENTRY,
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
@@ -444,112 +445,3 @@ class _ContinueReadingState extends State<ContinueReading> {
   }
 }
 
-/*
-
-return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: kDefaultPadding,
-                      ),
-                      Text(
-                        "${verseDetailData.gitaVerseById!.chapterNumber ?? ''}",
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      SizedBox(
-                        height: kDefaultPadding,
-                      ),
-                      Text(
-                        "धृतराष्ट्र उवाच |\nधर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः |\nमामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ||1||",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: orangeColor, height: lineSpacing * 1.5),
-                      ),
-                      SizedBox(
-                        height: kPadding * 3,
-                      ),
-                      Text(
-                        "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(height: lineSpacing),
-                      ),
-                      SizedBox(
-                        height: kDefaultPadding * 2,
-                      ),
-                      Text(
-                        "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(height: lineSpacing),
-                      ),
-                      SizedBox(height: kDefaultPadding * 2),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                              "assets/icons/icon_left_rtansection.svg"),
-                          SizedBox(width: kDefaultPadding),
-                          Text(
-                            "TRANSLATION",
-                            style:
-                                Theme.of(context).textTheme.subtitle1!.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          SizedBox(width: kDefaultPadding),
-                          SvgPicture.asset(
-                              "assets/icons/icon_right_translation.svg")
-                        ],
-                      ),
-                      SizedBox(height: kDefaultPadding),
-                      Text(
-                        "Dhritarashtra said: O Sanjay, after gathering on the holy field of Kurukshetra, and desiring to fight, what did my sons and the sons of Pandu do?  ",
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(height: lineSpacing),
-                      ),
-                      SizedBox(
-                        height: kDefaultPadding,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                              "assets/icons/icon_left_rtansection.svg"),
-                          SizedBox(width: kDefaultPadding),
-                          Text(
-                            "COMMENTARY",
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(width: kDefaultPadding),
-                          SvgPicture.asset(
-                              "assets/icons/icon_right_translation.svg")
-                        ],
-                      ),
-                      SizedBox(
-                        height: kDefaultPadding,
-                      ),
-                      Text(
-                        "The two armies had gathered on the battlefield of Kurukshetra, well prepared to fight a war that was inevitable. Still, in this verse, King Dhritarashtra asked Sanjay, what his sons and his brother Pandu’s sons were doing on the battlefield? It was apparent that they would fight, then why did he ask such a question?The blind King Dhritarashtra’s fondness for his own sons had clouded his spiritual wisdom and deviated him from the path of virtue. He had usurped the kingdom of Hastinapur from the rightful heirs; the Pandavas, sons of his brother Pandu. Feeling guilty of the injustice he had done towards his nephews, his conscience worried him about the outcome of this battle.The words dharma kṣhetre, the land of dharma (virtuous conduct) used by Dhritarashtra depict the dilemma he was experiencing.  Kurukshetra is described as kurukṣhetraṁ deva yajanam in the Shatapath Brahman, the Vedic textbook detailing rituals. It means “Kurukshetra is the sacrificial arena of the celestial gods.” Hence, it was regarded as the sacred land that nourished dharma. Dhritarashtra feared that the holy land might influence the minds of his sons. If it aroused the faculty of discrimination, they might turn away from killing their cousins and negotiate a truce. A peaceful settlement meant that the Pandavas would continue being a hindrance for them. He felt great displeasure at these possibilities, instead preferred that this war transpires. He was uncertain of the consequences of the war, yet desired to determine the fate of his sons. Therefore, he asked Sanjay about the activities of the two armies on the battleground.",
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(height: lineSpacing),
-                      )
-                    ],
-                  ),
-                );
-
-*/

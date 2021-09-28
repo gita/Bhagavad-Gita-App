@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -217,17 +216,4 @@ class SharedPref {
     }
     return [];
   }
-
-  ////// Edit Note....
-  /*static Future<bool?> editNotesFromAddNotes() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? temp = sharedPreferences.getString(PreferenceConstant.verseNotes);
-    if (temp != null) {
-      var temp1 = jsonDecode(temp) as List;
-      var tempNoteArrayList = temp1.map((e) {
-        var temp2 = e as Map<String, dynamic>;
-        return temp2.map((key, value) {});
-      });
-    }
-  }*/
 }

@@ -127,22 +127,9 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                 arguments: allVerseOTheDayResponseModel
                                     .allVerseOfTheDays!.nodes![0].verseOrder
                                     .toString());
-
-                            /*setState(() {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ContinueReading(
-                                    verseID: allVerseOTheDayResponseModel
-                                        .allVerseOfTheDays!.nodes![0].verseOrder
-                                        .toString(),
-                                  ),
-                                ),
-                              );
-                            });*/
                           },
                           child: Text(
-                            'READ MORE',
+                            StringConstant.strReadMore,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

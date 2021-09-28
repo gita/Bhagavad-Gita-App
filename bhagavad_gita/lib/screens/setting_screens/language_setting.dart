@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              'Language',
+              StringConstant.strLanguage,
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -100,7 +101,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'SAVE CHANGE',
+                    StringConstant.strSaveChange,
                     style: TextStyle(
                       fontSize: 14,
                       color: whiteColor,
