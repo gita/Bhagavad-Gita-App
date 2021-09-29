@@ -44,7 +44,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
           Row(
             children: [
               Text(
-                StringConstant.strFontSize,
+                StringConstant.strFontSize(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -52,7 +52,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(width: 175),
               Text(
-                StringConstant.strFontFamily,
+                StringConstant.strFontFamily(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -114,7 +114,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                         ),
                         child: Center(
                           child: Text(
-                            StringConstant.strInter,
+                            StringConstant.strInter(),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!
@@ -133,7 +133,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                StringConstant.strSpacing,
+                StringConstant.strSpacing(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -198,7 +198,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(height: 18),
               Text(
-                StringConstant.strColorMode,
+                StringConstant.strColorMode(),
                 style: Theme.of(context).textTheme.headline2,
               ),
               SizedBox(height: 10),

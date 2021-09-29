@@ -8,6 +8,7 @@ class PreferenceConstant {
   static String lastRead = 'lastRead';
   static String bookMarkVerse = 'bookMarkVerse';
   static String verseNotes = 'verseNotes';
+  static String language = "language";
 }
 
 class SharedPref {
@@ -215,5 +216,21 @@ class SharedPref {
       return tempArrayLsit;
     }
     return [];
+  }
+
+  //// Save language
+  static Future savelanguage(String language) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(
+        PreferenceConstant.language, jsonEncode(language));
+  }
+
+  static Future<String?> getLanguage() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? temp = sharedPreferences.getString(PreferenceConstant.language);
+    if (temp == null) {
+      return "hindi";
+    }
+    return temp;
   }
 }

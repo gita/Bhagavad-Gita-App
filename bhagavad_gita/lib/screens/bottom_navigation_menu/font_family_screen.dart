@@ -45,7 +45,7 @@ class _InterClickState extends State<InterClick> {
                 ),
                 Spacer(),
                 Text(
-                  StringConstant.strFontFamily,
+                  StringConstant.strFontFamily(),
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                       color: Colors.black,
                       fontSize: 14,

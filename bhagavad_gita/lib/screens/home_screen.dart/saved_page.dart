@@ -47,7 +47,7 @@ class _SavedPageState extends State<SavedPage> {
                         });
                       },
                       child: Text(
-                        StringConstant.strBookMark,
+                        StringConstant.strBookMark(),
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 16,
                               color: isPageIndex == 0
@@ -78,7 +78,7 @@ class _SavedPageState extends State<SavedPage> {
                         });
                       },
                       child: Text(
-                        StringConstant.strNotes,
+                        StringConstant.strNotes(),
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 16,
                               color: isPageIndex == 1

@@ -108,7 +108,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          StringConstant.strVerseOfTheDay,
+                          StringConstant.strVerseOfTheDay(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -129,7 +129,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                     .toString());
                           },
                           child: Text(
-                            StringConstant.strReadMore,
+                            StringConstant.strReadMore(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

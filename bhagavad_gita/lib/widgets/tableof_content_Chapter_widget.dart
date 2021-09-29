@@ -29,7 +29,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                "${StringConstant.strCHAPTER} ${chapter.chapterNumber ?? 0}",
+                "${StringConstant.strCHAPTER()} ${chapter.chapterNumber ?? 0}",
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
@@ -62,7 +62,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
                     ),
                     SizedBox(width: kPadding),
                     Text(
-                      "${chapter.versesCount ?? 0} ${StringConstant.strVerse}",
+                      "${chapter.versesCount ?? 0} ${StringConstant.strVerse()}",
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1!

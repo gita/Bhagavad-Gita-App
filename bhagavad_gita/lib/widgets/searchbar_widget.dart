@@ -32,7 +32,7 @@ class SearchBarWidget extends StatelessWidget {
                 Icons.search,
                 color: blackColor,
               ),
-              hintText: StringConstant.strSearchLanguage,
+              hintText: StringConstant.strSearchLanguage(),
               hintStyle: Theme.of(context)
                   .textTheme
                   .subtitle1!

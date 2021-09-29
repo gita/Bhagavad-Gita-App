@@ -149,7 +149,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                             SizedBox(height: kDefaultPadding * 2),
                             Center(
                               child: Text(
-                                "${StringConstant.strCHAPTER}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
+                                "${StringConstant.strCHAPTER()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -189,8 +189,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   },
                                   child: Text(
                                     isShowMoreChapterDetail
-                                        ? StringConstant.strShowLess
-                                        : StringConstant.strShowMore,
+                                        ? StringConstant.strShowLess()
+                                        : StringConstant.strShowMore(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!

@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:numberpicker/numberpicker.dart';
 import '../../locator.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _SettingScreenState extends State<SettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              StringConstant.strSetting,
+              StringConstant.strSetting(),
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -72,7 +73,7 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strLANGUAGE,
+                  StringConstant.strLANGUAGE(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: settingColor,
                         fontSize: 12,
@@ -117,7 +118,7 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strAUTHOR,
+                  StringConstant.strAUTHOR(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                       color: settingColor, fontSize: 12, letterSpacing: 1),
                 ),
@@ -130,7 +131,7 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Row(
               children: [
                 Text(
-                  StringConstant.strHideShowLanguage,
+                  StringConstant.strHideShowLanguage(),
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1!
@@ -147,7 +148,7 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVarseTranslationLanguage,
+              StringConstant.strVarseTranslationLanguage(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -167,7 +168,7 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVerseTanslationSource,
+              StringConstant.strVerseTanslationSource(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -211,7 +212,7 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVerseCommentrySource,
+              StringConstant.strVerseCommentrySource(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -250,7 +251,7 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strVERSEOFTHEDAY,
+                  StringConstant.strVerseOfTheDay(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: settingColor,
                         fontSize: 12,
@@ -261,6 +262,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           SwitchListTile(
+            activeColor: orangeColor,
             value: _switchValues[3],
             onChanged: (value) {
               setState(() {
@@ -269,7 +271,7 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strNotification,
+              StringConstant.strNotification(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -277,24 +279,29 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           AnimatedContainer(
-            height: isNotificationOn ? 70 : 0,
+            height: isNotificationOn ? 60 : 0,
             duration: Duration(milliseconds: 300),
-            child: Padding(
-              padding: EdgeInsets.all(kPadding * 1.5),
+            child: InkWell(
+              onTap: () {
+                print('timer');
+                setNotificationTimer(context);
+              },
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 0.5, color: textLightGreyColor),
-                ),
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: kPadding * 2, right: kDefaultPadding),
+                  padding: EdgeInsets.symmetric(horizontal: kPadding * 1.5),
                   child: Row(
                     children: [
-                      Text('Sanskrit'),
+                      Text(
+                        'Timer',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(color: greyScalBodyColor),
+                      ),
                       Spacer(),
-                      SvgPicture.asset(
-                          'assets/icons/icon_downsidearrow.svg')
+                      Text('13:00 PM'),
+                      SizedBox(width: kPadding),
+                      SvgPicture.asset('assets/icons/icon_downsidearrow.svg')
                     ],
                   ),
                 ),
@@ -303,6 +310,39 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  setNotificationTimer(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: Color(0XFF737373),
+          height: 350,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              children: [
+                NumberPicker(
+                  value: 10,
+                  minValue: 0,
+                  maxValue: 24,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -53,7 +53,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              '${StringConstant.strVerse} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
+                              '${StringConstant.strVerse()} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
@@ -165,7 +165,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickDelete!();
                           },
                           child: Text(
-                            StringConstant.strDelete,
+                            StringConstant.strDelete(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
@@ -189,7 +189,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToEdit!();
                           },
                           child: Text(
-                            StringConstant.strEdit,
+                            StringConstant.strEdit(),
                             textAlign: TextAlign.start,
                             style: Theme.of(context)
                                 .textTheme
@@ -210,7 +210,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToVerse!();
                           },
                           child: Text(
-                            StringConstant.strGoToVrese,
+                            StringConstant.strGoToVrese(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

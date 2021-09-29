@@ -41,7 +41,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              StringConstant.strLanguage,
+              StringConstant.strLanguage(),
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -101,7 +101,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    StringConstant.strSaveChange,
+                    StringConstant.strSaveChange(),
                     style: TextStyle(
                       fontSize: 14,
                       color: whiteColor,

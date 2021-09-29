@@ -58,7 +58,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              '${StringConstant.strVerse} ${listLastReadVerse[index].gitaVerseById!.chapterNumber}.${listLastReadVerse[index].gitaVerseById!.verseNumber}',
+                              '${StringConstant.strVerse()} ${listLastReadVerse[index].gitaVerseById!.chapterNumber}.${listLastReadVerse[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
@@ -139,7 +139,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                           onClickDelete!();
                         },
                         child: Text(
-                          StringConstant.strDelete,
+                          StringConstant.strDelete(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -159,7 +159,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                           onClickGoToVerse!();
                         },
                         child: Text(
-                          StringConstant.strGoToVrese,
+                          StringConstant.strGoToVrese(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!

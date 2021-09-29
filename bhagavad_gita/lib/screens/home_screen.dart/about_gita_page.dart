@@ -49,14 +49,14 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          StringConstant.strAbout,
+                          StringConstant.strAbout(),
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(fontSize: 28, color: whiteColor),
                         ),
                         Text(
-                          StringConstant.strGita,
+                          StringConstant.strGita(),
                           textAlign: TextAlign.justify,
                           style: Theme.of(context)
                               .textTheme
@@ -89,7 +89,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       right: 0,
                       child: Container(
                         child: Text(
-                          StringConstant.strUnlikeModernWriting,
+                          StringConstant.strUnlikeModernWriting(),
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
@@ -111,7 +111,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: StringConstant.strBhagvadGita,
+                          text: StringConstant.strBhagvadGita(),
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
@@ -119,7 +119,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                         ),
                         TextSpan(
                             text:
-                                StringConstant.strGitaStory,
+                                StringConstant.strGitaStory(),
                             style: Theme.of(context).textTheme.subtitle1)
                       ],
                     ),
@@ -132,7 +132,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        StringConstant.strStory,
+                        StringConstant.strStory(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -143,7 +143,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                      StringConstant.strGitaStoryDetail,
+                      StringConstant.strGitaStoryDetail(),
                       style: Theme.of(context).textTheme.subtitle1),
                   SizedBox(height: kDefaultPadding * 1.5),
                   Row(
@@ -153,7 +153,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        StringConstant.strConclusion,
+                        StringConstant.strConclusion(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -164,7 +164,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                    StringConstant.strConclusionDetail,
+                    StringConstant.strConclusionDetail(),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: kDefaultPadding),

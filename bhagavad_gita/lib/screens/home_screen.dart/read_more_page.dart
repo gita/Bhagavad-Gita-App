@@ -213,7 +213,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    StringConstant.strTRANSLATION,
+                                    StringConstant.strTRANSLATION(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
@@ -246,7 +246,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    StringConstant.strCOMMENTRY,
+                                    StringConstant.strCOMMENTRY(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!

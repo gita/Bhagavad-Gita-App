@@ -88,7 +88,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                StringConstant.strGetStarted,
+                                StringConstant.strGetStarted(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: whiteColor,
@@ -108,7 +108,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 });
                               },
                               child: Text(
-                                StringConstant.strSkip,
+                                StringConstant.strSkip(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -126,7 +126,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    StringConstant.srtNext,
+                                    StringConstant.srtNext(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!
@@ -183,7 +183,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         height: kPadding * 3,
                       ),
                       Text(
-                        StringConstant.strChooseLanguage,
+                        StringConstant.strChooseLanguage(),
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -194,7 +194,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         height: kPadding * 1,
                       ),
                       Text(
-                        StringConstant.strDontWorry,
+                        StringConstant.strDontWorry(),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1!
@@ -204,27 +204,27 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         height: kPadding * 3.5,
                       ),
                       SearchBarWidget(),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 20,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text("English"),
-                              leading: Radio(
-                                value: 1,
-                                groupValue: val,
-                                onChanged: (value) {
-                                  setState(() {
-                                    val = lastPage;
-                                  });
-                                },
-                                activeColor: Colors.green,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: ListView.builder(
+                      //     shrinkWrap: true,
+                      //     itemCount: 20,
+                      //     itemBuilder: (context, index) {
+                      //       return ListTile(
+                      //         title: Text("English"),
+                      //         leading: Radio(
+                      //           value: 20,
+                      //           groupValue: val,
+                      //           onChanged: (value) {
+                      //             setState(() {
+                      //               val = lastPage;
+                      //             });
+                      //           },
+                      //           activeColor: orangeColor,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       Padding(
                         padding: EdgeInsets.all(30),
                         child: InkWell(
@@ -240,7 +240,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                StringConstant.strOkLetsGo,
+                                StringConstant.strOkLetsGo(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: whiteColor,
@@ -274,12 +274,12 @@ class SimplifiedPageOne extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_simplified_one.svg'),
         SizedBox(height: kPadding * 5),
         Text(
-          StringConstant.strBhagvadGitaSimplified,
+          StringConstant.strBhagvadGitaSimplified(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding * 2),
         Text(
-          StringConstant.strReadTheGita,
+          StringConstant.strReadTheGita(),
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
               ),
@@ -298,13 +298,13 @@ class BeautifulDesignPageTwo extends StatelessWidget {
       children: [
         SvgPicture.asset('assets/icons/img_beautiful_two.svg'),
         Text(
-          StringConstant.strBeautifulDesign,
+          StringConstant.strBeautifulDesign(),
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strModernAndInteractive,
+          StringConstant.strModernAndInteractive(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
@@ -326,12 +326,12 @@ class ExploreEachVerePageThree extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_exploreverse_three.svg'),
         SizedBox(height: kPadding * 3),
         Text(
-          StringConstant.strExploreEachVerse,
+          StringConstant.strExploreEachVerse(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strDiveDeepEachVerse,
+          StringConstant.strDiveDeepEachVerse(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
@@ -358,12 +358,12 @@ class MakeItOwnPageFour extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_makeitowe_forth.svg'),
         SizedBox(height: kPadding * 3),
         Text(
-          StringConstant.strMakeItYourOwn,
+          StringConstant.strMakeItYourOwn(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strShareMemories,
+          StringConstant.strShareMemories(),
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme

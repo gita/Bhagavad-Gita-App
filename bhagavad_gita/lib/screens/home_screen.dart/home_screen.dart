@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
@@ -48,6 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
         lastReadVerse = tempLastRead;
       });
     });
+
+
+    print("selected language : $langauge");
   }
 
   @override
@@ -62,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(width: kDefaultPadding),
           Center(
             child: Text(
-              StringConstant.strAppTitle,
+              StringConstant.strAppTitle(),
               style: AppBarTheme.of(context).textTheme!.headline1,
             ),
           ),
@@ -101,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Text(
-                        StringConstant.strChapters,
+                        StringConstant.strChapters(),
                         style: Theme.of(context)
                             .textTheme
                             .headline1!

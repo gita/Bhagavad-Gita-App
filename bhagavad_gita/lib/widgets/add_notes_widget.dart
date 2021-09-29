@@ -50,8 +50,8 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
         ),
         title: Text(
           verseNotes.verseNote == ""
-              ? StringConstant.strAddNote
-              : StringConstant.strEditNote,
+              ? StringConstant.strAddNote()
+              : StringConstant.strEditNote(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         actions: [
@@ -71,7 +71,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                           borderRadius: BorderRadius.circular(8.0)),
                       child: Center(
                         child: Text(
-                          StringConstant.strSave,
+                          StringConstant.strSave(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -95,7 +95,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
             maxLines: 10,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: StringConstant.strPleaseAddYourNote),
+                hintText: StringConstant.strPleaseAddYourNote()),
             onChanged: (String value) {
               setState(() {
                 strNotes = value;

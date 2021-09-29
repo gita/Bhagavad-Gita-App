@@ -75,7 +75,7 @@ class ChapterListTileWidget extends StatelessWidget {
                             width: kDefaultPadding * 0.5,
                           ),
                           Text(
-                            '${chapter.versesCount ?? ""} ${StringConstant.strVerse}',
+                            '${chapter.versesCount ?? ""} ${StringConstant.strVerse()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!

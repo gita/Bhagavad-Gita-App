@@ -25,7 +25,7 @@ class LastReadWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                StringConstant.strLastRead,
+                StringConstant.strLastRead(),
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
@@ -33,7 +33,7 @@ class LastReadWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "${StringConstant.strVerse}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
+                "${StringConstant.strVerse()}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -59,7 +59,7 @@ class LastReadWidget extends StatelessWidget {
               onButtonTap();
             },
             child: Text(
-              StringConstant.strContinueReading,
+              StringConstant.strContinueReading(),
               style: Theme.of(context)
                   .textTheme
                   .headline2!

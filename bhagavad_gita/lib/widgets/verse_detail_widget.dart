@@ -41,7 +41,7 @@ class VerseDetailWidget extends StatelessWidget {
               ),
               SizedBox(width: kPadding),
               Text(
-                "${StringConstant.strVerse} ${verse.verseNumber}",
+                "${StringConstant.strVerse()} ${verse.verseNumber}",
                 style: Theme.of(context).textTheme.headline2,
               ),
               Spacer(),
