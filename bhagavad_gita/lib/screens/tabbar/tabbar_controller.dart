@@ -1,11 +1,13 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/about_gita_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class TabScreenController extends StatefulWidget {
   const TabScreenController({Key? key}) : super(key: key);
@@ -18,17 +20,22 @@ class _TabScreenControllerState extends State<TabScreenController>
     with SingleTickerProviderStateMixin {
   int seletecTab = 0;
   late TabController tabController;
+  final HttpLink httpLink = HttpLink(strGitaHttpLink);
+  late ValueNotifier<GraphQLClient> client;
 
   @override
   void initState() {
     super.initState();
+    client = ValueNotifier<GraphQLClient>(
+        GraphQLClient(link: httpLink, cache: GraphQLCache()));
     tabController = TabController(length: 4, vsync: this);
     tabController.index = 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return GraphQLProvider(
+      child: DefaultTabController(
       length: 4,
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
@@ -45,7 +52,27 @@ class _TabScreenControllerState extends State<TabScreenController>
           ],
         ),
       ),
+    ),
+      client: client,
     );
+    /*return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        bottomNavigationBar: BottomAppBar(
+          child: menu(),
+        ),
+        body: TabBarView(
+          controller: tabController,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            HomeScreen(),
+            SavedPage(),
+            QuotesScreen(),
+            AboutGitaScreen()
+          ],
+        ),
+      ),
+    );*/
   }
 
   Widget menu() {
@@ -75,7 +102,9 @@ class _TabScreenControllerState extends State<TabScreenController>
                         : 'assets/icons/icn_home.svg'),
                   ),
                   Text(
-                    StringConstant.strTabbarTitleHome(),
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_Home')
+                        .toString(),
                     style: tabController.index == 0
                         ? TextStyle(
                             fontSize: 10,
@@ -101,7 +130,9 @@ class _TabScreenControllerState extends State<TabScreenController>
                           ? 'assets/icons/icn_saved_selected.svg'
                           : 'assets/icons/icn_saved.svg')),
                   Text(
-                    StringConstant.strTabbarTitleSaved(),
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_Saved')
+                        .toString(),
                     style: tabController.index == 1
                         ? TextStyle(
                             fontSize: 10,
@@ -127,7 +158,9 @@ class _TabScreenControllerState extends State<TabScreenController>
                           ? 'assets/icons/icon_quotes_selected.svg'
                           : 'assets/icons/icon_quotes.svg')),
                   Text(
-                    StringConstant.strTabbarTitleQuotes(),
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_Quotes')
+                        .toString(),
                     style: tabController.index == 2
                         ? TextStyle(
                             fontSize: 10,
@@ -158,7 +191,9 @@ class _TabScreenControllerState extends State<TabScreenController>
                     ),
                   ),
                   Text(
-                    StringConstant.strTabbarTitleAbout(),
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_About')
+                        .toString(),
                     style: tabController.index == 3
                         ? TextStyle(
                             fontSize: 10,

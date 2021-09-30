@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -41,7 +41,7 @@ class VerseDetailWidget extends StatelessWidget {
               ),
               SizedBox(width: kPadding),
               Text(
-                "${StringConstant.strVerse()} ${verse.verseNumber}",
+                "${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${verse.verseNumber}",
                 style: Theme.of(context).textTheme.headline2,
               ),
               Spacer(),

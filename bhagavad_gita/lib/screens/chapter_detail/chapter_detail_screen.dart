@@ -1,7 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -142,14 +142,15 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                         Map<String, dynamic>? res = result.data;
                         ChapterDetailData chapterDetailData =
                             ChapterDetailData.fromJson(res!);
-                        print("Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
+                        print(
+                            "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
                         print("API Response : $res");
                         return Column(
                           children: [
                             SizedBox(height: kDefaultPadding * 2),
                             Center(
                               child: Text(
-                                "${StringConstant.strCHAPTER()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
+                                "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -189,8 +190,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   },
                                   child: Text(
                                     isShowMoreChapterDetail
-                                        ? StringConstant.strShowLess()
-                                        : StringConstant.strShowMore(),
+                                        ? DemoLocalization.of(context)!.getTranslatedValue('showLess').toString()
+                                        : DemoLocalization.of(context)!.getTranslatedValue('showMore').toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!

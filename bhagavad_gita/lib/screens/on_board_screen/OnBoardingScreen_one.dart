@@ -1,11 +1,13 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/main.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/indicatorWidget.dart';
-import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +27,8 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
   int lastPage = 0;
   bool languagePopUp = false;
 
-  int val = -1;
+  int val = 0;
+  List<String> listLang = ["English", "Hindi"];
 
   var allPages = [
     SimplifiedPageOne(),
@@ -39,6 +42,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
   @override
   void initState() {
     super.initState();
+    val = listLang.indexWhere((element) =>
+        element.toLowerCase() ==
+        langauge.toLowerCase().replaceAll("\"", "replace"));
   }
 
   void _pageChange(int index) {
@@ -88,7 +94,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                StringConstant.strGetStarted(),
+                                DemoLocalization.of(context)!
+                                    .getTranslatedValue('getStarted')
+                                    .toString(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: whiteColor,
@@ -105,10 +113,13 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 setState(() {
                                   _pageChange(pagerIndex + 2);
                                   pagerIndex = pagerIndex - 1;
+                                  
                                 });
                               },
                               child: Text(
-                                StringConstant.strSkip(),
+                                DemoLocalization.of(context)!
+                                    .getTranslatedValue('skip')
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -126,7 +137,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    StringConstant.srtNext(),
+                                    DemoLocalization.of(context)!
+                                        .getTranslatedValue('next')
+                                        .toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!
@@ -159,7 +172,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
         return AlertDialog(
           actions: [
             Container(
-              height: MediaQuery.of(context).size.height / 100 * 80,
+              height: 480, //MediaQuery.of(context).size.height / 100 * 80,
               width: 1000,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(15)),
@@ -183,7 +196,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         height: kPadding * 3,
                       ),
                       Text(
-                        StringConstant.strChooseLanguage(),
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('chooseLanguage')
+                            .toString(),
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -194,7 +209,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         height: kPadding * 1,
                       ),
                       Text(
-                        StringConstant.strDontWorry(),
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('dontWorry')
+                            .toString(),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1!
@@ -203,33 +220,36 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                       SizedBox(
                         height: kPadding * 3.5,
                       ),
-                      SearchBarWidget(),
-                      // Expanded(
-                      //   child: ListView.builder(
-                      //     shrinkWrap: true,
-                      //     itemCount: 20,
-                      //     itemBuilder: (context, index) {
-                      //       return ListTile(
-                      //         title: Text("English"),
-                      //         leading: Radio(
-                      //           value: 20,
-                      //           groupValue: val,
-                      //           onChanged: (value) {
-                      //             setState(() {
-                      //               val = lastPage;
-                      //             });
-                      //           },
-                      //           activeColor: orangeColor,
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
+                      //SearchBarWidget(),
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            for (int i = 0; i < listLang.length; i++)
+                              ListTile(
+                                title: Text(listLang[i]),
+                                leading: Radio(
+                                  value: i,
+                                  groupValue: val,
+                                  onChanged: (int? value) {
+                                    print("Valye : $value");
+                                    setState(() {
+                                      val = value ?? 0;
+                                    });
+                                    _changeLanguage(listLang[val]);
+                                  },
+                                  activeColor: orangeColor,
+                                ),
+                              ),
+                          ],
+                        ),
+                      )),
                       Padding(
                         padding: EdgeInsets.all(30),
                         child: InkWell(
                           onTap: () {
-                            navigationService.pushNamed(r_Tabbar);
+                            SharedPref.saveSkipOnboardScreen();
+                            navigationService.pushNamedAndRemoveUntil(r_Tabbar);
                           },
                           child: Container(
                             height: kPadding * 5,
@@ -240,7 +260,9 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                StringConstant.strOkLetsGo(),
+                                DemoLocalization.of(context)!
+                                    .getTranslatedValue('okLetsGo')
+                                    .toString(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: whiteColor,
@@ -261,6 +283,20 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
       },
     );
   }
+
+  void _changeLanguage(String strlang) {
+    SharedPref.savelanguage(strlang.toLowerCase());
+    langauge = strlang.toLowerCase();
+    Locale _temp;
+    switch (strlang.toLowerCase()) {
+      case 'english':
+        _temp = Locale('en', 'US');
+        break;
+      default:
+        _temp = Locale('hi', 'IN');
+    }
+    MyApp.setLocales(context, _temp);
+  }
 }
 
 class SimplifiedPageOne extends StatelessWidget {
@@ -274,12 +310,16 @@ class SimplifiedPageOne extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_simplified_one.svg'),
         SizedBox(height: kPadding * 5),
         Text(
-          StringConstant.strBhagvadGitaSimplified(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('bhagvadGitaSimplified')
+              .toString(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding * 2),
         Text(
-          StringConstant.strReadTheGita(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('readTheGita')
+              .toString(),
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
               ),
@@ -298,13 +338,17 @@ class BeautifulDesignPageTwo extends StatelessWidget {
       children: [
         SvgPicture.asset('assets/icons/img_beautiful_two.svg'),
         Text(
-          StringConstant.strBeautifulDesign(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('beautifulDesign')
+              .toString(),
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strModernAndInteractive(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('modernAndInteractive')
+              .toString(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
@@ -326,12 +370,16 @@ class ExploreEachVerePageThree extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_exploreverse_three.svg'),
         SizedBox(height: kPadding * 3),
         Text(
-          StringConstant.strExploreEachVerse(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('exploreEachVerse')
+              .toString(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strDiveDeepEachVerse(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('divedeepEachVerse')
+              .toString(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: textLightGreyColor,
@@ -358,12 +406,16 @@ class MakeItOwnPageFour extends StatelessWidget {
         SvgPicture.asset('assets/icons/img_makeitowe_forth.svg'),
         SizedBox(height: kPadding * 3),
         Text(
-          StringConstant.strMakeItYourOwn(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('makeItYourOwn')
+              .toString(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
-          StringConstant.strShareMemories(),
+          DemoLocalization.of(context)!
+              .getTranslatedValue('shearMemories')
+              .toString(),
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme

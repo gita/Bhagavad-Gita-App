@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,9 @@ class LastReadWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                StringConstant.strLastRead(),
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('lastRead')
+                    .toString(),
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
@@ -33,7 +35,7 @@ class LastReadWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "${StringConstant.strVerse()}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
+                "${DemoLocalization.of(context)!.getTranslatedValue('VERSE').toString()}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -59,7 +61,9 @@ class LastReadWidget extends StatelessWidget {
               onButtonTap();
             },
             child: Text(
-              StringConstant.strContinueReading(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('continueReading')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline2!

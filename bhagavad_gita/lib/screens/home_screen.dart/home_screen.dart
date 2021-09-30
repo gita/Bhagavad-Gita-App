@@ -2,6 +2,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
@@ -48,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
 
-
     print("selected language : $langauge");
   }
 
@@ -64,7 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(width: kDefaultPadding),
           Center(
             child: Text(
-              StringConstant.strAppTitle(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('bhagvad_gita')
+                  .toString(),
               style: AppBarTheme.of(context).textTheme!.headline1,
             ),
           ),
@@ -89,8 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     lastReadVerse: lastReadVerse!,
                     onButtonTap: () {
                       navigationService.pushNamed(r_ContinueReading,
-                          arguments:
-                              "${lastReadVerse!.verseID ?? 0}");
+                          arguments: "${lastReadVerse!.verseID ?? 0}");
                     },
                   ),
             Padding(
@@ -103,7 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Text(
-                        StringConstant.strChapters(),
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('chapters')
+                            .toString(),
                         style: Theme.of(context)
                             .textTheme
                             .headline1!

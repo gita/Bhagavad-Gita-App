@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -49,14 +49,18 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          StringConstant.strAbout(),
+                          DemoLocalization.of(context)!
+                              .getTranslatedValue('about')
+                              .toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(fontSize: 28, color: whiteColor),
                         ),
                         Text(
-                          StringConstant.strGita(),
+                          DemoLocalization.of(context)!
+                              .getTranslatedValue('gita')
+                              .toString(),
                           textAlign: TextAlign.justify,
                           style: Theme.of(context)
                               .textTheme
@@ -89,7 +93,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                       right: 0,
                       child: Container(
                         child: Text(
-                          StringConstant.strUnlikeModernWriting(),
+                          DemoLocalization.of(context)!
+                              .getTranslatedValue('unlikeModernWriting')
+                              .toString(),
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
@@ -111,15 +117,18 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: StringConstant.strBhagvadGita(),
+                          text: DemoLocalization.of(context)!
+                              .getTranslatedValue('bhagvadgitaAbout')
+                              .toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(fontSize: 16, color: blackColor),
                         ),
                         TextSpan(
-                            text:
-                                StringConstant.strGitaStory(),
+                            text: DemoLocalization.of(context)!
+                                .getTranslatedValue('gitaStory')
+                                .toString(),
                             style: Theme.of(context).textTheme.subtitle1)
                       ],
                     ),
@@ -132,7 +141,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        StringConstant.strStory(),
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('story')
+                            .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -143,7 +154,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                      StringConstant.strGitaStoryDetail(),
+                      DemoLocalization.of(context)!
+                          .getTranslatedValue('gitaStoryDetail')
+                          .toString(),
                       style: Theme.of(context).textTheme.subtitle1),
                   SizedBox(height: kDefaultPadding * 1.5),
                   Row(
@@ -153,7 +166,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                           "assets/icons/icon_left_rtansection.svg"),
                       SizedBox(width: kDefaultPadding),
                       Text(
-                        StringConstant.strConclusion(),
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('conclusion')
+                            .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
@@ -164,7 +179,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
                   ),
                   SizedBox(height: kDefaultPadding),
                   Text(
-                    StringConstant.strConclusionDetail(),
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('conclusionDetail')
+                        .toString(),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: kDefaultPadding),

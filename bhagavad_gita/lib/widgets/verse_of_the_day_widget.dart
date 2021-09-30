@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -108,7 +108,9 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          StringConstant.strVerseOfTheDay(),
+                          DemoLocalization.of(context)!
+                              .getTranslatedValue('verseOfTheDay')
+                              .toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -129,7 +131,9 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                     .toString());
                           },
                           child: Text(
-                            StringConstant.strReadMore(),
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('readMore')
+                                .toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

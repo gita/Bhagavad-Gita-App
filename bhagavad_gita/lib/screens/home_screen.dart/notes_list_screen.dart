@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -53,7 +53,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              '${StringConstant.strVerse()} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
+                              '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
@@ -165,7 +165,9 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickDelete!();
                           },
                           child: Text(
-                            StringConstant.strDelete(),
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('delete')
+                                .toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
@@ -189,7 +191,9 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToEdit!();
                           },
                           child: Text(
-                            StringConstant.strEdit(),
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('edit')
+                                .toString(),
                             textAlign: TextAlign.start,
                             style: Theme.of(context)
                                 .textTheme
@@ -210,7 +214,9 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             onClickGoToVerse!();
                           },
                           child: Text(
-                            StringConstant.strGoToVrese(),
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('goToVerse')
+                                .toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!

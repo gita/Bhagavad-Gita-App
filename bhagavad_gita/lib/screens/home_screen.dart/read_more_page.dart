@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -213,7 +214,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    StringConstant.strTRANSLATION(),
+                                    DemoLocalization.of(context)!
+                                        .getTranslatedValue('translation')
+                                        .toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
@@ -246,7 +249,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       "assets/icons/icon_left_rtansection.svg"),
                                   SizedBox(width: kDefaultPadding),
                                   Text(
-                                    StringConstant.strCOMMENTRY(),
+                                    DemoLocalization.of(context)!
+                                        .getTranslatedValue('commentry')
+                                        .toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle1!
@@ -444,4 +449,3 @@ class _ContinueReadingState extends State<ContinueReading> {
     );
   }
 }
-

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceConstant {
@@ -9,6 +11,7 @@ class PreferenceConstant {
   static String bookMarkVerse = 'bookMarkVerse';
   static String verseNotes = 'verseNotes';
   static String language = "language";
+  static String skipOnboardScreen = "skipOnboardScreen";
 }
 
 class SharedPref {
@@ -101,7 +104,8 @@ class SharedPref {
 
         sharedPreferences.setString(
             PreferenceConstant.bookMarkVerse, jsonEncode(t4));
-      }
+ 
+     }
     }
     return true;
   }
@@ -229,8 +233,35 @@ class SharedPref {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? temp = sharedPreferences.getString(PreferenceConstant.language);
     if (temp == null) {
-      return "hindi";
+      return "english";
     }
     return temp;
+  }
+
+  Locale getLocal() {
+    Locale _temp;
+    switch (langauge) {
+      case 'english':
+        _temp = Locale('en', 'US');
+        break;
+      default:
+        _temp = Locale('hi', 'IN');
+    }
+    return _temp;
+  }
+
+  ///// Save and Check onboarding screen pass or not
+  static saveSkipOnboardScreen() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool(PreferenceConstant.skipOnboardScreen, true);
+  }
+
+  static Future<bool> checkOnBoardScreenIsSkip() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? isSkip = sharedPreferences.getBool(PreferenceConstant.skipOnboardScreen);
+    if (isSkip == null) {
+      return false;
+    }
+    return isSkip;
   }
 }

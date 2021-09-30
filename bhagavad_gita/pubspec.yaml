@@ -19,6 +19,8 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.7
   numberpicker: ^2.1.1
+  flutter_localizations: 
+    sdk: flutter 
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +41,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - lib/lang/en.json
+    - lib/lang/hi.json
 
   # example:
   fonts:

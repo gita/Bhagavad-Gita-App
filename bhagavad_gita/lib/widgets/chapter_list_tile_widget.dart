@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -75,7 +75,7 @@ class ChapterListTileWidget extends StatelessWidget {
                             width: kDefaultPadding * 0.5,
                           ),
                           Text(
-                            '${chapter.versesCount ?? ""} ${StringConstant.strVerse()}',
+                            '${chapter.versesCount ?? ""} ${DemoLocalization.of(context)!.getTranslatedValue('verses').toString()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!

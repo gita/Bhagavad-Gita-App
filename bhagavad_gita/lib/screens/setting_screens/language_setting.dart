@@ -1,7 +1,10 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/main.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,9 +18,10 @@ class LanguageSettingScreen extends StatefulWidget {
 
 class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
   final NavigationService navigationService = locator<NavigationService>();
-  int val = -1;
   int lastPage = 0;
-  int selectedFont = -1;
+  int selectedlanguage = -1;
+
+  List<String> listLang = ["English", "Hindi"];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,9 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              StringConstant.strLanguage(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('Language')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -61,13 +67,13 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: 30,
+                itemCount: listLang.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: InkWell(
                       onTap: () {
                         setState(() {
-                          selectedFont = index;
+                          selectedlanguage = index;
                         });
                       },
                       child: Container(
@@ -75,14 +81,14 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                         child: Row(
                           children: [
                             Text(
-                              "English",
+                              listLang[index],
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    trailing: selectedFont == index
+                    trailing: selectedlanguage == index
                         ? SvgPicture.asset('assets/icons/Icon_true.svg')
                         : Text(''),
                   );
@@ -90,22 +96,33 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
               ),
             ),
             SizedBox(height: kDefaultPadding),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(245, 121, 3, 1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    StringConstant.strSaveChange(),
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: whiteColor,
-                      fontWeight: FontWeight.w400,
+            InkWell(
+              onTap: () {
+                if (selectedlanguage == -1) {
+                  return;
+                }
+                _changeLanguage(listLang[selectedlanguage]);
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(245, 121, 3, 1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      DemoLocalization.of(context)!
+                          .getTranslatedValue('saveChange')
+                          .toString(),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: whiteColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
@@ -116,5 +133,19 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
         ),
       ),
     );
+  }
+
+  void _changeLanguage(String strlang) {
+    SharedPref.savelanguage(strlang.toLowerCase());
+    langauge = strlang.toLowerCase();
+    Locale _temp;
+    switch (strlang.toLowerCase()) {
+      case 'english':
+        _temp = Locale('en', 'US');
+        break;
+      default:
+        _temp = Locale('hi', 'IN');
+    }
+    MyApp.setLocales(context, _temp);
   }
 }

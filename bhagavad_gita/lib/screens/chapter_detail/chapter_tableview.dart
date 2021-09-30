@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_chapter_verse_model.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -69,7 +70,9 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
           Row(
             children: [
               Text(
-                "Table of contents",
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('tableOfContents')
+                    .toString(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!

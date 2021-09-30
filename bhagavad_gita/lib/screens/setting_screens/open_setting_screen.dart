@@ -1,6 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,9 @@ class _SettingScreenState extends State<SettingScreen> {
           Spacer(),
           Center(
             child: Text(
-              StringConstant.strSetting(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('setting')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -73,7 +76,9 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strLANGUAGE(),
+                  DemoLocalization.of(context)!
+                      .getTranslatedValue('Language')
+                      .toString(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: settingColor,
                         fontSize: 12,
@@ -101,7 +106,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       left: kPadding * 2, right: kDefaultPadding),
                   child: Row(
                     children: [
-                      Text('🇬🇧  English'),
+                      Text(langauge.toUpperCase().replaceAll("\"", "")),
                       Spacer(),
                       SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
                     ],
@@ -118,7 +123,9 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strAUTHOR(),
+                  DemoLocalization.of(context)!
+                      .getTranslatedValue('author')
+                      .toString(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                       color: settingColor, fontSize: 12, letterSpacing: 1),
                 ),
@@ -131,7 +138,9 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Row(
               children: [
                 Text(
-                  StringConstant.strHideShowLanguage(),
+                  DemoLocalization.of(context)!
+                      .getTranslatedValue('hideShowLanguage')
+                      .toString(),
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1!
@@ -148,7 +157,9 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVarseTranslationLanguage(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('varseTranslationLanguage')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -168,7 +179,9 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVerseTanslationSource(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('verseTanslationSource')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -212,7 +225,9 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strVerseCommentrySource(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('verseCommentrySource')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -251,7 +266,9 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 SizedBox(width: kDefaultPadding),
                 Text(
-                  StringConstant.strVerseOfTheDay(),
+                  DemoLocalization.of(context)!
+                      .getTranslatedValue('verseOfTheDay')
+                      .toString(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: settingColor,
                         fontSize: 12,
@@ -271,7 +288,9 @@ class _SettingScreenState extends State<SettingScreen> {
               });
             },
             title: Text(
-              StringConstant.strNotification(),
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('notification')
+                  .toString(),
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
