@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -16,7 +17,10 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
-  const ContinueReading({Key? key, required this.verseID,}) : super(key: key);
+  const ContinueReading({
+    Key? key,
+    required this.verseID,
+  }) : super(key: key);
 
   @override
   _ContinueReadingState createState() => _ContinueReadingState();
@@ -34,8 +38,9 @@ class _ContinueReadingState extends State<ContinueReading> {
 
   //// Customisation
   String fontFamily = 'Inter';
-  // List<int> allFontSize = [1,2,3,4];
-  
+  double fontSize = 16;
+  FormatingColor formatingColor = whiteFormatingColor;
+
   @override
   void initState() {
     super.initState();
@@ -84,13 +89,14 @@ class _ContinueReadingState extends State<ContinueReading> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
+        backgroundColor: formatingColor.bgColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
           },
           child: Center(
-            child:
-                SvgPicture.asset("assets/icons/icon_back_arrow.svg", width: 20),
+            child: SvgPicture.asset("assets/icons/icon_back_arrow.svg",
+                width: 20, color: formatingColor.naviagationIconColor),
           ),
         ),
         actions: [
@@ -103,10 +109,10 @@ class _ContinueReadingState extends State<ContinueReading> {
             },
             child: Text(
               StringConstant.strAa,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontSize: 18, fontWeight: FontWeight.w100),
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w100,
+                  color: formatingColor.naviagationIconColor),
             ),
           ),
           SizedBox(
@@ -119,8 +125,8 @@ class _ContinueReadingState extends State<ContinueReading> {
             child: Container(
               width: 40,
               child: Center(
-                child:
-                    SvgPicture.asset('assets/icons/icon_setting_nonsele.svg'),
+                child: SvgPicture.asset('assets/icons/icon_setting_nonsele.svg',
+                    color: formatingColor.naviagationIconColor),
               ),
             ),
           ),
@@ -129,6 +135,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           )
         ],
       ),
+      backgroundColor: formatingColor.bgColor,
       body: GraphQLProvider(
         client: client,
         child: SafeArea(
@@ -172,12 +179,14 @@ class _ContinueReadingState extends State<ContinueReading> {
                             height: kDefaultPadding,
                           ),
                           Text(
-                            "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1!
-                                .copyWith(fontFamily: fontFamily),
-                          ),
+                              "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                      fontFamily: fontFamily,
+                                      fontSize: fontSize + 10,
+                                      color: formatingColor.textColor)),
                           SizedBox(
                             height: kDefaultPadding,
                           ),
@@ -185,8 +194,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: fontFamily,
-                                  color: orangeColor,
-                                  // fontSize: allFontSize.length.toDouble(),
+                                  color: formatingColor.style1,
+                                  fontSize: fontSize,
                                   fontWeight: FontWeight.w400)),
                           SizedBox(
                             height: kPadding * 3,
@@ -198,8 +207,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 .textTheme
                                 .subtitle1!
                                 .copyWith(
+                                    fontSize: fontSize,
                                     height: lineSpacing,
-                                    // fontSize: allFontSize.length.toDouble(),
+                                    color: formatingColor.textColor,
                                     fontFamily: fontFamily),
                           ),
                           SizedBox(
@@ -212,7 +222,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 .textTheme
                                 .subtitle1!
                                 .copyWith(
+                                    fontSize: fontSize,
                                     height: lineSpacing,
+                                    color: formatingColor.textColor,
                                     fontFamily: fontFamily),
                           ),
                           SizedBox(height: kDefaultPadding * 2),
@@ -230,7 +242,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                      fontSize: 14,
+                                      fontSize: fontSize - 2,
+                                      color: formatingColor.textColor,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -248,6 +261,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 .subtitle1!
                                 .copyWith(
                                     height: lineSpacing,
+                                    fontSize: fontSize,
+                                    color: formatingColor.textColor,
                                     fontFamily: fontFamily),
                           ),
                           SizedBox(
@@ -268,7 +283,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     .subtitle1!
                                     .copyWith(
                                         fontFamily: fontFamily,
-                                        fontSize: 14,
+                                        fontSize: fontSize - 2,
+                                        color: formatingColor.textColor,
                                         fontWeight: FontWeight.w700),
                               ),
                               SizedBox(width: kDefaultPadding),
@@ -287,6 +303,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 .subtitle1!
                                 .copyWith(
                                     height: lineSpacing,
+                                    fontSize: fontSize,
+                                    color: formatingColor.textColor,
                                     fontFamily: fontFamily),
                           ),
                           SizedBox(height: kDefaultPadding * 5)
@@ -455,7 +473,26 @@ class _ContinueReadingState extends State<ContinueReading> {
                 setState(() {
                   fontFamily = strFontFamily;
                 });
-              }, selectedFontSize: (int ) {  },
+              },
+              selectedFontSize: (int) {},
+              fontName: fontFamily,
+              fontSizeIncrease: (bool increase) {
+                if (increase) {
+                  setState(() {
+                    fontSize = fontSize + 1;
+                  });
+                } else {
+                  setState(() {
+                    fontSize = fontSize - 1;
+                  });
+                }
+              },
+              formatingColorSelection: (FormatingColor colorMode) {
+                setState(() {
+                  formatingColor = colorMode;
+                });
+              },
+              formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,

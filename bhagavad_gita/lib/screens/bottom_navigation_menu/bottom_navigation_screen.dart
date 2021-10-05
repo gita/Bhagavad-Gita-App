@@ -1,6 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/line_space_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,29 +16,37 @@ class BottomNavigationMenu extends StatefulWidget {
       required this.lineSpacing,
       required this.initialLineSpacing,
       required this.selectedFontFamily,
-      required this.selectedFontSize})
+      required this.selectedFontSize,
+      required this.fontName,
+      required this.fontSizeIncrease,
+      required this.formatingColorSelection, required this.formatingColor})
       : super(key: key);
 
   @override
   _BottomNavigationMenuState createState() => _BottomNavigationMenuState();
   final Function(double) lineSpacing;
   final double initialLineSpacing;
+  final FormatingColor formatingColor;
   final Function(String) selectedFontFamily;
   final Function(int) selectedFontSize;
+  final Function(bool) fontSizeIncrease;
+  final String fontName;
+  final Function(FormatingColor) formatingColorSelection;
 }
 
 class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
   final NavigationService navigationService = locator<NavigationService>();
 
-  List<int> allFontSize = [16, 17, 18, 19];
-
-  final int colorMode = 0;
+  String fontFamilyName = 'Inter';
+  FormatingColor colorMode = whiteFormatingColor;
 
   double selectedLineSpacing = 1.5;
   @override
   void initState() {
     super.initState();
+    fontFamilyName = widget.fontName;
     selectedLineSpacing = widget.initialLineSpacing;
+    colorMode = widget.formatingColor;
   }
 
   @override
@@ -84,75 +93,88 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
           Container(
             child: Row(
               children: [
-                InkWell(
-                  onTap: () {
-                    // print('${allFontSize[colorMode] + 1}');
-                    // allFontSize[colorMode] + 1;
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 76,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: editBoxBorderColor,
-                        style: BorderStyle.solid,
+                Material(
+                  child: InkWell(
+                    onTap: () {
+                      widget.fontSizeIncrease(true);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 76,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: editBoxBorderColor,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                        ),
                       ),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                      ),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/icons/image_aa_pluse.svg',
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/icons/image_aa_pluse.svg',
+                        ),
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  height: 40,
-                  width: 76,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: editBoxBorderColor, style: BorderStyle.solid),
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                    ),
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/image_aa_min.svg',
+                Material(
+                  child: InkWell(
+                    onTap: () {
+                      widget.fontSizeIncrease(false);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 76,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: editBoxBorderColor,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/icons/image_aa_min.svg',
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Spacer(),
                 Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        print('change font family');
-                        _onPressedInter(context,
-                            selectedFontFamily: (String fontFamily) {
-                          widget.selectedFontFamily(fontFamily);
-                        });
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 144,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: editBoxBorderColor,
-                              style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Center(
-                          child: Text(
-                            DemoLocalization.of(context)!
-                                .getTranslatedValue('inter')
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(fontSize: 18, color: titleLableColor),
+                    Material(
+                      child: InkWell(
+                        onTap: () {
+                          print('change font family');
+                          _onPressedInter(context,
+                              selectedFontFamily: (String fontFamily) {
+                            setState(() {
+                              fontFamilyName = fontFamily;
+                            });
+                            widget.selectedFontFamily(fontFamily);
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 144,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: editBoxBorderColor,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              fontFamilyName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      fontSize: 18, color: titleLableColor),
+                            ),
                           ),
                         ),
                       ),
@@ -244,66 +266,41 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Colors.orange[50] ?? Colors.orange,
-                            width: 6),
-                      ),
-                      child: Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: orangeColor, width: 3),
-                        ),
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 24),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 32,
-                      width: 32,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(251, 240, 218, 1),
-                        border: Border.all(
-                            style: BorderStyle.solid,
-                            color: Colors.deepPurple.shade100,
-                            width: 2),
-                      ),
+                    onTap: () {
+                      setState(() {
+                        colorMode = whiteFormatingColor;
+                      });
+                      widget.formatingColorSelection(whiteFormatingColor);
+                    },
+                    child: ColorSelectionWidget(
+                      formatingColor: whiteFormatingColor,
+                      isSelected: colorMode.id == "1" ? true : false,
                     ),
                   ),
                   SizedBox(width: 24),
                   InkWell(
                     onTap: () {
-                      setState(() {});
+                      setState(() {
+                        colorMode = orangeFormatingColor;
+                      });
+                      widget.formatingColorSelection(orangeFormatingColor);
                     },
-                    child: Container(
-                      height: 32,
-                      width: 32,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: blackColor,
-                        border: Border.all(
-                            style: BorderStyle.solid,
-                            color: Colors.deepPurple.shade100,
-                            width: 1),
-                      ),
+                    child: ColorSelectionWidget(
+                      formatingColor: orangeFormatingColor,
+                      isSelected: colorMode.id == "2" ? true : false,
+                    ),
+                  ),
+                  SizedBox(width: 24),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        colorMode = blackFormatingColor;
+                      });
+                      widget.formatingColorSelection(blackFormatingColor);
+                    },
+                    child: ColorSelectionWidget(
+                      formatingColor: blackFormatingColor,
+                      isSelected: colorMode.id == "3" ? true : false,
                     ),
                   ),
                 ],
@@ -340,5 +337,58 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
         );
       },
     );
+  }
+}
+
+class ColorSelectionWidget extends StatelessWidget {
+  const ColorSelectionWidget({
+    Key? key,
+    required this.formatingColor,
+    required this.isSelected,
+  }) : super(key: key);
+
+  final FormatingColor formatingColor;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return isSelected == true
+        ? Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: Colors.orange[50] ?? Colors.orange, width: 6),
+            ),
+            child: Container(
+              height: 36,
+              width: 36,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: orangeColor, width: 3),
+              ),
+              child: Container(
+                height: 32,
+                width: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: formatingColor.bgColor,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 32,
+            width: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: formatingColor.bgColor,
+              border: Border.all(
+                  style: BorderStyle.solid,
+                  color: Colors.deepPurple.shade100,
+                  width: 1),
+            ),
+          );
   }
 }

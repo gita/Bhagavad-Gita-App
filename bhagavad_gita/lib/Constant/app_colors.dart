@@ -13,6 +13,8 @@ Color titleLableColor = HexColor.fromHex('#1A1A1A');
 Color settingColor = HexColor.fromHex('#804916');
 Color editBoxBorderColor = HexColor.fromHex('#D9DBE9');
 Color effectColor = HexColor.fromHex('#FBF0DA');
+Color lightOrangeColor = HexColor.fromHex('#FBF0DA');
+Color darkOrangeColor = HexColor.fromHex('#FFBE80');
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
