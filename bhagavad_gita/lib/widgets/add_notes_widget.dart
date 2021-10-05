@@ -1,6 +1,5 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
@@ -101,8 +100,11 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
             initialValue: verseNotes.verseNote,
             maxLines: 10,
             decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: StringConstant.strPleaseAddYourNote()),
+              border: InputBorder.none,
+              hintText: DemoLocalization.of(context)!
+                  .getTranslatedValue('pleaseAddYourNote')
+                  .toString(),
+            ),
             onChanged: (String value) {
               setState(() {
                 strNotes = value;

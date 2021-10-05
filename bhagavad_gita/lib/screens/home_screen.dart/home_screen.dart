@@ -26,6 +26,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final NavigationService navigationService = locator<NavigationService>();
   LastReadVerse? lastReadVerse;
+
+  String fontFamily = 'Inter';
+
   final tempQuery = gql("""
     query {
     allGitaChapters {

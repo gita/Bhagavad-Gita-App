@@ -96,7 +96,7 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                     width: 30,
-                    height: 30,
+                    height: 28,
                     child: SvgPicture.asset(tabController.index == 0
                         ? 'assets/icons/icn_home_selected.svg'
                         : 'assets/icons/icn_home.svg'),
@@ -125,7 +125,7 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                       width: 30,
-                      height: 30,
+                      height: 28,
                       child: SvgPicture.asset(tabController.index == 1
                           ? 'assets/icons/icn_saved_selected.svg'
                           : 'assets/icons/icn_saved.svg')),
@@ -153,7 +153,7 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                       width: 30,
-                      height: 30,
+                      height: 28,
                       child: SvgPicture.asset(tabController.index == 2
                           ? 'assets/icons/icon_quotes_selected.svg'
                           : 'assets/icons/icon_quotes.svg')),
@@ -181,7 +181,7 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                     width: 30,
-                    height: 30,
+                    height: 28,
                     child: Padding(
                       padding:
                           EdgeInsets.all(tabController.index == 3 ? 0.0 : 2.0),

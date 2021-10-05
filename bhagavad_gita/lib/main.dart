@@ -9,7 +9,6 @@ import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -17,7 +16,9 @@ Future<void> main() async {
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
   bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
   print("Selected lang : $langauge");
-  runApp(MyApp(isOnBoardSkip: onBoardSkip,));
+  runApp(MyApp(
+    isOnBoardSkip: onBoardSkip,
+  ));
 }
 
 class MyApp extends StatefulWidget {

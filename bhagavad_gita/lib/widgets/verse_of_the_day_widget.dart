@@ -85,7 +85,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                 horizontal: kDefaultPadding * 0.5,
                 vertical: kDefaultPadding * 0.5),
             child: Container(
-              height: (width - kDefaultPadding) * 0.526,
+              height: (width - kDefaultPadding) * 0.52,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image:
@@ -103,7 +103,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                             BorderRadius.circular(kDefaultCornerRadius)),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(kDefaultPadding),
+                    padding: EdgeInsets.all(15.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -117,12 +117,12 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                               .copyWith(
                                   color: whiteColor, fontSize: width * 0.037),
                         ),
-                        Spacer(),
+                        // Spacer(),
                         VerseOfTheDayTextWidget(
                           verseID:
                               "${allVerseOTheDayResponseModel.allVerseOfTheDays!.nodes![0].verseOrder ?? 0}",
                         ),
-                        Spacer(),
+                        // Spacer(),
                         TextButton(
                           onPressed: () {
                             navigationService.pushNamed(r_ContinueReading,

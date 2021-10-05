@@ -72,7 +72,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               top: height / kPadding * 2.8,
               left: width / kPadding * 0.5,
               child: Container(
-                width: 360,
+                width: 340,
                 child: Text(
                   quote,
                   textAlign: TextAlign.left,

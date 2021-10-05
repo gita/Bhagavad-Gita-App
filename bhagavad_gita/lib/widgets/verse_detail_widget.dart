@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -20,6 +21,7 @@ class VerseDetailWidget extends StatelessWidget {
   }) : super(key: key);
 
   final GitaVersesByChapterIdNode verse;
+  String fontFamily = 'Inter';
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +43,10 @@ class VerseDetailWidget extends StatelessWidget {
               ),
               SizedBox(width: kPadding),
               Text(
-                "${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${verse.verseNumber}",
-                style: Theme.of(context).textTheme.headline2,
-              ),
+                  "${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${verse.verseNumber}",
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                        fontFamily: fontFamily,
+                      )),
               Spacer(),
               SvgPicture.asset(
                 "assets/icons/icn_arrow_forward.svg",
@@ -54,7 +57,10 @@ class VerseDetailWidget extends StatelessWidget {
           Text(
             verse.gitaTranslationsByVerseId!.nodes![0].description!
                 .replaceAll("\n", ""),
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(fontFamily: fontFamily),
           ),
           SizedBox(
             height: kDefaultPadding,

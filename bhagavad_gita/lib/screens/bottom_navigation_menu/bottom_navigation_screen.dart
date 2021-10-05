@@ -1,6 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/line_space_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,17 +11,25 @@ import 'font_family_screen.dart';
 
 class BottomNavigationMenu extends StatefulWidget {
   const BottomNavigationMenu(
-      {Key? key, required this.lineSpacing, required this.initialLineSpacing})
+      {Key? key,
+      required this.lineSpacing,
+      required this.initialLineSpacing,
+      required this.selectedFontFamily,
+      required this.selectedFontSize})
       : super(key: key);
 
   @override
   _BottomNavigationMenuState createState() => _BottomNavigationMenuState();
   final Function(double) lineSpacing;
   final double initialLineSpacing;
+  final Function(String) selectedFontFamily;
+  final Function(int) selectedFontSize;
 }
 
 class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
   final NavigationService navigationService = locator<NavigationService>();
+
+  List<int> allFontSize = [16, 17, 18, 19];
 
   final int colorMode = 0;
 
@@ -37,14 +45,24 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding, vertical: 29),
+      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: kPadding),
+          Container(
+            height: 5,
+            width: 50,
+            decoration: BoxDecoration(
+                color: editBoxBorderColor,
+                borderRadius: BorderRadius.circular(10)),
+          ),
+          SizedBox(height: kDefaultPadding),
           Row(
             children: [
               Text(
-                StringConstant.strFontSize(),
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('fontSize')
+                    .toString(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -52,7 +70,9 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(width: 175),
               Text(
-                StringConstant.strFontFamily(),
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('fontFamily')
+                    .toString(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -64,21 +84,27 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
           Container(
             child: Row(
               children: [
-                Container(
-                  height: 40,
-                  width: 76,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: editBoxBorderColor,
-                      style: BorderStyle.solid,
+                InkWell(
+                  onTap: () {
+                    // print('${allFontSize[colorMode] + 1}');
+                    // allFontSize[colorMode] + 1;
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 76,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: editBoxBorderColor,
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                      ),
                     ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                    ),
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/image_aa_pluse.svg',
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/icons/image_aa_pluse.svg',
+                      ),
                     ),
                   ),
                 ),
@@ -102,7 +128,13 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () => _onPressedInter(context),
+                      onTap: () {
+                        print('change font family');
+                        _onPressedInter(context,
+                            selectedFontFamily: (String fontFamily) {
+                          widget.selectedFontFamily(fontFamily);
+                        });
+                      },
                       child: Container(
                         height: 40,
                         width: 144,
@@ -114,7 +146,9 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                         ),
                         child: Center(
                           child: Text(
-                            StringConstant.strInter(),
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('inter')
+                                .toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!
@@ -133,7 +167,9 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                StringConstant.strSpacing(),
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('spacing')
+                    .toString(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -166,6 +202,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                     fit: FlexFit.tight,
                     child: InkWell(
                       onTap: () {
+                        print('line sapcing');
                         setState(() {
                           selectedLineSpacing = 1.5;
                         });
@@ -198,7 +235,9 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               ),
               SizedBox(height: 18),
               Text(
-                StringConstant.strColorMode(),
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('colorMode')
+                    .toString(),
                 style: Theme.of(context).textTheme.headline2,
               ),
               SizedBox(height: 10),
@@ -276,7 +315,8 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
     );
   }
 
-  void _onPressedInter(BuildContext context) {
+  _onPressedInter(BuildContext context,
+      {required Function(String) selectedFontFamily}) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -284,7 +324,11 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
           color: Color(0X80000000).withOpacity(0.80),
           height: 350,
           child: Container(
-            child: InterClick(),
+            child: InterClick(
+              selectedFontFamily: (String fontFamily) {
+                selectedFontFamily(fontFamily);
+              },
+            ),
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,
               borderRadius: BorderRadius.only(

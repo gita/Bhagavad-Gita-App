@@ -1,7 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/notes_list_screen.dart';
+import 'package:bhagavad_gita/widgets/notes_list_screen.dart';
 import 'package:bhagavad_gita/widgets/bookmark_verseList_widget.dart';
 import 'package:flutter/material.dart';
 

@@ -1,23 +1,26 @@
+import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
-import 'package:bhagavad_gita/Constant/string_constant.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../locator.dart';
 
 class InterClick extends StatefulWidget {
-  const InterClick({Key? key}) : super(key: key);
+  const InterClick({Key? key, required this.selectedFontFamily,})
+      : super(key: key);
 
   @override
   _InterClickState createState() => _InterClickState();
+
+  final Function(String) selectedFontFamily;
 }
 
 class _InterClickState extends State<InterClick> {
   final NavigationService navigationService = locator<NavigationService>();
-  int selectedFont = 0;
-  var alllangauge = ['Inter', 'Georgia', 'Avenir', 'Proxima Nova'];
+  var isSelectedFont = 0;
+  List<String> allFontFamily = ['Inter', 'Hind', 'Mukta', 'Poppins'];
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,17 @@ class _InterClickState extends State<InterClick> {
     width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: kDefaultPadding * 1.8),
+        padding: EdgeInsets.only(top: kPadding),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              height: 5,
+              width: 50,
+              decoration: BoxDecoration(
+                  color: editBoxBorderColor,
+                  borderRadius: BorderRadius.circular(10)),
+            ),
+            SizedBox(height: kDefaultPadding),
             Row(
               children: [
                 InkWell(
@@ -45,7 +55,9 @@ class _InterClickState extends State<InterClick> {
                 ),
                 Spacer(),
                 Text(
-                  StringConstant.strFontFamily(),
+                  DemoLocalization.of(context)!
+                      .getTranslatedValue('fontFamily')
+                      .toString(),
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                       color: Colors.black,
                       fontSize: 14,
@@ -67,21 +79,22 @@ class _InterClickState extends State<InterClick> {
             SizedBox(height: kDefaultPadding),
             Expanded(
               child: ListView.builder(
-                itemCount: alllangauge.length,
+                itemCount: allFontFamily.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: InkWell(
                       onTap: () {
                         setState(() {
-                          selectedFont = index;
+                          isSelectedFont = index;
                         });
+                        widget.selectedFontFamily(allFontFamily[index]);
+                        Navigator.of(context).pop();
                       },
                       child: Row(
                         children: [
                           Text(
-                            alllangauge[index],
+                            allFontFamily[index],
                             style: TextStyle(
-                              fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               height: 1.1,
@@ -90,7 +103,7 @@ class _InterClickState extends State<InterClick> {
                         ],
                       ),
                     ),
-                    trailing: selectedFont == index
+                    trailing: isSelectedFont == index
                         ? SvgPicture.asset('assets/icons/Icon_true.svg')
                         : Text(''),
                   );

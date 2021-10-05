@@ -12,6 +12,7 @@ class PreferenceConstant {
   static String verseNotes = 'verseNotes';
   static String language = "language";
   static String skipOnboardScreen = "skipOnboardScreen";
+  static String onChangeFontFamily = 'onChangeFontFamily';
 }
 
 class SharedPref {
@@ -104,8 +105,7 @@ class SharedPref {
 
         sharedPreferences.setString(
             PreferenceConstant.bookMarkVerse, jsonEncode(t4));
- 
-     }
+      }
     }
     return true;
   }
@@ -258,7 +258,8 @@ class SharedPref {
 
   static Future<bool> checkOnBoardScreenIsSkip() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    bool? isSkip = sharedPreferences.getBool(PreferenceConstant.skipOnboardScreen);
+    bool? isSkip =
+        sharedPreferences.getBool(PreferenceConstant.skipOnboardScreen);
     if (isSkip == null) {
       return false;
     }

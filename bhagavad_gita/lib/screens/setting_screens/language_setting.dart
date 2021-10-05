@@ -18,7 +18,6 @@ class LanguageSettingScreen extends StatefulWidget {
 
 class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
   final NavigationService navigationService = locator<NavigationService>();
-  int lastPage = 0;
   int selectedlanguage = -1;
 
   List<String> listLang = ["English", "Hindi"];

@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
@@ -17,7 +16,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
-  const ContinueReading({Key? key, required this.verseID}) : super(key: key);
+  const ContinueReading({Key? key, required this.verseID,}) : super(key: key);
 
   @override
   _ContinueReadingState createState() => _ContinueReadingState();
@@ -33,6 +32,10 @@ class _ContinueReadingState extends State<ContinueReading> {
   bool isVerseSaved = false;
   VerseNotes? verseNotes;
 
+  //// Customisation
+  String fontFamily = 'Inter';
+  // List<int> allFontSize = [1,2,3,4];
+  
   @override
   void initState() {
     super.initState();
@@ -94,6 +97,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           TextButton(
             onPressed: () {
               setState(() {
+                print('Bottom Navigation Menu');
                 _onPressedEditButton(context);
               });
             },
@@ -132,154 +136,166 @@ class _ContinueReadingState extends State<ContinueReading> {
             alignment: Alignment.bottomCenter,
             children: [
               SingleChildScrollView(
-                  child: Query(
-                      options: QueryOptions(document: gql(verseDetailQuery)),
-                      builder: (
-                        QueryResult result, {
-                        Refetch? refetch,
-                        FetchMore? fetchMore,
-                      }) {
-                        if (result.hasException) {
-                          print("ERROR : ${result.exception.toString()}");
-                        }
-                        if (result.data == null) {
-                          return Container(
-                            height: 200,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: primaryColor,
-                                strokeWidth: 2,
-                              ),
-                            ),
-                          );
-                        }
-                        Map<String, dynamic>? verse = result.data;
-                        VerseDetailData data = VerseDetailData.fromJson(verse!);
-                        lastReadVerse = LastReadVerse(
-                            verseID: widget.verseID,
-                            gitaVerseById: data.gitaVerseById!);
-                        SharedPref.saveLastRead(lastReadVerse!);
-                        return Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                          child: Column(
+                child: Query(
+                  options: QueryOptions(document: gql(verseDetailQuery)),
+                  builder: (
+                    QueryResult result, {
+                    Refetch? refetch,
+                    FetchMore? fetchMore,
+                  }) {
+                    if (result.hasException) {
+                      print("ERROR : ${result.exception.toString()}");
+                    }
+                    if (result.data == null) {
+                      return Container(
+                        height: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      );
+                    }
+                    Map<String, dynamic>? verse = result.data;
+                    VerseDetailData data = VerseDetailData.fromJson(verse!);
+                    lastReadVerse = LastReadVerse(
+                        verseID: widget.verseID,
+                        gitaVerseById: data.gitaVerseById!);
+                    SharedPref.saveLastRead(lastReadVerse!);
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: kDefaultPadding,
+                          ),
+                          Text(
+                            "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontFamily: fontFamily),
+                          ),
+                          SizedBox(
+                            height: kDefaultPadding,
+                          ),
+                          Text("${data.gitaVerseById!.text}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: fontFamily,
+                                  color: orangeColor,
+                                  // fontSize: allFontSize.length.toDouble(),
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(
+                            height: kPadding * 3,
+                          ),
+                          Text(
+                            "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    height: lineSpacing,
+                                    // fontSize: allFontSize.length.toDouble(),
+                                    fontFamily: fontFamily),
+                          ),
+                          SizedBox(
+                            height: kDefaultPadding * 2,
+                          ),
+                          Text(
+                            "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    height: lineSpacing,
+                                    fontFamily: fontFamily),
+                          ),
+                          SizedBox(height: kDefaultPadding * 2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: kDefaultPadding,
-                              ),
+                              SvgPicture.asset(
+                                  "assets/icons/icon_left_rtansection.svg"),
+                              SizedBox(width: kDefaultPadding),
                               Text(
-                                "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
-                                style: Theme.of(context).textTheme.headline1,
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding,
-                              ),
-                              Text(
-                                "${data.gitaVerseById!.text}",
-                                textAlign: TextAlign.center,
+                                DemoLocalization.of(context)!
+                                    .getTranslatedValue('translation')
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                      color: orangeColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
                                     ),
                               ),
-                              SizedBox(
-                                height: kPadding * 3,
-                              ),
-                              Text(
-                                "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(height: lineSpacing),
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding * 2,
-                              ),
-                              Text(
-                                "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(height: lineSpacing),
-                              ),
-                              SizedBox(height: kDefaultPadding * 2),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                      "assets/icons/icon_left_rtansection.svg"),
-                                  SizedBox(width: kDefaultPadding),
-                                  Text(
-                                    DemoLocalization.of(context)!
-                                        .getTranslatedValue('translation')
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1!
-                                        .copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  SizedBox(width: kDefaultPadding),
-                                  SvgPicture.asset(
-                                      "assets/icons/icon_right_translation.svg")
-                                ],
-                              ),
-                              SizedBox(height: kDefaultPadding),
-                              Text(
-                                data.gitaVerseById!.gitaTranslationsByVerseId!
-                                    .nodes![0].description!,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(height: lineSpacing),
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                      "assets/icons/icon_left_rtansection.svg"),
-                                  SizedBox(width: kDefaultPadding),
-                                  Text(
-                                    DemoLocalization.of(context)!
-                                        .getTranslatedValue('commentry')
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(width: kDefaultPadding),
-                                  SvgPicture.asset(
-                                      "assets/icons/icon_right_translation.svg")
-                                ],
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding,
-                              ),
-                              Text(
-                                data.gitaVerseById!.gitaCommentariesByVerseId!
-                                    .nodes![0].description!,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(height: lineSpacing),
-                              ),
-                              SizedBox(height: kDefaultPadding * 5)
+                              SizedBox(width: kDefaultPadding),
+                              SvgPicture.asset(
+                                  "assets/icons/icon_right_translation.svg")
                             ],
                           ),
-                        );
-                      })),
+                          SizedBox(height: kDefaultPadding),
+                          Text(
+                            data.gitaVerseById!.gitaTranslationsByVerseId!
+                                .nodes![0].description!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    height: lineSpacing,
+                                    fontFamily: fontFamily),
+                          ),
+                          SizedBox(
+                            height: kDefaultPadding,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                  "assets/icons/icon_left_rtansection.svg"),
+                              SizedBox(width: kDefaultPadding),
+                              Text(
+                                DemoLocalization.of(context)!
+                                    .getTranslatedValue('commentry')
+                                    .toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        fontFamily: fontFamily,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700),
+                              ),
+                              SizedBox(width: kDefaultPadding),
+                              SvgPicture.asset(
+                                  "assets/icons/icon_right_translation.svg")
+                            ],
+                          ),
+                          SizedBox(
+                            height: kDefaultPadding,
+                          ),
+                          Text(
+                            data.gitaVerseById!.gitaCommentariesByVerseId!
+                                .nodes![0].description!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    height: lineSpacing,
+                                    fontFamily: fontFamily),
+                          ),
+                          SizedBox(height: kDefaultPadding * 5)
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
               Positioned(
                 top: MediaQuery.of(context).size.height / 100 * 71,
                 left: kDefaultPadding,
@@ -435,6 +451,11 @@ class _ContinueReadingState extends State<ContinueReading> {
                 });
               },
               initialLineSpacing: lineSpacing,
+              selectedFontFamily: (String strFontFamily) {
+                setState(() {
+                  fontFamily = strFontFamily;
+                });
+              }, selectedFontSize: (int ) {  },
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,

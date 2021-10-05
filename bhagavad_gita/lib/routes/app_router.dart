@@ -81,10 +81,12 @@ class AppRouter {
           viewToShow: LanguageSettingScreen(),
         );
       case r_AddNote:
-      VerseNotes notes = settings.arguments as VerseNotes;
+        VerseNotes notes = settings.arguments as VerseNotes;
         return _getPageRoute(
           routeName: settings.name!,
-          viewToShow: AddNotesWidget(verseNotes: notes,),
+          viewToShow: AddNotesWidget(
+            verseNotes: notes,
+          ),
         );
       default:
         return MaterialPageRoute(

@@ -7,7 +7,7 @@ import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../locator.dart';
+import '../locator.dart';
 
 class NotesVerseKistWidget extends StatefulWidget {
   @override
