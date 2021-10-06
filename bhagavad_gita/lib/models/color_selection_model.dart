@@ -13,8 +13,8 @@ class FormatingColor {
 }
 
 FormatingColor whiteFormatingColor =
-    FormatingColor("1", Colors.white, appBarTitleColor, orangeColor, Colors.black);
+    FormatingColor("1", whiteColor, appBarTitleColor, orangeColor, blackColor);
 FormatingColor orangeFormatingColor =
-    FormatingColor("2", lightOrangeColor, appBarTitleColor, primaryColor, Colors.black);
+    FormatingColor("2", lightOrangeColor, appBarTitleColor, primaryColor, blackColor);
 FormatingColor blackFormatingColor =
-    FormatingColor("3", Colors.black, whiteColor, darkOrangeColor, whiteColor);
+    FormatingColor("3", blackColor, whiteColor, darkOrangeColor, whiteColor);

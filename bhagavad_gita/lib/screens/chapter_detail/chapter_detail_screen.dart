@@ -1,9 +1,12 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/verse_detail_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
   late String chapterDetailQuery;
   bool isShowMoreChapterDetail = false;
   String fontFamily = 'Inter';
+  double lineSpacing = 1.5;
+  double fontSize = 16;
+  FormatingColor formatingColor = whiteFormatingColor;
 
   @override
   void initState() {
@@ -68,6 +74,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
       client: client,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: formatingColor.bgColor,
           automaticallyImplyLeading: false,
           centerTitle: false,
           leading: InkWell(
@@ -76,11 +83,27 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
             },
             child: Center(
               child: SvgPicture.asset("assets/icons/icon_back_arrow.svg",
-                  width: 20),
+                  width: 20, color: formatingColor.naviagationIconColor),
             ),
           ),
           actions: [
-            Spacer(),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  print('Bottom Navigation Menu');
+                  formatingModalBottomSheet(context);
+                });
+              },
+              child: Text(
+                StringConstant.strAa,
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 18,
+                      color: formatingColor.naviagationIconColor,
+                      fontWeight: FontWeight.w100,
+                    ),
+              ),
+            ),
+            SizedBox(width: kPadding),
             InkWell(
               onTap: () {
                 navigationService.pushNamed(r_ChapterTableView);
@@ -88,13 +111,15 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               child: Container(
                 width: 40,
                 child: Center(
-                  child: SvgPicture.asset('assets/icons/Icon_menu_bottom.svg'),
+                  child: SvgPicture.asset('assets/icons/Icon_menu_bottom.svg',
+                      color: formatingColor.naviagationIconColor),
                 ),
               ),
             ),
             SizedBox(width: kDefaultPadding),
           ],
         ),
+        backgroundColor: formatingColor.bgColor,
         body: Stack(
           children: [
             Positioned(
@@ -146,8 +171,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   .textTheme
                                   .headline1!
                                   .copyWith(
+                                    height: lineSpacing,
                                     color: orangeColor,
-                                    fontSize: 16,
+                                    fontSize: fontSize,
                                     fontFamily: fontFamily,
                                   ),
                             ),
@@ -159,7 +185,12 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
-                                .copyWith(fontSize: 18, fontFamily: fontFamily),
+                                .copyWith(
+                                  height: lineSpacing,
+                                  fontSize: fontSize,
+                                  fontFamily: fontFamily,
+                                  color: formatingColor.naviagationIconColor,
+                                ),
                           ),
                           SizedBox(height: kDefaultPadding * 2),
                           Text(
@@ -167,10 +198,15 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                 '',
                             maxLines: isShowMoreChapterDetail ? 500 : 4,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                Theme.of(context).textTheme.subtitle1!.copyWith(
-                                      fontFamily: fontFamily,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                  fontSize: fontSize,
+                                  height: lineSpacing,
+                                  fontFamily: fontFamily,
+                                  color: formatingColor.naviagationIconColor,
+                                ),
                           ),
                           Row(
                             children: [
@@ -193,6 +229,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                       .textTheme
                                       .headline2!
                                       .copyWith(
+                                        fontSize: fontSize,
+                                        height: lineSpacing,
                                         fontFamily: fontFamily,
                                         color: textLightGreyColor,
                                       ),
@@ -208,9 +246,12 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                 .gitaVersesByChapterId!.nodes!.length,
                             itemBuilder: (BuildContext context, index) {
                               return VerseDetailWidget(
-                                verse: chapterDetailData.gitaChapterById!
-                                    .gitaVersesByChapterId!.nodes![index],
-                              );
+                                  verse: chapterDetailData.gitaChapterById!
+                                      .gitaVersesByChapterId!.nodes![index],
+                                  formatingColor: formatingColor,
+                                  lineSpacing: lineSpacing,
+                                  fontSize: fontSize,
+                                  fontFamily: fontFamily);
                             },
                           )
                         ],
@@ -223,6 +264,59 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  formatingModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: Color(0XFF737373),
+          height: 350,
+          child: Container(
+            child: BottomNavigationMenu(
+              lineSpacing: (double value) {
+                setState(() {
+                  lineSpacing = value;
+                });
+              },
+              initialLineSpacing: lineSpacing,
+              selectedFontFamily: (String strFontFamily) {
+                setState(() {
+                  fontFamily = strFontFamily;
+                });
+              },
+              selectedFontSize: (int) {},
+              fontName: fontFamily,
+              fontSizeIncrease: (bool increase) {
+                if (increase) {
+                  setState(() {
+                    fontSize = fontSize + 1;
+                  });
+                } else {
+                  setState(() {
+                    fontSize = fontSize - 1;
+                  });
+                }
+              },
+              formatingColorSelection: (FormatingColor colorMode) {
+                setState(() {
+                  formatingColor = colorMode;
+                });
+              },
+              formatingColor: formatingColor,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

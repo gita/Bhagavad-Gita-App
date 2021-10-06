@@ -66,273 +66,276 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            height: kPadding * 3,
-            width: double.infinity,
-            color: Colors.orange[50],
-            child: Row(
-              children: [
-                SizedBox(width: kDefaultPadding),
-                Text(
-                  DemoLocalization.of(context)!
-                      .getTranslatedValue('Language')
-                      .toString(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: settingColor,
-                        fontSize: 12,
-                        letterSpacing: 1,
-                      ),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: kPadding * 3,
+              width: double.infinity,
+              color: Colors.orange[50],
+              child: Row(
+                children: [
+                  SizedBox(width: kDefaultPadding),
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('Language')
+                        .toString(),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          color: settingColor,
+                          fontSize: 12,
+                          letterSpacing: 1,
+                        ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(kDefaultPadding),
-            child: InkWell(
-              onTap: () {
-                navigationService.pushNamed(r_Language);
+            Padding(
+              padding: EdgeInsets.all(kDefaultPadding),
+              child: InkWell(
+                onTap: () {
+                  navigationService.pushNamed(r_Language);
+                },
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: kPadding * 2, right: kDefaultPadding),
+                    child: Row(
+                      children: [
+                        Text(langauge.toUpperCase().replaceAll("\"", "")),
+                        Spacer(),
+                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: kPadding * 3,
+              width: double.infinity,
+              color: Colors.orange[50],
+              child: Row(
+                children: [
+                  SizedBox(width: kDefaultPadding),
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('author')
+                        .toString(),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: settingColor, fontSize: 12, letterSpacing: 1),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: kPadding * 2, right: kPadding * 2, top: kPadding),
+              child: Row(
+                children: [
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('hideShowLanguage')
+                        .toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: textLightGreyColor, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            SwitchListTile(
+              value: _switchValues[0],
+              onChanged: (value) {
+                setState(() {
+                  _switchValues[0] = value;
+                });
               },
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 0.5, color: textLightGreyColor),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: kPadding * 2, right: kDefaultPadding),
-                  child: Row(
-                    children: [
-                      Text(langauge.toUpperCase().replaceAll("\"", "")),
-                      Spacer(),
-                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                    ],
-                  ),
-                ),
+              title: Text(
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('varseTranslationLanguage')
+                    .toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .copyWith(color: greyScalBodyColor),
               ),
             ),
-          ),
-          Container(
-            height: kPadding * 3,
-            width: double.infinity,
-            color: Colors.orange[50],
-            child: Row(
-              children: [
-                SizedBox(width: kDefaultPadding),
-                Text(
-                  DemoLocalization.of(context)!
-                      .getTranslatedValue('author')
-                      .toString(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: settingColor, fontSize: 12, letterSpacing: 1),
-                ),
-              ],
+            Divider(
+              indent: kPadding * 2,
+              endIndent: kPadding * 2,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: kPadding * 2, right: kPadding * 2, top: kPadding),
-            child: Row(
-              children: [
-                Text(
-                  DemoLocalization.of(context)!
-                      .getTranslatedValue('hideShowLanguage')
-                      .toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: textLightGreyColor, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          SwitchListTile(
-            value: _switchValues[0],
-            onChanged: (value) {
-              setState(() {
-                _switchValues[0] = value;
-              });
-            },
-            title: Text(
-              DemoLocalization.of(context)!
-                  .getTranslatedValue('varseTranslationLanguage')
-                  .toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2!
-                  .copyWith(color: greyScalBodyColor),
-            ),
-          ),
-          Divider(
-            indent: kPadding * 2,
-            endIndent: kPadding * 2,
-          ),
-          SwitchListTile(
-            value: _switchValues[1],
-            onChanged: (value) {
-              setState(() {
-                _switchValues[1] = value;
-                isTranslationsource = !isTranslationsource;
-              });
-            },
-            title: Text(
-              DemoLocalization.of(context)!
-                  .getTranslatedValue('verseTanslationSource')
-                  .toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2!
-                  .copyWith(color: greyScalBodyColor),
-            ),
-          ),
-          AnimatedContainer(
-            height: isTranslationsource ? 70 : 0,
-            duration: Duration(milliseconds: 300),
-            child: Padding(
-              padding: EdgeInsets.all(kPadding * 1.5),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 0.5, color: textLightGreyColor),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: kPadding * 2, right: kDefaultPadding),
-                  child: Row(
-                    children: [
-                      Text('Sanskrit'),
-                      Spacer(),
-                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Divider(
-            indent: kPadding * 2,
-            endIndent: kPadding * 2,
-          ),
-          SwitchListTile(
-            value: _switchValues[2],
-            onChanged: (value) {
-              setState(() {
-                _switchValues[2] = value;
-                isCommentarySource = !isCommentarySource;
-              });
-            },
-            title: Text(
-              DemoLocalization.of(context)!
-                  .getTranslatedValue('verseCommentrySource')
-                  .toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2!
-                  .copyWith(color: greyScalBodyColor),
-            ),
-          ),
-          AnimatedContainer(
-            height: isCommentarySource ? 70 : 0,
-            duration: Duration(milliseconds: 300),
-            child: Padding(
-              padding: EdgeInsets.all(kPadding * 1.5),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 0.5, color: textLightGreyColor),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: kPadding * 2, right: kDefaultPadding),
-                  child: Row(
-                    children: [
-                      Text('Swami Chinmayananda (Hindi)'),
-                      Spacer(),
-                      SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: kPadding * 3,
-            width: double.infinity,
-            color: Colors.orange[50],
-            child: Row(
-              children: [
-                SizedBox(width: kDefaultPadding),
-                Text(
-                  DemoLocalization.of(context)!
-                      .getTranslatedValue('verseOfTheDay')
-                      .toString(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: settingColor,
-                        fontSize: 12,
-                        letterSpacing: 1,
-                      ),
-                ),
-              ],
-            ),
-          ),
-          SwitchListTile(
-            activeColor: orangeColor,
-            value: _switchValues[3],
-            onChanged: (value) {
-              setState(() {
-                _switchValues[3] = value;
-                isNotificationOn = !isNotificationOn;
-              });
-            },
-            title: Text(
-              DemoLocalization.of(context)!
-                  .getTranslatedValue('notification')
-                  .toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2!
-                  .copyWith(color: greyScalBodyColor),
-            ),
-          ),
-          AnimatedContainer(
-            height: isNotificationOn ? 60 : 0,
-            duration: Duration(milliseconds: 300),
-            child: InkWell(
-              onTap: () {
-                print('timer');
-                setNotificationTimer(context);
+            SwitchListTile(
+              value: _switchValues[1],
+              onChanged: (value) {
+                setState(() {
+                  _switchValues[1] = value;
+                  isTranslationsource = !isTranslationsource;
+                });
               },
-              child: Container(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kPadding * 1.5),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Timer',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .copyWith(color: greyScalBodyColor),
-                      ),
-                      Spacer(),
-                      Text('13:00 PM'),
-                      SizedBox(width: kPadding),
-                      SvgPicture.asset('assets/icons/icon_downsidearrow.svg')
-                    ],
+              title: Text(
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('verseTanslationSource')
+                    .toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .copyWith(color: greyScalBodyColor),
+              ),
+            ),
+            AnimatedContainer(
+              height: isTranslationsource ? 70 : 0,
+              duration: Duration(milliseconds: 300),
+              child: Padding(
+                padding: EdgeInsets.all(kPadding * 1.5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: kPadding * 2, right: kDefaultPadding),
+                    child: Row(
+                      children: [
+                        Text('Sanskrit'),
+                        Spacer(),
+                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            Divider(
+              indent: kPadding * 2,
+              endIndent: kPadding * 2,
+            ),
+            SwitchListTile(
+              value: _switchValues[2],
+              onChanged: (value) {
+                setState(() {
+                  _switchValues[2] = value;
+                  isCommentarySource = !isCommentarySource;
+                });
+              },
+              title: Text(
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('verseCommentrySource')
+                    .toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .copyWith(color: greyScalBodyColor),
+              ),
+            ),
+            AnimatedContainer(
+              height: isCommentarySource ? 70 : 0,
+              duration: Duration(milliseconds: 300),
+              child: Padding(
+                padding: EdgeInsets.all(kPadding * 1.5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: kPadding * 2, right: kDefaultPadding),
+                    child: Row(
+                      children: [
+                        Text('Swami Chinmayananda (Hindi)'),
+                        Spacer(),
+                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: kPadding * 3,
+              width: double.infinity,
+              color: Colors.orange[50],
+              child: Row(
+                children: [
+                  SizedBox(width: kDefaultPadding),
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('verseOfTheDay')
+                        .toString(),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          color: settingColor,
+                          fontSize: 12,
+                          letterSpacing: 1,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            SwitchListTile(
+              activeColor: orangeColor,
+              value: _switchValues[3],
+              onChanged: (value) {
+                setState(() {
+                  _switchValues[3] = value;
+                  isNotificationOn = !isNotificationOn;
+                });
+              },
+              title: Text(
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('notification')
+                    .toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .copyWith(color: greyScalBodyColor),
+              ),
+            ),
+            AnimatedContainer(
+              height: isNotificationOn ? 60 : 0,
+              duration: Duration(milliseconds: 300),
+              child: InkWell(
+                onTap: () {
+                  print('timer');
+                  setNotificationTimer(context);
+                },
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: kPadding * 1.5),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Timer',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2!
+                              .copyWith(color: greyScalBodyColor),
+                        ),
+                        Spacer(),
+                        Text('13:00 PM'),
+                        SizedBox(width: kPadding),
+                        SvgPicture.asset('assets/icons/icon_downsidearrow.svg')
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   setNotificationTimer(BuildContext context) {
+    int currentValue = 1;
     return showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -347,16 +350,38 @@ class _SettingScreenState extends State<SettingScreen> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: Column(
+            child: Row(
               children: [
                 NumberPicker(
-                  value: 10,
-                  minValue: 0,
+                  value: currentValue,
+                  minValue: 1,
                   maxValue: 24,
                   onChanged: (value) {
-                    setState(() {});
+                    setState(() {
+                      currentValue = value;
+                    });
                   },
-                )
+                ),
+                // NumberPicker(
+                //   value: currentValue,
+                //   minValue: 1,
+                //   maxValue: 24,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       currentValue = value + 5;
+                //     });
+                //   },
+                // ),
+                // NumberPicker(
+                //   value: currentValue,
+                //   minValue: 1,
+                //   maxValue: 24,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       currentValue = value + 10;
+                //     });
+                //   },
+                // )
               ],
             ),
           ),

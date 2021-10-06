@@ -454,7 +454,7 @@ class _ContinueReadingState extends State<ContinueReading> {
     );
   }
 
-  void _onPressedEditButton(BuildContext context) {
+  _onPressedEditButton(context) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
