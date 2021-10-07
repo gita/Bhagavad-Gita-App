@@ -6,6 +6,7 @@ import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../../locator.dart';
 
@@ -150,13 +151,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            SwitchListTile(
+            ListTileSwitch(
               value: _switchValues[0],
               onChanged: (value) {
                 setState(() {
                   _switchValues[0] = value;
                 });
               },
+              switchActiveColor: orangeColor,
+              switchScale: 0.8,
+              switchType: SwitchType.cupertino,
               title: Text(
                 DemoLocalization.of(context)!
                     .getTranslatedValue('varseTranslationLanguage')
@@ -171,7 +175,7 @@ class _SettingScreenState extends State<SettingScreen> {
               indent: kPadding * 2,
               endIndent: kPadding * 2,
             ),
-            SwitchListTile(
+            ListTileSwitch(
               value: _switchValues[1],
               onChanged: (value) {
                 setState(() {
@@ -179,6 +183,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   isTranslationsource = !isTranslationsource;
                 });
               },
+              switchActiveColor: orangeColor,
+              switchScale: 0.8,
+              switchType: SwitchType.cupertino,
               title: Text(
                 DemoLocalization.of(context)!
                     .getTranslatedValue('verseTanslationSource')
@@ -217,7 +224,8 @@ class _SettingScreenState extends State<SettingScreen> {
               indent: kPadding * 2,
               endIndent: kPadding * 2,
             ),
-            SwitchListTile(
+
+            ListTileSwitch(
               value: _switchValues[2],
               onChanged: (value) {
                 setState(() {
@@ -225,6 +233,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   isCommentarySource = !isCommentarySource;
                 });
               },
+              switchActiveColor: orangeColor,
+              switchScale: 0.8,
+              switchType: SwitchType.cupertino,
               title: Text(
                 DemoLocalization.of(context)!
                     .getTranslatedValue('verseCommentrySource')
@@ -279,8 +290,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            SwitchListTile(
-              activeColor: orangeColor,
+            ListTileSwitch(
               value: _switchValues[3],
               onChanged: (value) {
                 setState(() {
@@ -288,6 +298,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   isNotificationOn = !isNotificationOn;
                 });
               },
+              switchActiveColor: orangeColor,
+              switchScale: 0.8,
+              switchType: SwitchType.cupertino,
               title: Text(
                 DemoLocalization.of(context)!
                     .getTranslatedValue('notification')

@@ -73,8 +73,8 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                 });
                               },
                               child: Container(
-                                height: kPadding * 2,
-                                width: kPadding * 2,
+                                height: kPadding * 3,
+                                width: kPadding * 3,
                                 child: Center(
                                   child: SvgPicture.asset(
                                       'assets/icons/Icon_more_setting.svg'),
@@ -118,7 +118,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             )
                           ],
                         ),
-                        Divider(height: kDefaultPadding * 2)
+                        Divider()
                       ],
                     ),
                   ),

@@ -13,7 +13,7 @@ import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql_flutter/graphql_flutter.dart'; 
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
@@ -35,6 +35,7 @@ class _ContinueReadingState extends State<ContinueReading> {
 
   bool isVerseSaved = false;
   VerseNotes? verseNotes;
+  int versId = 1;
 
   //// Customisation
   String fontFamily = 'Inter';
@@ -44,12 +45,20 @@ class _ContinueReadingState extends State<ContinueReading> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      versId = int.parse(widget.verseID);
+      getVersDetails();
+    });
+  }
+
+  getVersDetails() {
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
+    print('object-------$versId');
     verseDetailQuery = """
   query GetVerseDetailsById {
-    gitaVerseById(id: ${widget.verseID}) {
+    gitaVerseById(id: $versId) {
       chapterNumber
       verseNumber
       text
@@ -75,6 +84,23 @@ class _ContinueReadingState extends State<ContinueReading> {
         isVerseSaved = result;
         verseNotes = resultVerseNotes;
       });
+    });
+    // changeVersePage(VerseDetailData(gitaVerseById: GitaVerseById()));
+  }
+
+  changeVersePage() {
+    setState(() {
+      versId = versId + 1;
+      print('Allready changed$versId');
+      getVersDetails();
+    });
+  }
+
+  reverschangeVersePage() {
+    setState(() {
+      versId = versId - 1;
+      print('Allready changed$versId');
+      getVersDetails();
     });
   }
 
@@ -317,22 +343,27 @@ class _ContinueReadingState extends State<ContinueReading> {
               Positioned(
                 top: MediaQuery.of(context).size.height / 100 * 71,
                 left: kDefaultPadding,
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: editBoxBorderColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/icon_slider_verse.svg",
+                child: InkWell(
+                  onTap: () {
+                    versId == 1 ? versId = 1 : reverschangeVersePage();
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: editBoxBorderColor,
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icons/icon_slider_verse.svg",
+                      ),
                     ),
                   ),
                 ),
@@ -340,22 +371,29 @@ class _ContinueReadingState extends State<ContinueReading> {
               Positioned(
                 top: MediaQuery.of(context).size.height / 100 * 71,
                 right: kDefaultPadding,
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: editBoxBorderColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/Icon_slider_verseNext.svg",
+                child: InkWell(
+                  onTap: () {
+                    print('change Verse');
+                    changeVersePage();
+                    print('changed Verse');
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: editBoxBorderColor,
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icons/Icon_slider_verseNext.svg",
+                      ),
                     ),
                   ),
                 ),

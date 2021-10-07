@@ -4,7 +4,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:flutter_share/flutter_share.dart';
 class QuotesScreen extends StatefulWidget {
   @override
   _QuotesScreenState createState() => _QuotesScreenState();
@@ -12,7 +12,7 @@ class QuotesScreen extends StatefulWidget {
 
 class _QuotesScreenState extends State<QuotesScreen> {
   String quote = "";
-
+  final PageController controller = PageController();
   @override
   void initState() {
     super.initState();
@@ -27,6 +27,14 @@ class _QuotesScreenState extends State<QuotesScreen> {
     });
   }
 
+  Future<void> share() async {
+    await FlutterShare.share(
+      title: 'Example share',
+      text: 'Example share text',
+      linkUrl: 'https://flutter.dev/',
+      chooserTitle: 'Example Chooser Title'
+    );
+  }
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -52,12 +60,17 @@ class _QuotesScreenState extends State<QuotesScreen> {
             Positioned(
               top: width / kDefaultPadding * 4,
               right: width / kDefaultPadding,
-              child: InkWell(
-                onTap: () {
-                  print('Shear Quote');
-                },
-                child: Container(
-                  child: SvgPicture.asset("assets/icons/icon_shareQuotes.svg"),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () async {
+                    print('Shear Quote');
+                    share();
+                  },
+                  child: Container(
+                    child:
+                        SvgPicture.asset("assets/icons/icon_shareQuotes.svg"),
+                  ),
                 ),
               ),
             ),
@@ -86,26 +99,29 @@ class _QuotesScreenState extends State<QuotesScreen> {
             Positioned(
               bottom: kDefaultPadding,
               left: kDefaultPadding,
-              child: InkWell(
-                onTap: () {
-                  getQuote();
-                },
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: textLightGreyColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/icon_slider_verse.svg",
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    getQuote();
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: textLightGreyColor,
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icons/icon_slider_verse.svg",
+                      ),
                     ),
                   ),
                 ),
@@ -114,26 +130,29 @@ class _QuotesScreenState extends State<QuotesScreen> {
             Positioned(
               bottom: kDefaultPadding,
               right: kDefaultPadding,
-              child: InkWell(
-                onTap: () {
-                  getQuote();
-                },
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: textLightGreyColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/Icon_slider_verseNext.svg",
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    getQuote();
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: textLightGreyColor,
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icons/Icon_slider_verseNext.svg",
+                      ),
                     ),
                   ),
                 ),
@@ -144,4 +163,5 @@ class _QuotesScreenState extends State<QuotesScreen> {
       ),
     );
   }
+
 }

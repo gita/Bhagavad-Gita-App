@@ -46,14 +46,23 @@ class _SavedPageState extends State<SavedPage> {
                           isPageIndex = isPageIndex - 1;
                         });
                       },
-                      child: Text(
-                          DemoLocalization.of(context)!.getTranslatedValue('bookMark').toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontSize: 16,
-                              color: isPageIndex == 0
-                                  ? orangeColor
-                                  : textLightGreyColor,
-                            ),
+                      child: Container(
+                        height: kPadding * 2.5,
+                        width: kDefaultPadding * 6,
+                        child: Center(
+                          child: Text(
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('bookMark')
+                                .toString(),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontSize: 16,
+                                      color: isPageIndex == 0
+                                          ? orangeColor
+                                          : textLightGreyColor,
+                                    ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: kPadding * 0.7),
@@ -77,14 +86,23 @@ class _SavedPageState extends State<SavedPage> {
                           isPageIndex = isPageIndex - 1;
                         });
                       },
-                      child: Text(
-                          DemoLocalization.of(context)!.getTranslatedValue('notes').toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontSize: 16,
-                              color: isPageIndex == 1
-                                  ? orangeColor
-                                  : textLightGreyColor,
-                            ),
+                      child: Container(
+                        height: kPadding * 2.5,
+                        width: kDefaultPadding * 6,
+                        child: Center(
+                          child: Text(
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('notes')
+                                .toString(),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontSize: 16,
+                                      color: isPageIndex == 1
+                                          ? orangeColor
+                                          : textLightGreyColor,
+                                    ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: kPadding * 0.7),

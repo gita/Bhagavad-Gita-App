@@ -17,6 +17,10 @@ dependencies:
   flutter_svg: ^0.22.0
   graphql_flutter: ^5.0.0
   intl: ^0.17.0
+  list_tile_switch: ^1.0.0
+  popover: ^0.2.6+2
+  file_picker: ^4.1.3
+  flutter_share: ^2.0.0
   shared_preferences: ^2.0.7
   numberpicker: ^2.1.1
   flutter_localizations: 

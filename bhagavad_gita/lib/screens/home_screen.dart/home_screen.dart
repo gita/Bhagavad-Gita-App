@@ -75,10 +75,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Spacer(),
           InkWell(
-              onTap: () {
-                navigationService.pushNamed(r_Setting);
-              },
-              child: SvgPicture.asset('assets/icons/icn_settings.svg')),
+            onTap: () {
+              navigationService.pushNamed(r_Setting);
+            },
+            child: Container(
+              width: kPadding * 4,
+              child: Center(
+                child: SvgPicture.asset('assets/icons/icn_settings.svg'),
+              ),
+            ),
+          ),
           SizedBox(
             width: kDefaultPadding,
           )
