@@ -1,12 +1,14 @@
+import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:popover/popover.dart';
 import '../locator.dart';
 
 class BookmarkVersListWidget extends StatefulWidget {
@@ -44,7 +46,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
         Expanded(
           child: ListView.builder(
             itemCount: listLastReadVerse.length,
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (BuildContext context, int indexVerse) {
               return Column(
                 children: [
                   Padding(
@@ -56,47 +58,81 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             SvgPicture.asset('assets/icons/icon_verseLogo.svg'),
                             SizedBox(width: kPadding),
                             Text(
-                              '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${listLastReadVerse[index].gitaVerseById!.chapterNumber}.${listLastReadVerse[index].gitaVerseById!.verseNumber}',
+                              '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${listLastReadVerse[indexVerse].gitaVerseById!.chapterNumber}.${listLastReadVerse[indexVerse].gitaVerseById!.verseNumber}',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
-                            InkWell(
-                              onTap: () {
-                                print('Helloooo Ritvik');
-                                showPopover(
-                                  context: context,
-                                  bodyBuilder: (context) => const ListItems(),
-                                  onPop: () => print('Popover was popped!'),
-                                  direction: PopoverDirection.top,
-                                  width: 200,
-                                  height: 400,
-                                  arrowHeight: 15,
-                                  arrowWidth: 30,
-                                );
-
-                                // showPopover(
-                                //   context: context,
-                                //   transitionDuration:
-                                //       const Duration(milliseconds: 150),
-                                //   bodyBuilder: (context) => Container(
-                                //     height: 100,
-                                //     width: 100,
-                                //     color: orangeColor,
-                                //     child: Column(
-                                //       children: [],
-                                //     ),
-                                //   ),
-                                //   onPop: () => print('Popover was popped!'),
-                                //   direction: PopoverDirection.top,
-                                //   width: 200,
-                                //   height: 400,
-                                //   arrowHeight: 15,
-                                //   arrowWidth: 30,
-                                // );
+                            PopupMenuButton(
+                              itemBuilder: (BuildContext context) {
+                                return List.generate(2, (index) {
+                                  if (index == 0) {
+                                    return PopupMenuItem(
+                                      padding: EdgeInsets.all(0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              'assets/icons/icon_delete.svg'),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue('delete')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: Colors.red,
+                                                    fontSize: 16),
+                                          )
+                                        ],
+                                      ),
+                                      onTap: () async {
+                                        await SharedPref.removeVerseFromSaved(
+                                            listLastReadVerse[indexVerse]
+                                                .verseID!);
+                                        getAllSavedVerse();
+                                      },
+                                    );
+                                  } else {
+                                    return PopupMenuItem(
+                                      padding: EdgeInsets.all(0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              'assets/icons/icon_go_to_verse.svg'),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue('goToVerse')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: blackColor,
+                                                    fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Future.delayed(
+                                            Duration(milliseconds: 200), () {
+                                          navigationService.pushNamed(
+                                              r_ContinueReading,
+                                              arguments:
+                                                  "${listLastReadVerse[indexVerse].verseID ?? 0}");
+                                        });
+                                      },
+                                    );
+                                  }
+                                });
                               },
                               child: Container(
                                 height: kPadding * 3,
                                 width: kPadding * 3,
+                                color: Colors.transparent,
                                 child: Center(
                                   child: SvgPicture.asset(
                                       'assets/icons/Icon_more_setting.svg'),
@@ -107,7 +143,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                         ),
                         SizedBox(height: kPadding * 2),
                         Text(
-                          listLastReadVerse[index]
+                          listLastReadVerse[indexVerse]
                                   .gitaVerseById!
                                   .gitaTranslationsByVerseId!
                                   .nodes![0]
@@ -125,121 +161,6 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
           ),
         ),
       ],
-    );
-  }
-
-  /* showBookMarkDialog(
-      {Function()? onClickDelete, Function()? onClickGoToVerse}) {
-    return showGeneralDialog(
-      barrierLabel: '',
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.7),
-      context: context,
-      pageBuilder: (context, anim1, anim2) {
-        return Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: kDefaultPadding * 7.5, right: kDefaultPadding),
-            child: Container(
-              width: 200,
-              height: 120,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: kPadding),
-                  Row(
-                    children: [
-                      SizedBox(width: kDefaultPadding),
-                      SvgPicture.asset('assets/icons/icon_delete.svg'),
-                      SizedBox(width: kDefaultPadding),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          onClickDelete!();
-                        },
-                        child: Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('delete')
-                              .toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: Colors.red, fontSize: 16),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(width: kDefaultPadding),
-                      SvgPicture.asset('assets/icons/icon_go_to_verse.svg'),
-                      SizedBox(width: kDefaultPadding),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          onClickGoToVerse!();
-                        },
-                        child: Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('goToVerse')
-                              .toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: blackColor, fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }*/
-}
-
-class ListItems extends StatelessWidget {
-  const ListItems({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scrollbar(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            InkWell(
-              onTap: () {},
-              child: Container(
-                height: 50,
-                color: Colors.amber[100],
-                child: const Center(child: Text('Entry A')),
-              ),
-            ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[200],
-              child: const Center(child: Text('Entry B')),
-            ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[300],
-              child: const Center(child: Text('Entry C')),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

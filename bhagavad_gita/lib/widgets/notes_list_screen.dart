@@ -57,19 +57,101 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             Spacer(),
-                            InkWell(
-                              onTap: () {
-                                showNoteDialog(onClickDelete: () async {
-                                  await SharedPref.removeVerseNotesFromSaved(
-                                      writeNotes[index].verseID!);
-                                  getNoteVerse();
-                                }, onClickGoToEdit: () {
-                                  navigationService.pushNamed(r_AddNote,
-                                      arguments: writeNotes[index]);
-                                }, onClickGoToVerse: () {
-                                  navigationService.pushNamed(r_ContinueReading,
-                                      arguments:
-                                          "${writeNotes[index].verseID ?? 0}");
+                            PopupMenuButton(
+                              itemBuilder: (BuildContext context) {
+                                return List.generate(3, (indexNotes) {
+                                  if (indexNotes == 0) {
+                                    return PopupMenuItem(
+                                      padding: EdgeInsets.all(0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              'assets/icons/icon_delete.svg'),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue('delete')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: Colors.red,
+                                                    fontSize: 16),
+                                          )
+                                        ],
+                                      ),
+                                      onTap: () async {
+                                        await SharedPref
+                                            .removeVerseNotesFromSaved(
+                                                writeNotes[index].verseID!);
+                                        getNoteVerse();
+                                      },
+                                    );
+                                  } else if (indexNotes == 1) {
+                                    return PopupMenuItem(
+                                      padding: EdgeInsets.all(0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              'assets/icons/Icon_writenote_pen.svg'),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue('edit')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: blackColor,
+                                                    fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Future.delayed(
+                                            Duration(milliseconds: 200), () {
+                                          navigationService.pushNamed(r_AddNote,
+                                              arguments: writeNotes[index]);
+                                        });
+                                      },
+                                    );
+                                  } else {
+                                    return PopupMenuItem(
+                                      padding: EdgeInsets.all(0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              'assets/icons/icon_go_to_verse.svg'),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue('goToVerse')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: blackColor,
+                                                    fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Future.delayed(
+                                            Duration(milliseconds: 200), () {
+                                          navigationService.pushNamed(
+                                              r_ContinueReading,
+                                              arguments:
+                                                  "${writeNotes[index].verseID ?? 0}");
+                                        });
+                                      },
+                                    );
+                                  }
                                 });
                               },
                               child: Container(
@@ -80,7 +162,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                       'assets/icons/Icon_more_setting.svg'),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         SizedBox(height: kPadding * 1.5),
@@ -128,114 +210,6 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
           ),
         ),
       ],
-    );
-  }
-
-  showNoteDialog(
-      {Function()? onClickDelete,
-      Function()? onClickGoToVerse,
-      Function()? onClickGoToEdit}) {
-    return showGeneralDialog(
-      barrierLabel: "",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.7),
-      context: context,
-      pageBuilder: (context, anim1, anim2) {
-        return Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: kDefaultPadding * 7.5, right: kDefaultPadding),
-            child: Container(
-              width: 200,
-              height: 160,
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: kPadding),
-                    Row(
-                      children: [
-                        SizedBox(width: kDefaultPadding),
-                        SvgPicture.asset('assets/icons/icon_delete.svg'),
-                        SizedBox(width: kDefaultPadding),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            onClickDelete!();
-                          },
-                          child: Text(
-                            DemoLocalization.of(context)!
-                                .getTranslatedValue('delete')
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: Colors.red, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(width: kDefaultPadding),
-                        SvgPicture.asset(
-                          'assets/icons/Icon_writenote_pen.svg',
-                          height: kPadding * 1.8,
-                          width: kPadding * 1.8,
-                        ),
-                        SizedBox(width: kPadding),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            onClickGoToEdit!();
-                          },
-                          child: Text(
-                            DemoLocalization.of(context)!
-                                .getTranslatedValue('edit')
-                                .toString(),
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: blackColor, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(width: kDefaultPadding),
-                        SvgPicture.asset('assets/icons/icon_go_to_verse.svg'),
-                        SizedBox(width: kDefaultPadding),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            onClickGoToVerse!();
-                          },
-                          child: Text(
-                            DemoLocalization.of(context)!
-                                .getTranslatedValue('goToVerse')
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: blackColor, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
