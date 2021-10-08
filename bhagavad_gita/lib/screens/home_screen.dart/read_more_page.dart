@@ -1,19 +1,20 @@
-// ignore_for_file: unused_local_variable
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
-import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
+import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:graphql_flutter/graphql_flutter.dart'; 
+import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
@@ -85,7 +86,6 @@ class _ContinueReadingState extends State<ContinueReading> {
         verseNotes = resultVerseNotes;
       });
     });
-    // changeVersePage(VerseDetailData(gitaVerseById: GitaVerseById()));
   }
 
   changeVersePage() {
@@ -102,6 +102,15 @@ class _ContinueReadingState extends State<ContinueReading> {
       print('Allready changed$versId');
       getVersDetails();
     });
+  }
+
+  Future<void> shareVerse() async {
+    await FlutterShare.share(
+      title: 'Transaltion',
+      text:
+          lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? "",
+      linkUrl: "https://bhagavadgita.graphcdn.app/",
+    );
   }
 
   double lineSpacing = 1.5;
@@ -423,7 +432,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  shareVerse();
+                },
                 child: Container(
                   height: 48,
                   width: 70,
@@ -461,14 +472,10 @@ class _ContinueReadingState extends State<ContinueReading> {
                 onTap: () async {
                   if (lastReadVerse != null) {
                     if (isVerseSaved) {
-                      var result =
-                          await SharedPref.removeVerseFromSaved(widget.verseID);
                       setState(() {
                         isVerseSaved = !isVerseSaved;
                       });
                     } else {
-                      var result =
-                          await SharedPref.saveBookmarkVerse(lastReadVerse!);
                       setState(() {
                         isVerseSaved = !isVerseSaved;
                       });

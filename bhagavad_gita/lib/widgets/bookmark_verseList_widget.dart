@@ -1,4 +1,3 @@
-import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
@@ -66,16 +65,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                 print('Helloooo Ritvik');
                                 showPopover(
                                   context: context,
-                                  transitionDuration:
-                                      const Duration(milliseconds: 150),
-                                  bodyBuilder: (context) => Container(
-                                    height: 100,
-                                    width: 100,
-                                    color: orangeColor,
-                                    child: Column(
-                                      children: [],
-                                    ),
-                                  ),
+                                  bodyBuilder: (context) => const ListItems(),
                                   onPop: () => print('Popover was popped!'),
                                   direction: PopoverDirection.top,
                                   width: 200,
@@ -83,6 +73,26 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                   arrowHeight: 15,
                                   arrowWidth: 30,
                                 );
+
+                                // showPopover(
+                                //   context: context,
+                                //   transitionDuration:
+                                //       const Duration(milliseconds: 150),
+                                //   bodyBuilder: (context) => Container(
+                                //     height: 100,
+                                //     width: 100,
+                                //     color: orangeColor,
+                                //     child: Column(
+                                //       children: [],
+                                //     ),
+                                //   ),
+                                //   onPop: () => print('Popover was popped!'),
+                                //   direction: PopoverDirection.top,
+                                //   width: 200,
+                                //   height: 400,
+                                //   arrowHeight: 15,
+                                //   arrowWidth: 30,
+                                // );
                               },
                               child: Container(
                                 height: kPadding * 3,

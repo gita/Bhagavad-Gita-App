@@ -113,7 +113,6 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 setState(() {
                                   _pageChange(pagerIndex + 2);
                                   pagerIndex = pagerIndex - 1;
-                                  
                                 });
                               },
                               child: Text(
@@ -220,7 +219,6 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                       SizedBox(
                         height: kPadding * 3.5,
                       ),
-                      //SearchBarWidget(),
                       Expanded(
                           child: SingleChildScrollView(
                         child: Column(

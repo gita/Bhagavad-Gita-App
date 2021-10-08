@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/Constant/quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_share/flutter_share.dart';
+
 class QuotesScreen extends StatefulWidget {
   @override
   _QuotesScreenState createState() => _QuotesScreenState();
@@ -29,12 +30,12 @@ class _QuotesScreenState extends State<QuotesScreen> {
 
   Future<void> share() async {
     await FlutterShare.share(
-      title: 'Example share',
-      text: 'Example share text',
-      linkUrl: 'https://flutter.dev/',
-      chooserTitle: 'Example Chooser Title'
+      title: quote,
+      text: quote,
+      linkUrl: "https://bhagavadgita.graphcdn.app/",
     );
   }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -163,5 +164,4 @@ class _QuotesScreenState extends State<QuotesScreen> {
       ),
     );
   }
-
 }
