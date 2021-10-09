@@ -226,6 +226,13 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             for (int i = 0; i < listLang.length; i++)
                               ListTile(
                                 title: Text(listLang[i]),
+                                onTap: () {
+                                  print("Valye : $i");
+                                    setState(() {
+                                      val = i;
+                                    });
+                                    _changeLanguage(listLang[val]);
+                                },
                                 leading: Radio(
                                   value: i,
                                   groupValue: val,
