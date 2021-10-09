@@ -228,10 +228,10 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 title: Text(listLang[i]),
                                 onTap: () {
                                   print("Valye : $i");
-                                    setState(() {
-                                      val = i;
-                                    });
-                                    _changeLanguage(listLang[val]);
+                                  setState(() {
+                                    val = i;
+                                  });
+                                  _changeLanguage(listLang[val]);
                                 },
                                 leading: Radio(
                                   value: i,
