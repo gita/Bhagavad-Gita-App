@@ -36,23 +36,23 @@ class _TabScreenControllerState extends State<TabScreenController>
   Widget build(BuildContext context) {
     return GraphQLProvider(
       child: DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          child: menu(),
-        ),
-        body: TabBarView(
-          controller: tabController,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            HomeScreen(),
-            SavedPage(),
-            QuotesScreen(),
-            AboutGitaScreen()
-          ],
+        length: 4,
+        child: Scaffold(
+          bottomNavigationBar: BottomAppBar(
+            child: menu(),
+          ),
+          body: TabBarView(
+            controller: tabController,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              HomeScreen(),
+              SavedPage(),
+              QuotesScreen(),
+              AboutGitaScreen()
+            ],
+          ),
         ),
       ),
-    ),
       client: client,
     );
     /*return DefaultTabController(
@@ -78,7 +78,7 @@ class _TabScreenControllerState extends State<TabScreenController>
   Widget menu() {
     return SafeArea(
       child: Container(
-        height: 56,
+        height: 60,
         child: TabBar(
           onTap: (int index) {
             setState(() {
@@ -96,79 +96,26 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                     width: 30,
-                    height: 28,
-                    child: SvgPicture.asset(tabController.index == 0
-                        ? 'assets/icons/icn_home_selected.svg'
-                        : 'assets/icons/icn_home.svg'),
+                    height: 25,
+                    child: SvgPicture.asset(
+                      tabController.index == 0
+                          ? 'assets/icons/icn_home_selected.svg'
+                          : 'assets/icons/icn_home.svg',
+                    ),
                   ),
+                  SizedBox(height: 3),
                   Text(
                     DemoLocalization.of(context)!
                         .getTranslatedValue('tabBar_Home')
                         .toString(),
                     style: tabController.index == 0
                         ? TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             color: blackColor,
                             fontWeight: FontWeight.w600,
                           )
                         : TextStyle(
-                            fontSize: 10,
-                            color: textLightGreyColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-            Tab(
-              child: Column(
-                children: [
-                  Container(
-                      width: 30,
-                      height: 28,
-                      child: SvgPicture.asset(tabController.index == 1
-                          ? 'assets/icons/icn_saved_selected.svg'
-                          : 'assets/icons/icn_saved.svg')),
-                  Text(
-                    DemoLocalization.of(context)!
-                        .getTranslatedValue('tabBar_Saved')
-                        .toString(),
-                    style: tabController.index == 1
-                        ? TextStyle(
-                            fontSize: 10,
-                            color: blackColor,
-                            fontWeight: FontWeight.w600,
-                          )
-                        : TextStyle(
-                            fontSize: 10,
-                            color: textLightGreyColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-            Tab(
-              child: Column(
-                children: [
-                  Container(
-                      width: 30,
-                      height: 28,
-                      child: SvgPicture.asset(tabController.index == 2
-                          ? 'assets/icons/icon_quotes_selected.svg'
-                          : 'assets/icons/icon_quotes.svg')),
-                  Text(
-                    DemoLocalization.of(context)!
-                        .getTranslatedValue('tabBar_Quotes')
-                        .toString(),
-                    style: tabController.index == 2
-                        ? TextStyle(
-                            fontSize: 10,
-                            color: blackColor,
-                            fontWeight: FontWeight.w600,
-                          )
-                        : TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             color: textLightGreyColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -181,7 +128,67 @@ class _TabScreenControllerState extends State<TabScreenController>
                 children: [
                   Container(
                     width: 30,
-                    height: 28,
+                    height: 25,
+                    child: SvgPicture.asset(tabController.index == 1
+                        ? 'assets/icons/icn_saved_selected.svg'
+                        : 'assets/icons/icn_saved.svg'),
+                  ),
+                  SizedBox(height: 3),
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_Saved')
+                        .toString(),
+                    style: tabController.index == 1
+                        ? TextStyle(
+                            fontSize: 12,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 12,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            Tab(
+              child: Column(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 25,
+                    child: SvgPicture.asset(tabController.index == 2
+                        ? 'assets/icons/icon_quotes_selected.svg'
+                        : 'assets/icons/icon_quotes.svg'),
+                  ),
+                  SizedBox(height: 3),
+                  Text(
+                    DemoLocalization.of(context)!
+                        .getTranslatedValue('tabBar_Quotes')
+                        .toString(),
+                    style: tabController.index == 2
+                        ? TextStyle(
+                            fontSize: 12,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: 12,
+                            color: textLightGreyColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            Tab(
+              child: Column(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 25,
                     child: Padding(
                       padding:
                           EdgeInsets.all(tabController.index == 3 ? 0.0 : 2.0),
@@ -190,18 +197,19 @@ class _TabScreenControllerState extends State<TabScreenController>
                           : 'assets/icons/icn_about.svg'),
                     ),
                   ),
+                  SizedBox(height: 3),
                   Text(
                     DemoLocalization.of(context)!
                         .getTranslatedValue('tabBar_About')
                         .toString(),
                     style: tabController.index == 3
                         ? TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             color: blackColor,
                             fontWeight: FontWeight.w600,
                           )
                         : TextStyle(
-                            fontSize: 10,
+                            fontSize: 12,
                             color: textLightGreyColor,
                             fontWeight: FontWeight.w500,
                           ),

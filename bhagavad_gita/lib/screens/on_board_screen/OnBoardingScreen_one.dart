@@ -26,6 +26,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
   int pagerIndex = 0;
   int lastPage = 0;
   bool languagePopUp = false;
+  bool isSkip = false;
 
   int val = 0;
   List<String> listLang = ["English", "Hindi"];
@@ -47,11 +48,27 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
         langauge.toLowerCase().replaceAll("\"", "replace"));
   }
 
-  void _pageChange(int index) {
+  _pageChange(int index) {
+    if (!isSkip) {
+      print("Page changed : $index");
+      setState(() {
+        pagerIndex = index;
+        controller.animateToPage(index,
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
+      });
+    } else {
+      isSkip = false;
+    }
+  }
+
+  _navigateToLastPage() {
+    print("Navigate last page");
+    isSkip = true;
     setState(() {
-      pagerIndex = index;
-      controller.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+      pagerIndex = 3;
+      controller.jumpToPage(3);
+      // controller.animateToPage(3,
+      //     duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
   }
 
@@ -81,26 +98,31 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                   PageIndicator(pagerIndex: pagerIndex, totalPages: 4),
                   SizedBox(height: kPadding * 7),
                   pagerIndex == 3
-                      ? InkWell(
-                          onTap: () {
-                            buildShowDialog(context);
-                          },
-                          child: Container(
-                            height: 50,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 121, 3, 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                DemoLocalization.of(context)!
-                                    .getTranslatedValue('getStarted')
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w400,
+                      ? Container(
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(245, 121, 3, 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                buildShowDialog(context);
+                              },
+                              child: Expanded(
+                                child: Center(
+                                  child: Text(
+                                    DemoLocalization.of(context)!
+                                        .getTranslatedValue('getStarted')
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -110,10 +132,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                setState(() {
-                                  _pageChange(pagerIndex + 2);
-                                  pagerIndex = pagerIndex - 1;
-                                });
+                                _navigateToLastPage();
                               },
                               child: Text(
                                 DemoLocalization.of(context)!
@@ -128,10 +147,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             Spacer(),
                             TextButton(
                               onPressed: () {
-                                setState(() {
-                                  _pageChange(pagerIndex + 1);
-                                  pagerIndex = pagerIndex - 1;
-                                });
+                                _pageChange(pagerIndex + 1);
                               },
                               child: Row(
                                 children: [
@@ -162,7 +178,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
     );
   }
 
-  Future<dynamic> buildShowDialog(BuildContext context) {
+  buildShowDialog(context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return showDialog(
@@ -251,27 +267,33 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                       )),
                       Padding(
                         padding: EdgeInsets.all(30),
-                        child: InkWell(
-                          onTap: () {
-                            SharedPref.saveSkipOnboardScreen();
-                            navigationService.pushNamedAndRemoveUntil(r_Tabbar);
-                          },
-                          child: Container(
-                            height: kPadding * 5,
-                            width: kPadding * 19,
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 121, 3, 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                DemoLocalization.of(context)!
-                                    .getTranslatedValue('okLetsGo')
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w400,
+                        child: Container(
+                          height: kPadding * 5,
+                          width: kPadding * 19,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(245, 121, 3, 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                SharedPref.saveSkipOnboardScreen();
+                                navigationService
+                                    .pushNamedAndRemoveUntil(r_Tabbar);
+                              },
+                              child: Expanded(
+                                child: Center(
+                                  child: Text(
+                                    DemoLocalization.of(context)!
+                                        .getTranslatedValue('okLetsGo')
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

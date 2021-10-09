@@ -61,27 +61,32 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
         actions: [
           strNotes.length > 0
               ? Center(
-                  child: InkWell(
-                    onTap: () async {
-                      verseNotes.verseNote = strNotes;
-                      await SharedPref.saveVerseNotes(verseNotes);
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 71,
-                      decoration: BoxDecoration(
-                          color: orangeColor,
-                          borderRadius: BorderRadius.circular(8.0)),
-                      child: Center(
-                        child: Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('save')
-                              .toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 14, color: whiteColor),
+                  child: Container(
+                    height: 30,
+                    width: 71,
+                    decoration: BoxDecoration(
+                        color: orangeColor,
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          verseNotes.verseNote = strNotes;
+                          await SharedPref.saveVerseNotes(verseNotes);
+                          Navigator.of(context).pop();
+                        },
+                        child: Expanded(
+                          child: Center(
+                            child: Text(
+                              DemoLocalization.of(context)!
+                                  .getTranslatedValue('save')
+                                  .toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(fontSize: 14, color: whiteColor),
+                            ),
+                          ),
                         ),
                       ),
                     ),

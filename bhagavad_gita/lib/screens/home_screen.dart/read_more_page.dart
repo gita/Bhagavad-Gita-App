@@ -107,8 +107,9 @@ class _ContinueReadingState extends State<ContinueReading> {
   Future<void> shareVerse() async {
     await FlutterShare.share(
       title: 'Transaltion',
-      text:
-          lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? "",
+      text: lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
+              .description ??
+          "",
       linkUrl: "https://bhagavadgita.graphcdn.app/",
     );
   }
@@ -472,10 +473,12 @@ class _ContinueReadingState extends State<ContinueReading> {
                 onTap: () async {
                   if (lastReadVerse != null) {
                     if (isVerseSaved) {
+                      await SharedPref.removeVerseFromSaved(widget.verseID);
                       setState(() {
                         isVerseSaved = !isVerseSaved;
                       });
                     } else {
+                      await SharedPref.saveBookmarkVerse(lastReadVerse!);
                       setState(() {
                         isVerseSaved = !isVerseSaved;
                       });

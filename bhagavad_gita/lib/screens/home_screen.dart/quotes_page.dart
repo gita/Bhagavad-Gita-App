@@ -76,7 +76,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               ),
             ),
             Positioned(
-              top: height / kPadding * 2.3,
+              top: height / kPadding * 2.2,
               left: width / kPadding * 0.5,
               child: Container(
                 child: SvgPicture.asset("assets/icons/icon_Quote.svg"),
@@ -93,7 +93,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1!
-                      .copyWith(color: whiteColor, fontWeight: FontWeight.w500),
+                      .copyWith(color: whiteColor, fontWeight: FontWeight.w500,height: 1.7),
                 ),
               ),
             ),

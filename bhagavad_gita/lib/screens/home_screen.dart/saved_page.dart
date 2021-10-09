@@ -33,7 +33,6 @@ class _SavedPageState extends State<SavedPage> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: kDefaultPadding),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -41,14 +40,11 @@ class _SavedPageState extends State<SavedPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          _pageChange(isPageIndex - 1);
-                          isPageIndex = isPageIndex - 1;
-                        });
+                        _pageChange(isPageIndex - 1);
                       },
                       child: Container(
-                        height: kPadding * 2.5,
-                        width: kDefaultPadding * 6,
+                        height: kPadding * 6,
+                        width: kDefaultPadding * 8,
                         child: Center(
                           child: Text(
                             DemoLocalization.of(context)!
@@ -65,7 +61,6 @@ class _SavedPageState extends State<SavedPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: kPadding * 0.7),
                     Container(
                       height: 5,
                       width: 40,
@@ -81,14 +76,11 @@ class _SavedPageState extends State<SavedPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          _pageChange(isPageIndex + 1);
-                          isPageIndex = isPageIndex - 1;
-                        });
+                        _pageChange(isPageIndex + 1);
                       },
                       child: Container(
-                        height: kPadding * 2.5,
-                        width: kDefaultPadding * 6,
+                        height: kPadding * 6,
+                        width: kDefaultPadding * 8,
                         child: Center(
                           child: Text(
                             DemoLocalization.of(context)!
@@ -105,7 +97,6 @@ class _SavedPageState extends State<SavedPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: kPadding * 0.7),
                     Container(
                       height: 5,
                       width: 40,

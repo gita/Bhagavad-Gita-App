@@ -103,7 +103,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                             BorderRadius.circular(kDefaultCornerRadius)),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.only(left: kDefaultPadding,top: kDefaultPadding,bottom: kPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -225,7 +225,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               text:
                   '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber} | ',
               style: Theme.of(context).textTheme.headline2!.copyWith(
-                    color: primaryColor,
+                    color: orangeColor,
                     fontSize: width * 0.037,
                   ),
               children: <TextSpan>[
