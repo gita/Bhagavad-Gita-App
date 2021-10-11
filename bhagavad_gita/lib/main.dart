@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       theme: ThemeData(
+          accentColor: orangeColor,
           fontFamily: 'Inter',
           textTheme: TextTheme(
             headline1: TextStyle(
@@ -89,7 +91,6 @@ class _MyAppState extends State<MyApp> {
             color: Colors.white,
             elevation: 0,
             titleTextStyle: TextStyle(color: appBarTitleColor),
-            // ignore: deprecated_member_use
             textTheme: TextTheme(
               headline1: TextStyle(
                   color: appBarTitleColor,

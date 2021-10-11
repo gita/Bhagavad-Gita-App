@@ -77,10 +77,18 @@ class _ContinueReadingState extends State<ContinueReading> {
   }
   """;
 
+    getVerseNotes();
+  }
+
+  getVerseNotes() {
+    setState(() {
+      isVerseSaved = false;
+      verseNotes = null;
+    });
     Future.delayed(Duration(milliseconds: 200), () async {
-      var result = await SharedPref.checkVerseIsSavedOrNot(widget.verseID);
+      var result = await SharedPref.checkVerseIsSavedOrNot("$versId");
       var resultVerseNotes =
-          await SharedPref.checkVerseNotesIsSavedOrNot(widget.verseID);
+          await SharedPref.checkVerseNotesIsSavedOrNot("$versId");
       setState(() {
         isVerseSaved = result;
         verseNotes = resultVerseNotes;
@@ -385,7 +393,6 @@ class _ContinueReadingState extends State<ContinueReading> {
                   onTap: () {
                     print('change Verse');
                     changeVersePage();
-                    print('changed Verse');
                   },
                   child: Container(
                     height: 48,

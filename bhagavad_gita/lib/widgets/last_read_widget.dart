@@ -56,14 +56,14 @@ class LastReadWidget extends StatelessWidget {
                 .copyWith(color: greyScalLableColor),
           ),
           Container(
-            width: kDefaultPadding * 8,
             height: kDefaultPadding * 2,
             child: InkWell(
               onTap: () {
                 onButtonTap();
               },
               child: Expanded(
-                child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: kPadding),
                   child: Text(
                     DemoLocalization.of(context)!
                         .getTranslatedValue('continueReading')

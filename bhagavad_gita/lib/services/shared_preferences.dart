@@ -265,4 +265,9 @@ class SharedPref {
     }
     return isSkip;
   }
+
+  //// Save Verse Setting....
+  // static Future saveVerseSetting() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // }
 }

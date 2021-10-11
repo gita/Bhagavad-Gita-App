@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final NavigationService navigationService = locator<NavigationService>();
   LastReadVerse? lastReadVerse;
+  bool isSortChapterNum = true;
 
   String fontFamily = 'Inter';
 
@@ -165,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Map<String, dynamic> allGitaChapters = node["allGitaChapters"];
                 List chapters = allGitaChapters["nodes"];
                 return ListView.builder(
+                  // reverse: true,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: chapters.length,

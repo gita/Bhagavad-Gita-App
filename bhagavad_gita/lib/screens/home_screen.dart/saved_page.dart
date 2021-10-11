@@ -40,7 +40,7 @@ class _SavedPageState extends State<SavedPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        _pageChange(isPageIndex - 1);
+                        _pageChange(isPageIndex = 0);
                       },
                       child: Container(
                         height: kPadding * 6,
@@ -76,7 +76,7 @@ class _SavedPageState extends State<SavedPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        _pageChange(isPageIndex + 1);
+                        _pageChange(isPageIndex = 1);
                       },
                       child: Container(
                         height: kPadding * 6,
