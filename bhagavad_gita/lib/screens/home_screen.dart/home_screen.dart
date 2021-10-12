@@ -14,6 +14,7 @@ import 'package:bhagavad_gita/widgets/chapter_list_tile_widget.dart';
 import 'package:bhagavad_gita/widgets/last_read_widget.dart';
 import 'package:bhagavad_gita/widgets/verse_of_the_day_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSortChapterNum = true;
 
   String fontFamily = 'Inter';
+  bool isReverse = false;
 
   final tempQuery = gql("""
     query {
@@ -92,104 +94,147 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            VerseOfTheDayWidget(),
-            lastReadVerse == null
-                ? Container()
-                : LastReadWidget(
-                    lastReadVerse: lastReadVerse!,
-                    onButtonTap: () {
-                      navigationService.pushNamed(r_ContinueReading,
-                          arguments: "${lastReadVerse!.verseID ?? 0}");
-                    },
-                  ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: kDefaultPadding,
-                  right: kDefaultPadding,
-                  bottom: kDefaultPadding),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        DemoLocalization.of(context)!
-                            .getTranslatedValue('chapters')
-                            .toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: greyScalBodyColor, fontSize: 20),
-                      ),
-                      Spacer(),
-                      InkWell(
-                        onTap: () {
-                          print('Sort button tap');
-                        },
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          child: Center(
-                            child:
-                                SvgPicture.asset('assets/icons/icn_sort.svg'),
-                          ),
+      body: OfflineBuilder(
+        connectivityBuilder: (BuildContext context,
+            ConnectivityResult connectivity, Widget child) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          return new Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                height: 24.0,
+                left: 0.0,
+                right: 0.0,
+                child: !connected
+                    ? Container(
+                        color:
+                            connected ? Color(0xFF00EE44) : Color(0xFFEE4400),
+                        child: Center(
+                          child: Text("${connected ? 'ONLINE' : 'OFFLINE'}"),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      )
+                    : Container(),
               ),
-            ),
-            Query(
-              options: QueryOptions(document: tempQuery),
-              builder: (
-                QueryResult result, {
-                Refetch? refetch,
-                FetchMore? fetchMore,
-              }) {
-                if (result.hasException) {
-                  print("ERROR : ${result.exception.toString()}");
-                }
-                if (result.data == null) {
-                  return Container(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: primaryColor,
-                        strokeWidth: 2,
+              !connected
+                  ? Center(
+                      child: Text(
+                        'Offline!',
+                        style: AppBarTheme.of(context).textTheme!.headline1,
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          VerseOfTheDayWidget(),
+                          lastReadVerse == null
+                              ? Container()
+                              : LastReadWidget(
+                                  lastReadVerse: lastReadVerse!,
+                                  onButtonTap: () {
+                                    navigationService.pushNamed(
+                                        r_ContinueReading,
+                                        arguments:
+                                            "${lastReadVerse!.verseID ?? 0}");
+                                  },
+                                ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: kDefaultPadding,
+                                right: kDefaultPadding,
+                                bottom: kDefaultPadding),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      DemoLocalization.of(context)!
+                                          .getTranslatedValue('chapters')
+                                          .toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline1!
+                                          .copyWith(
+                                              color: greyScalBodyColor,
+                                              fontSize: 20),
+                                    ),
+                                    Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isReverse = !isReverse;
+                                        });
+                                      },
+                                      child: Container(
+                                        width: 40,
+                                        height: 40,
+                                        child: Center(
+                                          child: SvgPicture.asset(
+                                              'assets/icons/icn_sort.svg'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Query(
+                            options: QueryOptions(document: tempQuery),
+                            builder: (
+                              QueryResult result, {
+                              Refetch? refetch,
+                              FetchMore? fetchMore,
+                            }) {
+                              if (result.hasException) {
+                                print("ERROR : ${result.exception.toString()}");
+                              }
+                              if (result.data == null) {
+                                return Container(
+                                  height: 200,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: primaryColor,
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                );
+                              }
+                              Map<String, dynamic> node = result.data!;
+                              Map<String, dynamic> allGitaChapters =
+                                  node["allGitaChapters"];
+                              List chapters = allGitaChapters["nodes"];
+                              return ListView.builder(
+                                reverse: isReverse,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: chapters.length,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> chapterTemp =
+                                      chapters[index];
+                                  Chapter chapter =
+                                      Chapter.fromJson(chapterTemp);
+                                  return ChapterListTileWidget(
+                                    index: index,
+                                    onTap: () {
+                                      navigationService.pushNamed(
+                                          r_ChapterDetail,
+                                          arguments:
+                                              chapter.chapterNumber ?? 1);
+                                    },
+                                    chapter: chapter,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(height: kDefaultPadding * 2)
+                        ],
                       ),
                     ),
-                  );
-                }
-                Map<String, dynamic> node = result.data!;
-                Map<String, dynamic> allGitaChapters = node["allGitaChapters"];
-                List chapters = allGitaChapters["nodes"];
-                return ListView.builder(
-                  // reverse: true,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: chapters.length,
-                  itemBuilder: (context, index) {
-                    Map<String, dynamic> chapterTemp = chapters[index];
-                    Chapter chapter = Chapter.fromJson(chapterTemp);
-                    print("Chapter $chapter");
-                    return ChapterListTileWidget(
-                      index: index,
-                      onTap: () {
-                        navigationService.pushNamed(r_ChapterDetail,
-                            arguments: chapter.chapterNumber ?? 1);
-                      },
-                      chapter: chapter,
-                    );
-                  },
-                );
-              },
-            ),
-            SizedBox(height: kDefaultPadding * 2)
-          ],
-        ),
+            ],
+          );
+        },
+        child: Container(),
       ),
     );
   }

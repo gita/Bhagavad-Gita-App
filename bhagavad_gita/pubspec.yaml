@@ -21,7 +21,7 @@ dependencies:
   flutter_share: ^2.0.0
   shared_preferences: ^2.0.7
   flutter_local_notifications: ^9.0.0
-  numberpicker: ^2.1.1
+  flutter_offline: "^2.0.0"
   flutter_localizations: 
     sdk: flutter 
 

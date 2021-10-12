@@ -9,7 +9,6 @@ import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
-import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/verse_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -43,6 +42,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
   @override
   void initState() {
     super.initState();
+    chapterNumber = widget.chapterNumber;
     getChapterDetail();
   }
 
@@ -52,7 +52,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
 
     chapterDetailQuery = """ 
     {
-    gitaChapterById(id: ${widget.chapterNumber}) {
+    gitaChapterById(id: $chapterNumber) {
       chapterNumber
       nameTranslated
       chapterSummary
@@ -73,40 +73,24 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
     }
   }
   """;
-    getChapterNotes();
-  }
-
-  getChapterNotes() {
-    setState(() {
-      isChapterNumSave = false;
-      chapter = null;
-    });
-    Future.delayed(Duration(milliseconds: 200), () async {
-      var result =
-          await SharedPref.checkVerseIsSavedOrNot("${widget.chapterNumber}");
-      var resultVerseNote = await SharedPref.checkVerseNotesIsSavedOrNot(
-          "${widget.chapterNumber}");
-      setState(() {
-        isChapterNumSave = result;
-        chapter = resultVerseNote as Chapter;
-      });
-    });
   }
 
   changeChapterPage() {
-    setState(() {
-      chapterNumber = widget.chapterNumber + 1;
-      print('Allready changed${widget.chapterNumber}');
-      getChapterDetail();
-    });
+    if (chapterNumber < 18) {
+      setState(() {
+        chapterNumber = chapterNumber + 1;
+        getChapterDetail();
+      });
+    }
   }
 
   reverschangeChapterPage() {
-    setState(() {
-      chapterNumber = widget.chapterNumber - 1;
-      print('Allready changed${widget.chapterNumber}');
-      getChapterDetail();
-    });
+    if (chapterNumber > 1) {
+      setState(() {
+        chapterNumber = chapterNumber - 1;
+        getChapterDetail();
+      });
+    }
   }
 
   @override
@@ -302,9 +286,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               left: kDefaultPadding,
               child: InkWell(
                 onTap: () {
-                  widget.chapterNumber == 1
-                      ? chapterNumber = chapterNumber
-                      : reverschangeChapterPage();
+                  reverschangeChapterPage();
                 },
                 child: Container(
                   height: 48,

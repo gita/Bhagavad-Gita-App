@@ -4,10 +4,11 @@ import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/widgets/set_notificationTimer_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
-import 'package:numberpicker/numberpicker.dart';
 import '../../locator.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -224,7 +225,6 @@ class _SettingScreenState extends State<SettingScreen> {
               indent: kPadding * 2,
               endIndent: kPadding * 2,
             ),
-
             ListTileSwitch(
               value: _switchValues[2],
               onChanged: (value) {
@@ -348,13 +348,12 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   setNotificationTimer(BuildContext context) {
-    int currentValue = 1;
     return showModalBottomSheet(
       context: context,
       builder: (context) {
         return Container(
+          height: 320,
           color: Color(0XFF737373),
-          height: 350,
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,
@@ -363,40 +362,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: Row(
-              children: [
-                NumberPicker(
-                  value: currentValue,
-                  minValue: 1,
-                  maxValue: 24,
-                  onChanged: (value) {
-                    setState(() {
-                      currentValue = value;
-                    });
-                  },
-                ),
-                // NumberPicker(
-                //   value: currentValue,
-                //   minValue: 1,
-                //   maxValue: 24,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       currentValue = value + 5;
-                //     });
-                //   },
-                // ),
-                // NumberPicker(
-                //   value: currentValue,
-                //   minValue: 1,
-                //   maxValue: 24,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       currentValue = value + 10;
-                //     });
-                //   },
-                // )
-              ],
-            ),
+            child: SetNotificationTimerWidget(),
           ),
         );
       },

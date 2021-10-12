@@ -21,6 +21,8 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
   NavigationService navigationService = locator<NavigationService>();
   String strNotes = "";
   late VerseNotes verseNotes;
+  List<VerseNotes> writeNotes = [];
+  int? index;
 
   @override
   void initState() {
@@ -93,6 +95,40 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                   ),
                 )
               : Container(),
+          // strNotes.length == 0
+          //     ? Center(
+          //         child: Container(
+          //           height: 30,
+          //           width: 71,
+          //           decoration: BoxDecoration(
+          //               color: orangeColor,
+          //               borderRadius: BorderRadius.circular(8.0)),
+          //           child: Material(
+          //             color: Colors.transparent,
+          //             child: InkWell(
+          //               onTap: () async {
+          //                 verseNotes.verseNote = strNotes;
+          //                 await SharedPref.removeVerseNotesFromSaved(strNotes);
+          //                 Navigator.of(context).pop();
+          //               },
+          //               child: Expanded(
+          //                 child: Center(
+          //                   child: Text(
+          //                     DemoLocalization.of(context)!
+          //                         .getTranslatedValue('delete')
+          //                         .toString(),
+          //                     style: Theme.of(context)
+          //                         .textTheme
+          //                         .headline2!
+          //                         .copyWith(fontSize: 14, color: whiteColor),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       )
+          //     : Container(),
           SizedBox(
             width: kDefaultPadding,
           )
@@ -102,8 +138,9 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: TextFormField(
+            keyboardType: TextInputType.multiline,
             initialValue: verseNotes.verseNote,
-            maxLines: 10,
+            maxLines: 100,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: DemoLocalization.of(context)!
