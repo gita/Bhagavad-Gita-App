@@ -13,6 +13,8 @@ class PreferenceConstant {
   static String language = "language";
   static String skipOnboardScreen = "skipOnboardScreen";
   static String onChangeFontFamily = 'onChangeFontFamily';
+  static String verseCustomisation = 'verseCustomisation';
+  static String verseListCustomisation = 'verseListCustomisation';
 }
 
 class SharedPref {
@@ -267,7 +269,44 @@ class SharedPref {
   }
 
   //// Save Verse Setting....
-  // static Future saveVerseSetting() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  // }
+  static saveVerseCustomisation(VerseCustomissation verseCustomissation) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(
+        PreferenceConstant.verseCustomisation, jsonEncode(verseCustomissation));
+  }
+
+  static Future<VerseCustomissation> getSavedVerseCustomisation() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? strVerseCustomisation =
+        sharedPreferences.getString(PreferenceConstant.verseCustomisation);
+    if (strVerseCustomisation != null) {
+      var lastRead = jsonDecode(strVerseCustomisation);
+      print("Last Read : $lastRead");
+      var tempRead = lastRead as Map<String, dynamic>;
+      return VerseCustomissation.fromJson(tempRead);
+    }
+    return VerseCustomissation(
+        fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: "1");
+  }
+
+  //// Save Verse Listing Setting....
+  static saveVerseListCustomisation(
+      VerseCustomissation verseCustomissation) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(PreferenceConstant.verseListCustomisation,
+        jsonEncode(verseCustomissation));
+  }
+
+  static Future<VerseCustomissation> getSavedVerseListCustomisation() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? strVerseListCustomisation =
+        sharedPreferences.getString(PreferenceConstant.verseListCustomisation);
+    if (strVerseListCustomisation != null) {
+      var saveSatting = jsonDecode(strVerseListCustomisation);
+      var readTemp = saveSatting as Map<String, dynamic>;
+      return VerseCustomissation.fromJson(readTemp);
+    }
+    return VerseCustomissation(
+        fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: '1');
+  }
 }

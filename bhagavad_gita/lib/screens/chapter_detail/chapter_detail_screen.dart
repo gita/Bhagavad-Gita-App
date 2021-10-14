@@ -6,9 +6,11 @@ import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
+import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/verse_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,12 +40,30 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
   bool isChapterNumSave = false;
   Chapter? chapter;
   int chapterNumber = 1;
+  late VerseCustomissation verseCustomissation;
 
   @override
   void initState() {
     super.initState();
     chapterNumber = widget.chapterNumber;
     getChapterDetail();
+
+    SharedPref.getSavedVerseListCustomisation().then((value) {
+      verseCustomissation = value;
+      setState(() {
+        lineSpacing = value.lineSpacing;
+        fontFamily = value.fontfamily;
+        fontSize = value.fontsize.toDouble();
+        print('FontSize ----> $fontSize');
+        if (value.colorId == '1') {
+          formatingColor = whiteFormatingColor;
+        } else if (value.colorId == '2') {
+          formatingColor = orangeFormatingColor;
+        } else if (value.colorId == '3') {
+          formatingColor = blackFormatingColor;
+        }
+      });
+    });
   }
 
   getChapterDetail() {
@@ -157,110 +177,117 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               child: SvgPicture.asset(
                   "assets/icons/flower_chapterDetail_right.svg"),
             ),
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: kPadding * 2),
-                child: Query(
-                  options: QueryOptions(document: gql(chapterDetailQuery)),
-                  builder: (
-                    QueryResult result, {
-                    Refetch? refetch,
-                    FetchMore? fetchMore,
-                  }) {
-                    if (result.hasException) {
-                      print("ERROR : ${result.exception.toString()}");
-                    }
-                    if (result.data == null) {
-                      return Container(
-                        height: 200,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor,
-                            strokeWidth: 2,
-                          ),
-                        ),
-                      );
-                    }
-                    Map<String, dynamic>? res = result.data;
-                    ChapterDetailData chapterDetailData =
-                        ChapterDetailData.fromJson(res!);
-                    print(
-                        "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
-                    print("API Response : $res");
-                    return Column(
-                      children: [
-                        SizedBox(height: kDefaultPadding * 2),
-                        Center(
-                          child: Text(
-                            "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      height: lineSpacing,
-                                      color: orangeColor,
-                                      fontSize: fontSize,
-                                      fontFamily: fontFamily,
-                                    ),
-                          ),
-                        ),
-                        SizedBox(height: kPadding),
-                        Text(
-                          chapterDetailData.gitaChapterById!.nameTranslated ??
-                              "",
-                          style:
-                              Theme.of(context).textTheme.headline2!.copyWith(
-                                    height: lineSpacing,
-                                    fontSize: fontSize,
-                                    fontFamily: fontFamily,
-                                    color: formatingColor.naviagationIconColor,
-                                  ),
-                        ),
-                        SizedBox(height: kDefaultPadding * 2),
-                        Text(
-                          chapterDetailData.gitaChapterById!.chapterSummary ??
-                              '',
-                          maxLines: isShowMoreChapterDetail ? 500 : 4,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    fontSize: fontSize,
-                                    height: lineSpacing,
-                                    fontFamily: fontFamily,
-                                    color: formatingColor.naviagationIconColor,
-                                  ),
-                        ),
-                        Row(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  isShowMoreChapterDetail =
-                                      !isShowMoreChapterDetail;
-                                });
-                              },
-                              child: Text(
-                                isShowMoreChapterDetail
-                                    ? DemoLocalization.of(context)!
-                                        .getTranslatedValue('showLess')
-                                        .toString()
-                                    : DemoLocalization.of(context)!
-                                        .getTranslatedValue('showMore')
-                                        .toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                      fontSize: fontSize,
-                                      height: lineSpacing,
-                                      fontFamily: fontFamily,
-                                      color: textLightGreyColor,
-                                    ),
-                              ),
+            SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: kPadding * 2),
+                  child: Query(
+                    options: QueryOptions(document: gql(chapterDetailQuery)),
+                    builder: (
+                      QueryResult result, {
+                      Refetch? refetch,
+                      FetchMore? fetchMore,
+                    }) {
+                      if (result.hasException) {
+                        print("ERROR : ${result.exception.toString()}");
+                      }
+                      if (result.data == null) {
+                        return Container(
+                          height: 200,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                              strokeWidth: 2,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: kDefaultPadding),
-                        Expanded(
-                          child: ListView.builder(
+                          ),
+                        );
+                      }
+                      Map<String, dynamic>? res = result.data;
+                      ChapterDetailData chapterDetailData =
+                          ChapterDetailData.fromJson(res!);
+                      print(
+                          "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
+                      print("API Response : $res");
+                      return Column(
+                        children: [
+                          SizedBox(height: kDefaultPadding * 2),
+                          Center(
+                            child: Text(
+                              "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    height: lineSpacing,
+                                    color: orangeColor,
+                                    fontSize: fontSize,
+                                    fontFamily: fontFamily,
+                                  ),
+                            ),
+                          ),
+                          SizedBox(height: kPadding),
+                          Text(
+                            chapterDetailData.gitaChapterById!.nameTranslated ??
+                                "",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(
+                                  height: lineSpacing,
+                                  fontSize: fontSize,
+                                  fontFamily: fontFamily,
+                                  color: formatingColor.naviagationIconColor,
+                                ),
+                          ),
+                          SizedBox(height: kDefaultPadding * 2),
+                          Text(
+                            chapterDetailData.gitaChapterById!.chapterSummary ??
+                                '',
+                            maxLines: isShowMoreChapterDetail ? 500 : 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                  fontSize: fontSize,
+                                  height: lineSpacing,
+                                  fontFamily: fontFamily,
+                                  color: formatingColor.naviagationIconColor,
+                                ),
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isShowMoreChapterDetail =
+                                        !isShowMoreChapterDetail;
+                                  });
+                                },
+                                child: Text(
+                                  isShowMoreChapterDetail
+                                      ? DemoLocalization.of(context)!
+                                          .getTranslatedValue('showLess')
+                                          .toString()
+                                      : DemoLocalization.of(context)!
+                                          .getTranslatedValue('showMore')
+                                          .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                        fontSize: fontSize,
+                                        height: lineSpacing,
+                                        fontFamily: fontFamily,
+                                        color: textLightGreyColor,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: kDefaultPadding),
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: chapterDetailData.gitaChapterById!
                                 .gitaVersesByChapterId!.nodes!.length,
@@ -273,11 +300,11 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   fontSize: fontSize,
                                   fontFamily: fontFamily);
                             },
-                          ),
-                        )
-                      ],
-                    );
-                  },
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -358,12 +385,16 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                 setState(() {
                   lineSpacing = value;
                 });
+                verseCustomissation.lineSpacing = value;
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               initialLineSpacing: lineSpacing,
               selectedFontFamily: (String strFontFamily) {
                 setState(() {
                   fontFamily = strFontFamily;
                 });
+                verseCustomissation.fontfamily = strFontFamily;
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               selectedFontSize: (int) {},
               fontName: fontFamily,
@@ -371,17 +402,22 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                 if (increase) {
                   setState(() {
                     fontSize = fontSize + 1;
+                    print('FONTSIZE====>>$fontSize');
                   });
                 } else {
                   setState(() {
                     fontSize = fontSize - 1;
                   });
                 }
+                verseCustomissation.fontsize = fontSize.toInt();
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               formatingColorSelection: (FormatingColor colorMode) {
                 setState(() {
                   formatingColor = colorMode;
                 });
+                verseCustomissation.colorId = colorMode.id;
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               formatingColor: formatingColor,
             ),

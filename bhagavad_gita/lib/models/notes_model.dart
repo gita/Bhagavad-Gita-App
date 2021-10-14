@@ -19,3 +19,29 @@ class VerseNotes {
         "verseNote": verseNote
       };
 }
+
+class VerseCustomissation {
+  int fontsize = 16;
+  String fontfamily = "Inter";
+  double lineSpacing = 1.5;
+  String colorId = "1";
+
+  VerseCustomissation(
+      {required this.fontsize,
+      required this.fontfamily,
+      required this.lineSpacing,
+      required this.colorId});
+  factory VerseCustomissation.fromJson(Map<String, dynamic> json) =>
+      VerseCustomissation(
+        fontsize: json['fontsize'],
+        fontfamily: json['fontFamily'],
+        lineSpacing: json['lineSpacing'],
+        colorId: json['colorId'],
+      );
+  Map<String, dynamic> toJson() => {
+        'fontsize': fontsize,
+        'fontFamily': fontfamily,
+        'lineSpacing': lineSpacing,
+        'colorId': colorId,
+      };
+}

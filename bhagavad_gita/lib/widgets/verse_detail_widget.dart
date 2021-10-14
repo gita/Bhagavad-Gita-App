@@ -84,7 +84,7 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
           SizedBox(
             height: kDefaultPadding,
           ),
-          Divider()
+          Divider(color: widget.formatingColor.naviagationIconColor)
         ],
       ),
     );

@@ -38,10 +38,14 @@ class _ContinueReadingState extends State<ContinueReading> {
   VerseNotes? verseNotes;
   int versId = 1;
 
+  LastReadVerse? lastReadVerse;
+
   //// Customisation
+  double lineSpacing = 1.5;
   String fontFamily = 'Inter';
   double fontSize = 16;
   FormatingColor formatingColor = whiteFormatingColor;
+  late VerseCustomissation verseCustomissation;
 
   @override
   void initState() {
@@ -49,6 +53,22 @@ class _ContinueReadingState extends State<ContinueReading> {
     setState(() {
       versId = int.parse(widget.verseID);
       getVersDetails();
+    });
+
+    SharedPref.getSavedVerseCustomisation().then((value) {
+      verseCustomissation = value;
+      setState(() {
+        lineSpacing = value.lineSpacing;
+        fontFamily = value.fontfamily;
+        fontSize = value.fontsize.toDouble();
+        if (value.colorId == "1") {
+          formatingColor = whiteFormatingColor;
+        } else if (value.colorId == "2") {
+          formatingColor = orangeFormatingColor;
+        } else if (value.colorId == "3") {
+          formatingColor = blackFormatingColor;
+        }
+      });
     });
   }
 
@@ -99,7 +119,6 @@ class _ContinueReadingState extends State<ContinueReading> {
   changeVersePage() {
     setState(() {
       versId = versId + 1;
-      print('Allready changed$versId');
       getVersDetails();
     });
   }
@@ -107,7 +126,6 @@ class _ContinueReadingState extends State<ContinueReading> {
   reverschangeVersePage() {
     setState(() {
       versId = versId - 1;
-      print('Allready changed$versId');
       getVersDetails();
     });
   }
@@ -121,9 +139,6 @@ class _ContinueReadingState extends State<ContinueReading> {
       linkUrl: "https://bhagavadgita.graphcdn.app/",
     );
   }
-
-  double lineSpacing = 1.5;
-  LastReadVerse? lastReadVerse;
 
   @override
   Widget build(BuildContext context) {
@@ -522,12 +537,16 @@ class _ContinueReadingState extends State<ContinueReading> {
                 setState(() {
                   lineSpacing = value;
                 });
+                verseCustomissation.lineSpacing = value;
+                SharedPref.saveVerseCustomisation(verseCustomissation);
               },
               initialLineSpacing: lineSpacing,
               selectedFontFamily: (String strFontFamily) {
                 setState(() {
                   fontFamily = strFontFamily;
                 });
+                verseCustomissation.fontfamily = strFontFamily;
+                SharedPref.saveVerseCustomisation(verseCustomissation);
               },
               selectedFontSize: (int) {},
               fontName: fontFamily,
@@ -541,11 +560,15 @@ class _ContinueReadingState extends State<ContinueReading> {
                     fontSize = fontSize - 1;
                   });
                 }
+                verseCustomissation.fontsize = fontSize.toInt();
+                SharedPref.saveVerseCustomisation(verseCustomissation);
               },
               formatingColorSelection: (FormatingColor colorMode) {
                 setState(() {
                   formatingColor = colorMode;
                 });
+                verseCustomissation.colorId = colorMode.id;
+                SharedPref.saveVerseCustomisation(verseCustomissation);
               },
               formatingColor: formatingColor,
             ),

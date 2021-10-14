@@ -19,7 +19,8 @@ class BottomNavigationMenu extends StatefulWidget {
       required this.selectedFontSize,
       required this.fontName,
       required this.fontSizeIncrease,
-      required this.formatingColorSelection, required this.formatingColor})
+      required this.formatingColorSelection,
+      required this.formatingColor})
       : super(key: key);
 
   @override
