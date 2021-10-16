@@ -1,5 +1,6 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
@@ -202,20 +203,31 @@ class _SettingScreenState extends State<SettingScreen> {
               duration: Duration(milliseconds: 300),
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 0.5, color: textLightGreyColor),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: kPadding * 2, right: kDefaultPadding),
-                    child: Row(
-                      children: [
-                        Text('Sanskrit'),
-                        Spacer(),
-                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                      ],
+                child: InkWell(
+                  onTap: () {
+                    navigationService.pushNamed(r_VerseTranslation);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: textLightGreyColor),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: kPadding * 2, right: kDefaultPadding),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              savedVerseTranslation.title!.replaceAll("\"", ""),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Spacer(),
+                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -251,20 +263,32 @@ class _SettingScreenState extends State<SettingScreen> {
               duration: Duration(milliseconds: 300),
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 0.5, color: textLightGreyColor),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: kPadding * 2, right: kDefaultPadding),
-                    child: Row(
-                      children: [
-                        Text('Swami Chinmayananda (Hindi)'),
-                        Spacer(),
-                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                      ],
+                child: InkWell(
+                  onTap: () {
+                    print('tapppp');
+                    navigationService.pushNamed(r_VerseCommentary);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: textLightGreyColor),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: kPadding * 2, right: kDefaultPadding),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              savedVerseCommentary.title!,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Spacer(),
+                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
+                        ],
+                      ),
                     ),
                   ),
                 ),

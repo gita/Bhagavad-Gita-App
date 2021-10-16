@@ -46,6 +46,7 @@ flutter:
     - assets/images/
     - lib/lang/en.json
     - lib/lang/hi.json
+    - lib/jsonfile/
 
   # example:
   fonts:

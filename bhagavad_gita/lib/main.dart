@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:bhagavad_gita/Constant/app_colors.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
   setupServiceLocator();
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
   bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
+  savedVerseTranslation = await SharedPref.getSavedVerseTranslationSetting();
   print("Selected lang : $langauge");
   runApp(MyApp(
     isOnBoardSkip: onBoardSkip,

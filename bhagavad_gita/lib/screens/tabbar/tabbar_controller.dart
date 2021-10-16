@@ -55,15 +55,6 @@ class _TabScreenControllerState extends State<TabScreenController>
       ),
       client: client,
     );
-    /*return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          child: menu(),
-        ),
-        body: TabBarView(
-          controller: tabController,
-          physics: NeverScrollableScrollPhysics(),
           children: [
             HomeScreen(),
             SavedPage(),

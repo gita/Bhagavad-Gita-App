@@ -12,6 +12,8 @@ import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:bhagavad_gita/screens/on_board_screen/OnBoardingScreen_one.dart';
 import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
+import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
+import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
 import 'package:bhagavad_gita/screens/tabbar/tabbar_controller.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +89,16 @@ class AppRouter {
           viewToShow: AddNotesWidget(
             verseNotes: notes,
           ),
+        );
+      case r_VerseTranslation:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: VerseTranslationScreen(),
+        );
+      case r_VerseCommentary:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: VerseCommentaryScreen(),
         );
       default:
         return MaterialPageRoute(

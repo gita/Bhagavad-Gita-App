@@ -10,3 +10,5 @@ const String r_SavedPage = 'r_SavedPage';
 const String r_Setting = 'r_Setting';
 const String r_Language = 'r_Language';
 const String r_AddNote = 'r_AddNote';
+const String r_VerseTranslation = 'r_VerseTranslation';
+const String r_VerseCommentary = 'r_VerseCommentary';

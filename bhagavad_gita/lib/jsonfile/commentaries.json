@@ -1,0 +1,21 @@
+[
+  { "authorName": "Swami Ramsukhdas", "language": "hindi", "title": "Hindi Commentary by Swami Ramsukhdas" },
+  { "authorName": "Swami Chinmayananda", "language": "hindi", "title": "Hindi Commentary by Swami Chinmayananda" },
+  { "authorName": "Sri Anandgiri", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Anandgiri" },
+  { "authorName": "Sri Dhanpati", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Dhanpati" },
+  { "authorName": "Sri Madhavacharya", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Madhavacharya" },
+  { "authorName": "Sri Neelkanth", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Neelkanth" },
+  { "authorName": "Sri Ramanujacharya", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Ramanujacharya" },
+  { "authorName": "Sri Sridhara Swami", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Sridhara Swami" },
+  {
+    "authorName": "Sri Vedantadeshikacharya Venkatanatha",
+    "language": "sanskrit", "title": "Sanskrit Commentary by Sri Vedantadeshikacharya Venkatanatha"
+  },
+  { "authorName": "Sri Abhinavgupta", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Abhinavgupta" },
+  { "authorName": "Sri Jayatritha", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Jayatritha" },
+  { "authorName": "Sri Madhusudan Saraswati", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Madhusudan Saraswati" },
+  { "authorName": "Sri Purushottamji", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Purushottamji" },
+  { "authorName": "Sri Shankaracharya", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Shankaracharya" },
+  { "authorName": "Sri Vallabhacharya", "language": "sanskrit", "title": "Sanskrit Commentary by Sri Vallabhacharya" },
+  { "authorName": "Swami Sivananda", "language": "english", "title": "English Commentary by Swami Sivananda" }
+]

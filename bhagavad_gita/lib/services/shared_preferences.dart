@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
+import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class PreferenceConstant {
   static String onChangeFontFamily = 'onChangeFontFamily';
   static String verseCustomisation = 'verseCustomisation';
   static String verseListCustomisation = 'verseListCustomisation';
+  static String verseTranslation = 'verseTranslation';
 }
 
 class SharedPref {
@@ -308,5 +310,29 @@ class SharedPref {
     }
     return VerseCustomissation(
         fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: '1');
+  }
+
+////// Verse translation from setting screen
+  static saveVerseTranslationSelection(
+      TranslationResponseModel translationResponseModel) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(PreferenceConstant.verseTranslation,
+        jsonEncode(translationResponseModel));
+  }
+
+  static Future<TranslationResponseModel>
+      getSavedVerseTranslationSetting() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? strVerseListCustomisation =
+        sharedPreferences.getString(PreferenceConstant.verseTranslation);
+    if (strVerseListCustomisation != null) {
+      var saveSatting = jsonDecode(strVerseListCustomisation);
+      var readTemp = saveSatting as Map<String, dynamic>;
+      return TranslationResponseModel.fromJson(readTemp);
+    }
+    return TranslationResponseModel(
+        authorName: 'Swami Sivananda',
+        language: 'english',
+        title: 'English translation by Swami Sivananda');
   }
 }
