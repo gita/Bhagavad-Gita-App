@@ -245,7 +245,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: Row(
                         children: [
                           Container(
-                            width: 300,
+                            // width: 300,
                             child: Text(
                               savedVerseTranslation.title!,
                               overflow: TextOverflow.ellipsis,
@@ -307,14 +307,12 @@ class _SettingScreenState extends State<SettingScreen> {
                           left: kPadding * 2, right: kDefaultPadding),
                       child: Row(
                         children: [
-                          Container(
-                            width: 300,
+                          Expanded(
                             child: Text(
                               savedVerseCommentary.title!,
-                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
-                          Spacer(),
                           SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
                         ],
                       ),

@@ -170,142 +170,147 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
         backgroundColor: formatingColor.bgColor,
         body: Stack(
           children: [
-            Positioned(
-              child: SvgPicture.asset("assets/icons/flower_chapterDetail.svg"),
-            ),
-            Positioned(
-              right: 0,
-              child: SvgPicture.asset(
-                  "assets/icons/flower_chapterDetail_right.svg"),
-            ),
             SingleChildScrollView(
               child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kPadding * 2),
-                  child: Query(
-                    options: QueryOptions(document: gql(chapterDetailQuery)),
-                    builder: (
-                      QueryResult result, {
-                      Refetch? refetch,
-                      FetchMore? fetchMore,
-                    }) {
-                      if (result.hasException) {
-                        print("ERROR : ${result.exception.toString()}");
-                      }
-                      if (result.data == null) {
-                        return Container(
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: primaryColor,
-                              strokeWidth: 2,
-                            ),
-                          ),
-                        );
-                      }
-                      Map<String, dynamic>? res = result.data;
-                      ChapterDetailData chapterDetailData =
-                          ChapterDetailData.fromJson(res!);
-                      // print(
-                      //     "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
-                      print("API Response : $res");
-                      return Column(
-                        children: [
-                          SizedBox(height: kDefaultPadding * 2),
-                          Center(
-                            child: Text(
-                              "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1!
-                                  .copyWith(
-                                    height: lineSpacing,
-                                    color: orangeColor,
-                                    fontSize: fontSize,
-                                    fontFamily: fontFamily,
-                                  ),
-                            ),
-                          ),
-                          SizedBox(height: kPadding),
-                          Text(
-                            chapterDetailData.gitaChapterById!.nameTranslated ??
-                                "",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(
-                                  height: lineSpacing,
-                                  fontSize: fontSize,
-                                  fontFamily: fontFamily,
-                                  color: formatingColor.naviagationIconColor,
+                child: Stack(
+                  children: [
+                    SvgPicture.asset("assets/icons/flower_chapterDetail.svg"),
+                    Positioned(
+                      right: 0,
+                      child: SvgPicture.asset(
+                          "assets/icons/flower_chapterDetail_right.svg"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: kPadding * 2),
+                      child: Query(
+                        options:
+                            QueryOptions(document: gql(chapterDetailQuery)),
+                        builder: (
+                          QueryResult result, {
+                          Refetch? refetch,
+                          FetchMore? fetchMore,
+                        }) {
+                          if (result.hasException) {
+                            print("ERROR : ${result.exception.toString()}");
+                          }
+                          if (result.data == null) {
+                            return Container(
+                              height: 200,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
+                                  strokeWidth: 2,
                                 ),
-                          ),
-                          SizedBox(height: kDefaultPadding * 2),
-                          Text(
-                            chapterDetailData.gitaChapterById!.chapterSummary ??
-                                '',
-                            maxLines: isShowMoreChapterDetail ? 500 : 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                  fontSize: fontSize,
-                                  height: lineSpacing,
-                                  fontFamily: fontFamily,
-                                  color: formatingColor.naviagationIconColor,
-                                ),
-                          ),
-                          Row(
+                              ),
+                            );
+                          }
+                          Map<String, dynamic>? res = result.data;
+                          ChapterDetailData chapterDetailData =
+                              ChapterDetailData.fromJson(res!);
+                          print("API Response : $res");
+                          return Column(
                             children: [
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isShowMoreChapterDetail =
-                                        !isShowMoreChapterDetail;
-                                  });
-                                },
+                              SizedBox(height: kDefaultPadding * 2),
+                              Center(
                                 child: Text(
-                                  isShowMoreChapterDetail
-                                      ? DemoLocalization.of(context)!
-                                          .getTranslatedValue('showLess')
-                                          .toString()
-                                      : DemoLocalization.of(context)!
-                                          .getTranslatedValue('showMore')
-                                          .toString(),
+                                  "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline2!
+                                      .headline1!
                                       .copyWith(
-                                        fontSize: fontSize,
                                         height: lineSpacing,
+                                        color: orangeColor,
+                                        fontSize: fontSize,
                                         fontFamily: fontFamily,
-                                        color: textLightGreyColor,
                                       ),
                                 ),
                               ),
+                              SizedBox(height: kPadding),
+                              Text(
+                                chapterDetailData
+                                        .gitaChapterById!.nameTranslated ??
+                                    "",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(
+                                      height: lineSpacing,
+                                      fontSize: fontSize,
+                                      fontFamily: fontFamily,
+                                      color:
+                                          formatingColor.naviagationIconColor,
+                                    ),
+                              ),
+                              SizedBox(height: kDefaultPadding * 2),
+                              Text(
+                                chapterDetailData
+                                        .gitaChapterById!.chapterSummary ??
+                                    '',
+                                maxLines: isShowMoreChapterDetail ? 500 : 4,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                      fontSize: fontSize,
+                                      height: lineSpacing,
+                                      fontFamily: fontFamily,
+                                      color:
+                                          formatingColor.naviagationIconColor,
+                                    ),
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isShowMoreChapterDetail =
+                                            !isShowMoreChapterDetail;
+                                      });
+                                    },
+                                    child: Text(
+                                      isShowMoreChapterDetail
+                                          ? DemoLocalization.of(context)!
+                                              .getTranslatedValue('showLess')
+                                              .toString()
+                                          : DemoLocalization.of(context)!
+                                              .getTranslatedValue('showMore')
+                                              .toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(
+                                            fontSize: fontSize,
+                                            height: lineSpacing,
+                                            fontFamily: fontFamily,
+                                            color: textLightGreyColor,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: kDefaultPadding),
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: chapterDetailData.gitaChapterById!
+                                    .gitaVersesByChapterId!.nodes!.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return VerseDetailWidget(
+                                      verse: chapterDetailData.gitaChapterById!
+                                          .gitaVersesByChapterId!.nodes![index],
+                                      formatingColor: formatingColor,
+                                      lineSpacing: lineSpacing,
+                                      fontSize: fontSize,
+                                      fontFamily: fontFamily);
+                                },
+                              ),
                             ],
-                          ),
-                          SizedBox(height: kDefaultPadding),
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: chapterDetailData.gitaChapterById!
-                                .gitaVersesByChapterId!.nodes!.length,
-                            itemBuilder: (BuildContext context, index) {
-                              return VerseDetailWidget(
-                                  verse: chapterDetailData.gitaChapterById!
-                                      .gitaVersesByChapterId!.nodes![index],
-                                  formatingColor: formatingColor,
-                                  lineSpacing: lineSpacing,
-                                  fontSize: fontSize,
-                                  fontFamily: fontFamily);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
