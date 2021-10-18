@@ -55,15 +55,6 @@ class _TabScreenControllerState extends State<TabScreenController>
       ),
       client: client,
     );
-          children: [
-            HomeScreen(),
-            SavedPage(),
-            QuotesScreen(),
-            AboutGitaScreen()
-          ],
-        ),
-      ),
-    );*/
   }
 
   Widget menu() {

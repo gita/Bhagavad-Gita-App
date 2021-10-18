@@ -148,7 +148,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                   .gitaTranslationsByVerseId!
                                   .nodes![0]
                                   .description ??
-                              '',
+                              ''.replaceAll("\n", ""),
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Divider()

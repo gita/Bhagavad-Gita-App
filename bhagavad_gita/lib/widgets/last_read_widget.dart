@@ -46,9 +46,9 @@ class LastReadWidget extends StatelessWidget {
           SizedBox(
             height: kDefaultPadding,
           ),
-          Text(
+          Text(lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes!.length > 0 ?
             lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
-                .description!,
+                .description! : "---",
             maxLines: 4,
             style: Theme.of(context)
                 .textTheme

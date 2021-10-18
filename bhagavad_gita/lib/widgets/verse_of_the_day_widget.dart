@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
@@ -103,7 +104,10 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                             BorderRadius.circular(kDefaultCornerRadius)),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: kDefaultPadding,top: kDefaultPadding,bottom: kPadding),
+                    padding: EdgeInsets.only(
+                        left: kDefaultPadding,
+                        top: kDefaultPadding,
+                        bottom: kPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -175,12 +179,14 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
+    String language1 = savedVerseTranslation.language ?? "english";
+    String auther1 = savedVerseTranslation.authorName ?? "Swami Sivananda";
     getVerseDetail = """
             query GetVerseDetailsById {
               gitaVerseById(id: ${widget.verseID}) {
               chapterNumber
               verseNumber
-              gitaTranslationsByVerseId(condition: { language: "english", authorName: "Swami Sivananda" }) {
+              gitaTranslationsByVerseId(condition: { language: "$language1", authorName: "$auther1" }) {
                 nodes {
                   description
                 }

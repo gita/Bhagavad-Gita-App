@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../locator.dart';
@@ -113,9 +114,20 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                       ),
                                       onTap: () {
                                         Future.delayed(
-                                            Duration(milliseconds: 200), () {
-                                          navigationService.pushNamed(r_AddNote,
-                                              arguments: writeNotes[index]);
+                                            Duration(milliseconds: 200),
+                                            () async {
+                                          bool temp = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddNotesWidget(
+                                                verseNotes: writeNotes[index],
+                                              ),
+                                            ),
+                                          );
+                                          if (temp) {
+                                            getNoteVerse();
+                                          }
                                         });
                                       },
                                     );

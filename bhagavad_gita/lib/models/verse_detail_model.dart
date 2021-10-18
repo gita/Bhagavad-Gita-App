@@ -6,7 +6,7 @@ class LastReadVerse {
   LastReadVerse({this.verseID, this.gitaVerseById});
 
   factory LastReadVerse.fromJson(Map<String, dynamic> json) => LastReadVerse(
-      gitaVerseById: GitaVerseById.fromJson(json["gitaVerseById"]),
+    gitaVerseById: json["gitaVerseById"] == null ? null : GitaVerseById.fromJson(json["gitaVerseById"]),
       verseID: json["verseID"]);
 
   Map<String, dynamic> toJson() => {

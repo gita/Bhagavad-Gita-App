@@ -21,7 +21,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
   NavigationService navigationService = locator<NavigationService>();
   String strNotes = "";
   late VerseNotes verseNotes;
-  List<VerseNotes> writeNotes = [];
+
   @override
   void initState() {
     super.initState();
@@ -59,7 +59,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         actions: [
-          strNotes.length > 0
+          verseNotes.verseNote.isEmpty || strNotes.isNotEmpty
               ? Center(
                   child: Container(
                     height: 30,
@@ -73,7 +73,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                         onTap: () async {
                           verseNotes.verseNote = strNotes;
                           await SharedPref.saveVerseNotes(verseNotes);
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                         },
                         child: Expanded(
                           child: Center(
@@ -92,9 +92,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                     ),
                   ),
                 )
-              : Container(),
-          strNotes.length <= 0
-              ? Center(
+              : Center(
                   child: Container(
                     height: 30,
                     width: 71,
@@ -105,10 +103,9 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () async {
-                          verseNotes.verseNote = strNotes;
                           await SharedPref.removeVerseNotesFromSaved(
-                              verseNotes.verseNote);
-                          Navigator.of(context).pop();
+                              verseNotes.verseID ?? "0");
+                          Navigator.of(context).pop(true);
                         },
                         child: Expanded(
                           child: Center(
@@ -126,11 +123,8 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                       ),
                     ),
                   ),
-                )
-              : Container(),
-          SizedBox(
-            width: kDefaultPadding,
-          )
+                ),
+          SizedBox(width: kDefaultPadding)
         ],
       ),
       body: SafeArea(

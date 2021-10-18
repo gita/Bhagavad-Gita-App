@@ -1,6 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -10,6 +11,7 @@ import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -47,6 +49,10 @@ class _ContinueReadingState extends State<ContinueReading> {
   FormatingColor formatingColor = whiteFormatingColor;
   late VerseCustomissation verseCustomissation;
 
+  bool showTraliteration = true;
+  bool showTranslation = true;
+  bool showCommentry = true;
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +76,25 @@ class _ContinueReadingState extends State<ContinueReading> {
         }
       });
     });
+
+    SharedPref.getSavedBoolValue(PreferenceConstant.verseTransliterationSetting)
+        .then((value) {
+      setState(() {
+        showTraliteration = value;
+      });
+    });
+    SharedPref.getSavedBoolValue(PreferenceConstant.verseTranslationSetting)
+        .then((value) {
+      setState(() {
+        showTranslation = value;
+      });
+    });
+    SharedPref.getSavedBoolValue(PreferenceConstant.verseCommentarySetting)
+        .then((value) {
+      setState(() {
+        showCommentry = value;
+      });
+    });
   }
 
   getVersDetails() {
@@ -77,18 +102,25 @@ class _ContinueReadingState extends State<ContinueReading> {
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
     print('object-------$versId');
+    //print("Languade : ${savedVerseTranslation.language}");
+    String language1 = savedVerseTranslation.language ?? "english";
+    String language2 = savedVerseCommentary.language ?? "english";
+
+    String auther1 = savedVerseTranslation.authorName ?? "Swami Sivananda";
+    String auther2 = savedVerseCommentary.authorName ?? "Swami Sivananda";
+
     verseDetailQuery = """
   query GetVerseDetailsById {
     gitaVerseById(id: $versId) {
       chapterNumber
       verseNumber
       text
-      gitaTranslationsByVerseId(condition: { language: "english", authorName: "Swami Sivananda" }) {
+      gitaTranslationsByVerseId(condition: { language: "$language1", authorName: "$auther1" }) {
         nodes {
           description
         }
       }
-      gitaCommentariesByVerseId(condition: { language: "english", authorName: "Swami Sivananda" }) {
+      gitaCommentariesByVerseId(condition: { language: "$language2", authorName: "$auther2" }) {
         nodes {
           description
         }
@@ -97,6 +129,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   }
   """;
 
+    print("Query : $verseDetailQuery");
     getVerseNotes();
   }
 
@@ -223,8 +256,12 @@ class _ContinueReadingState extends State<ContinueReading> {
                         ),
                       );
                     }
+                    print("SSSSSS : ${result.data}");
                     Map<String, dynamic>? verse = result.data;
                     VerseDetailData data = VerseDetailData.fromJson(verse!);
+                    if (data.gitaVerseById == null) {
+                      return Container();
+                    }
                     lastReadVerse = LastReadVerse(
                         verseID: widget.verseID,
                         gitaVerseById: data.gitaVerseById!);
@@ -259,18 +296,20 @@ class _ContinueReadingState extends State<ContinueReading> {
                           SizedBox(
                             height: kPadding * 3,
                           ),
-                          Text(
-                            "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontSize: fontSize,
-                                    height: lineSpacing,
-                                    color: formatingColor.textColor,
-                                    fontFamily: fontFamily),
-                          ),
+                          showTraliteration
+                              ? Text(
+                                  "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: fontSize,
+                                          height: lineSpacing,
+                                          color: formatingColor.textColor,
+                                          fontFamily: fontFamily),
+                                )
+                              : Container(),
                           SizedBox(
                             height: kDefaultPadding * 2,
                           ),
@@ -287,85 +326,120 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     fontFamily: fontFamily),
                           ),
                           SizedBox(height: kDefaultPadding * 2),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                  "assets/icons/icon_left_rtansection.svg"),
-                              SizedBox(width: kDefaultPadding),
-                              Text(
-                                DemoLocalization.of(context)!
-                                    .getTranslatedValue('translation')
-                                    .toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                      fontSize: fontSize - 2,
-                                      color: formatingColor.textColor,
-                                      fontWeight: FontWeight.w600,
+                          showTranslation
+                              ? Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            "assets/icons/icon_left_rtansection.svg"),
+                                        SizedBox(width: kDefaultPadding),
+                                        Text(
+                                          DemoLocalization.of(context)!
+                                              .getTranslatedValue('translation')
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                fontSize: fontSize - 2,
+                                                color: formatingColor.textColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        SizedBox(width: kDefaultPadding),
+                                        SvgPicture.asset(
+                                            "assets/icons/icon_right_translation.svg")
+                                      ],
                                     ),
-                              ),
-                              SizedBox(width: kDefaultPadding),
-                              SvgPicture.asset(
-                                  "assets/icons/icon_right_translation.svg")
-                            ],
-                          ),
-                          SizedBox(height: kDefaultPadding),
-                          Text(
-                            data.gitaVerseById!.gitaTranslationsByVerseId!
-                                .nodes![0].description!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    height: lineSpacing,
-                                    fontSize: fontSize,
-                                    color: formatingColor.textColor,
-                                    fontFamily: fontFamily),
-                          ),
+                                    SizedBox(height: kDefaultPadding),
+                                    Text(
+                                      data
+                                                  .gitaVerseById!
+                                                  .gitaTranslationsByVerseId!
+                                                  .nodes!
+                                                  .length >
+                                              0
+                                          ? data
+                                              .gitaVerseById!
+                                              .gitaTranslationsByVerseId!
+                                              .nodes![0]
+                                              .description!
+                                          : "---",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .copyWith(
+                                              height: lineSpacing,
+                                              fontSize: fontSize,
+                                              color: formatingColor.textColor,
+                                              fontFamily: fontFamily),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(
                             height: kDefaultPadding,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                  "assets/icons/icon_left_rtansection.svg"),
-                              SizedBox(width: kDefaultPadding),
-                              Text(
-                                DemoLocalization.of(context)!
-                                    .getTranslatedValue('commentry')
-                                    .toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(
-                                        fontFamily: fontFamily,
-                                        fontSize: fontSize - 2,
-                                        color: formatingColor.textColor,
-                                        fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(width: kDefaultPadding),
-                              SvgPicture.asset(
-                                  "assets/icons/icon_right_translation.svg")
-                            ],
-                          ),
-                          SizedBox(
-                            height: kDefaultPadding,
-                          ),
-                          Text(
-                            data.gitaVerseById!.gitaCommentariesByVerseId!
-                                .nodes![0].description!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    height: lineSpacing,
-                                    fontSize: fontSize,
-                                    color: formatingColor.textColor,
-                                    fontFamily: fontFamily),
-                          ),
+                          showCommentry
+                              ? Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            "assets/icons/icon_left_rtansection.svg"),
+                                        SizedBox(width: kDefaultPadding),
+                                        Text(
+                                          DemoLocalization.of(context)!
+                                              .getTranslatedValue('commentry')
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                  fontFamily: fontFamily,
+                                                  fontSize: fontSize - 2,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontWeight: FontWeight.w700),
+                                        ),
+                                        SizedBox(width: kDefaultPadding),
+                                        SvgPicture.asset(
+                                            "assets/icons/icon_right_translation.svg")
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: kDefaultPadding,
+                                    ),
+                                    Text(
+                                      data
+                                                  .gitaVerseById!
+                                                  .gitaCommentariesByVerseId!
+                                                  .nodes!
+                                                  .length >
+                                              0
+                                          ? data
+                                              .gitaVerseById!
+                                              .gitaCommentariesByVerseId!
+                                              .nodes![0]
+                                              .description!
+                                          : "---",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .copyWith(
+                                              height: lineSpacing,
+                                              fontSize: fontSize,
+                                              color: formatingColor.textColor,
+                                              fontFamily: fontFamily),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(height: kDefaultPadding * 5)
                         ],
                       ),
@@ -468,16 +542,31 @@ class _ContinueReadingState extends State<ContinueReading> {
                 ),
               ),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (verseNotes == null) {
                     VerseNotes temp = VerseNotes(
                         verseID: widget.verseID,
                         gitaVerseById: lastReadVerse!.gitaVerseById,
                         verseNote: "");
-                    navigationService.pushNamed(r_AddNote, arguments: temp);
+                    bool saved = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNotesWidget(verseNotes: temp),
+                      ),
+                    );
+                    if (saved) {
+                      getVerseNotes();
+                    }
                   } else {
-                    navigationService.pushNamed(r_AddNote,
-                        arguments: verseNotes);
+                    bool saved = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AddNotesWidget(verseNotes: verseNotes!)),
+                    );
+                    if (saved) {
+                      getVerseNotes();
+                    }
                   }
                 },
                 child: Container(

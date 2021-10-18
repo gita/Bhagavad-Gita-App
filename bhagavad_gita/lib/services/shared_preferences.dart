@@ -17,6 +17,9 @@ class PreferenceConstant {
   static String verseCustomisation = 'verseCustomisation';
   static String verseListCustomisation = 'verseListCustomisation';
   static String verseTranslation = 'verseTranslation';
+  static String verseTransliterationSetting = 'verseTransliterationSetting';
+  static String verseTranslationSetting = 'verseTranslationSetting';
+  static String verseCommentarySetting = 'verseCommentarySetting';
 }
 
 class SharedPref {
@@ -334,5 +337,21 @@ class SharedPref {
         authorName: 'Swami Sivananda',
         language: 'english',
         title: 'English translation by Swami Sivananda');
+  }
+
+  //// Set and get bool value
+  static Future<bool> getSavedBoolValue(String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var temp = sharedPreferences.getBool(key);
+    print('Key : $key value : $temp');
+    if (temp != null) {
+      return temp;
+    }
+    return true;
+  }
+
+  static Future saveBoolValue(String key, bool value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool(key, value);
   }
 }

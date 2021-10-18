@@ -40,8 +40,9 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
     return InkWell(
       onTap: () {
         navigationService.pushNamed(r_ContinueReading,
-            arguments:
-                "${widget.verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}");
+            arguments: widget.verse.gitaTranslationsByVerseId!.nodes!.length > 0
+                ? "${widget.verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}"
+                : "0");
       },
       child: Column(
         children: [
@@ -72,8 +73,10 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
           ),
           SizedBox(height: kPadding),
           Text(
-            widget.verse.gitaTranslationsByVerseId!.nodes![0].description!
-                .replaceAll("\n", ""),
+            widget.verse.gitaTranslationsByVerseId!.nodes!.length > 0
+                ? widget.verse.gitaTranslationsByVerseId!.nodes![0].description!
+                    .replaceAll("\n", "")
+                : "---".replaceAll("\n", ""),
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontFamily: widget.fontFamily,
                   fontSize: widget.fontSize,

@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/set_notificationTimer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,28 @@ class _SettingScreenState extends State<SettingScreen> {
   bool isNotificationOn = false;
 
   List<bool> _switchValues = List.generate(7, (_) => false);
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(milliseconds: 10), () async {
+      var temp1 = await SharedPref.getSavedBoolValue(
+          PreferenceConstant.verseTransliterationSetting);
+      var temp2 = await SharedPref.getSavedBoolValue(
+          PreferenceConstant.verseTranslationSetting);
+      var temp3 = await SharedPref.getSavedBoolValue(
+          PreferenceConstant.verseCommentarySetting);
+
+      setState(() {
+        _switchValues[0] = temp1;
+        _switchValues[1] = temp2;
+        isTranslationsource = temp2;
+        _switchValues[2] = temp3;
+        isCommentarySource = temp3;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +182,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 setState(() {
                   _switchValues[0] = value;
                 });
+                SharedPref.saveBoolValue(
+                    PreferenceConstant.verseTransliterationSetting, value);
               },
               switchActiveColor: orangeColor,
               switchScale: 0.8,
@@ -184,6 +209,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   _switchValues[1] = value;
                   isTranslationsource = !isTranslationsource;
                 });
+                SharedPref.saveBoolValue(
+                    PreferenceConstant.verseTranslationSetting, value);
               },
               switchActiveColor: orangeColor,
               switchScale: 0.8,
@@ -218,9 +245,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: Row(
                         children: [
                           Container(
-                            width: 250,
+                            width: 300,
                             child: Text(
-                              savedVerseTranslation.title!.replaceAll("\"", ""),
+                              savedVerseTranslation.title!,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -244,6 +271,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   _switchValues[2] = value;
                   isCommentarySource = !isCommentarySource;
                 });
+                SharedPref.saveBoolValue(
+                    PreferenceConstant.verseCommentarySetting, value);
               },
               switchActiveColor: orangeColor,
               switchScale: 0.8,
@@ -279,7 +308,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: Row(
                         children: [
                           Container(
-                            width: 250,
+                            width: 300,
                             child: Text(
                               savedVerseCommentary.title!,
                               overflow: TextOverflow.ellipsis,
@@ -294,7 +323,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-            Container(
+            /*Container(
               height: kPadding * 3,
               width: double.infinity,
               color: Colors.orange[50],
@@ -364,7 +393,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

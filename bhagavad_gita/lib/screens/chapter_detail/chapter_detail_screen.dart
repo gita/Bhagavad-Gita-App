@@ -1,6 +1,7 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
@@ -81,7 +82,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
           chapterNumber
           verseNumber
           gitaTranslationsByVerseId(
-            condition: { language: "english", authorName: "Swami Sivananda" }
+            condition: { language: "${savedVerseTranslation.language ?? "english"}", authorName: "${savedVerseTranslation.authorName ?? "Swami Sivananda"}" }
           ) {
             nodes {
               description
@@ -205,8 +206,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                       Map<String, dynamic>? res = result.data;
                       ChapterDetailData chapterDetailData =
                           ChapterDetailData.fromJson(res!);
-                      print(
-                          "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
+                      // print(
+                      //     "Verse : ${chapterDetailData.gitaChapterById!.gitaVersesByChapterId!.nodes![0].gitaTranslationsByVerseId!.nodes![0].verseId}");
                       print("API Response : $res");
                       return Column(
                         children: [
@@ -300,7 +301,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   fontSize: fontSize,
                                   fontFamily: fontFamily);
                             },
-                          )
+                          ),
                         ],
                       );
                     },
@@ -341,9 +342,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               right: kDefaultPadding,
               child: InkWell(
                 onTap: () {
-                  print('change Verse');
                   changeChapterPage();
-                  print('changed Verse');
                 },
                 child: Container(
                   height: 48,
