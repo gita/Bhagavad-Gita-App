@@ -96,8 +96,12 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                       child: Row(
                                         children: [
                                           SizedBox(width: kDefaultPadding),
-                                          SvgPicture.asset(
-                                              'assets/icons/Icon_writenote_pen.svg'),
+                                          Container(
+                                            height: kPadding * 2,
+                                            width: kPadding * 2,
+                                            child: SvgPicture.asset(
+                                                'assets/icons/Icon_writenote_pen.svg'),
+                                          ),
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!

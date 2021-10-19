@@ -244,11 +244,10 @@ class _SettingScreenState extends State<SettingScreen> {
                           left: kPadding * 2, right: kDefaultPadding),
                       child: Row(
                         children: [
-                          Container(
-                            // width: 300,
+                          Expanded(
                             child: Text(
                               savedVerseTranslation.title!,
-                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                           Spacer(),

@@ -2,14 +2,17 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
+import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../locator.dart';
 
 class InterClick extends StatefulWidget {
-  const InterClick({Key? key, required this.selectedFontFamily,})
-      : super(key: key);
+  const InterClick({
+    Key? key,
+    required this.selectedFontFamily,
+  }) : super(key: key);
 
   @override
   _InterClickState createState() => _InterClickState();
@@ -21,6 +24,18 @@ class _InterClickState extends State<InterClick> {
   final NavigationService navigationService = locator<NavigationService>();
   var isSelectedFont = 0;
   List<String> allFontFamily = ['Inter', 'Hind', 'Mukta', 'Poppins'];
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPref.getSavedVerseCustomisation().then((value) {
+      var index = allFontFamily.indexWhere(
+          (element) => element.toLowerCase() == value.fontfamily.toLowerCase());
+      setState(() {
+        isSelectedFont = index;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

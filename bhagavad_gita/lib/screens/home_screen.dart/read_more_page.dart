@@ -9,6 +9,7 @@ import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
+import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
@@ -77,6 +78,10 @@ class _ContinueReadingState extends State<ContinueReading> {
       });
     });
 
+    getAllToggelValueFormShowingContent();
+  }
+
+  getAllToggelValueFormShowingContent() {
     SharedPref.getSavedBoolValue(PreferenceConstant.verseTransliterationSetting)
         .then((value) {
       setState(() {
@@ -211,8 +216,19 @@ class _ContinueReadingState extends State<ContinueReading> {
             width: kPadding,
           ),
           InkWell(
-            onTap: () {
-              navigationService.pushNamed(r_Setting);
+            onTap: () async {
+              var temp = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingScreen(),
+                ),
+              );
+              if (temp) {
+                getAllToggelValueFormShowingContent();
+                setState(() {
+                  getVersDetails();
+                });
+              }
             },
             child: Container(
               width: 40,

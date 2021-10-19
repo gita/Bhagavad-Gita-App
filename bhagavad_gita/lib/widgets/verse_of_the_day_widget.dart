@@ -126,7 +126,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                           verseID:
                               "${allVerseOTheDayResponseModel.allVerseOfTheDays!.nodes![0].verseOrder ?? 0}",
                         ),
-                        Spacer(),
+                        // Spacer(),
                         TextButton(
                           onPressed: () {
                             navigationService.pushNamed(r_ContinueReading,
@@ -239,6 +239,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                   text:
                       '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description}',
                   style: Theme.of(context).textTheme.headline2!.copyWith(
+                        overflow: TextOverflow.ellipsis,
                         color: whiteColor,
                         fontSize: width * 0.037,
                       ),
