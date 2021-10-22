@@ -72,7 +72,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                         children: [
                                           SizedBox(width: kDefaultPadding),
                                           SvgPicture.asset(
-                                              'assets/icons/icon_delete.svg'),
+                                              'assets/icons/icon_delete_.svg'),
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!

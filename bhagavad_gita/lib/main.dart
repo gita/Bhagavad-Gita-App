@@ -18,6 +18,7 @@ Future<void> main() async {
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
   bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
   savedVerseTranslation = await SharedPref.getSavedVerseTranslationSetting();
+  savedVerseCommentary = await SharedPref.getSavedVerseCommentarySetting();
   print("Selected lang : $langauge");
   runApp(MyApp(
     isOnBoardSkip: onBoardSkip,

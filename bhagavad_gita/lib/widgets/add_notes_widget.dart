@@ -21,11 +21,22 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
   NavigationService navigationService = locator<NavigationService>();
   String strNotes = "";
   late VerseNotes verseNotes;
+  List<VerseNotes> writeNotes = [];
 
   @override
   void initState() {
     super.initState();
     this.verseNotes = widget.verseNotes;
+    getNoteVerse();
+  }
+
+  getNoteVerse() {
+    Future.delayed(Duration(microseconds: 200), () async {
+      var result = await SharedPref.getAllSavedVerseNotes();
+      setState(() {
+        writeNotes = result;
+      });
+    });
   }
 
   @override
@@ -59,8 +70,81 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
         actions: [
-          verseNotes.verseNote.isEmpty || strNotes.isNotEmpty
-              ? Center(
+          verseNotes.verseNote.length > 0
+              ? PopupMenuButton(
+                  itemBuilder: (BuildContext context) {
+                    return List.generate(
+                      2,
+                      (index) {
+                        if (index == 0) {
+                          return PopupMenuItem(
+                            padding: EdgeInsets.only(right: kPadding),
+                            child: Row(
+                              children: [
+                                SizedBox(width: kDefaultPadding),
+                                SvgPicture.asset(
+                                    'assets/icons/icon_delete_.svg'),
+                                SizedBox(width: kDefaultPadding),
+                                Text(
+                                  DemoLocalization.of(context)!
+                                      .getTranslatedValue('delete')
+                                      .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.red, fontSize: 16),
+                                )
+                              ],
+                            ),
+                            onTap: () async {
+                              await SharedPref.removeVerseNotesFromSaved(
+                                  verseNotes.verseID ?? "0");
+                              Navigator.of(context).pop(true);
+                            },
+                          );
+                        } else {
+                          return PopupMenuItem(
+                            padding: EdgeInsets.all(0),
+                            child: Row(
+                              children: [
+                                SizedBox(width: kDefaultPadding),
+                                SvgPicture.asset(
+                                    'assets/icons/Icon_writenote_pen.svg'),
+                                SizedBox(width: kDefaultPadding),
+                                Text(
+                                  DemoLocalization.of(context)!
+                                      .getTranslatedValue('save')
+                                      .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: blackColor, fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            onTap: () async {
+                              verseNotes.verseNote = strNotes;
+                              await SharedPref.saveVerseNotes(verseNotes);
+                              Navigator.of(context).pop(true);
+                            },
+                          );
+                        }
+                      },
+                    );
+                  },
+                  child: Container(
+                    height: kPadding * 3,
+                    width: kPadding * 3,
+                    color: Colors.transparent,
+                    child: Center(
+                      child: SvgPicture.asset(
+                          'assets/icons/Icon_more_setting.svg'),
+                    ),
+                  ),
+                )
+              : Center(
                   child: Container(
                     height: 30,
                     width: 71,
@@ -80,38 +164,6 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                             child: Text(
                               DemoLocalization.of(context)!
                                   .getTranslatedValue('save')
-                                  .toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(fontSize: 14, color: whiteColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              : Center(
-                  child: Container(
-                    height: 30,
-                    width: 71,
-                    decoration: BoxDecoration(
-                        color: orangeColor,
-                        borderRadius: BorderRadius.circular(8.0)),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () async {
-                          await SharedPref.removeVerseNotesFromSaved(
-                              verseNotes.verseID ?? "0");
-                          Navigator.of(context).pop(true);
-                        },
-                        child: Expanded(
-                          child: Center(
-                            child: Text(
-                              DemoLocalization.of(context)!
-                                  .getTranslatedValue('delete')
                                   .toString(),
                               style: Theme.of(context)
                                   .textTheme

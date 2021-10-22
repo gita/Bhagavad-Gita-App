@@ -145,7 +145,10 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                         ),
                         chapter.isExpanded == true
                             ? AnimatedContainer(
-                                height: chapter.isExpanded! ? 300 : 0,
+                                height: chapter.isExpanded!
+                                    ? calculateVerGridHeight(
+                                        chapter.versesCount ?? 0)
+                                    : 0,
                                 duration: Duration(milliseconds: 300),
                                 child: TableOfContectVerseGridWidget(
                                   chapter: chapter,
@@ -162,6 +165,22 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
         ),
       ),
     );
+  }
+
+  double calculateVerGridHeight(int verseCount) {
+    if (verseCount % 5 == 0) {
+      return (verseCount / 5) * 80;
+    } else {
+      if ((verseCount - 1) % 5 == 0) {
+        return (((verseCount - 1) / 5) * 80) + 72;
+      } else if ((verseCount - 2) % 5 == 0) {
+        return (((verseCount - 2) / 5) * 80) + 72;
+      } else if ((verseCount - 3) % 5 == 0) {
+        return (((verseCount - 3) / 5) * 80) + 72;
+      } else {
+        return (((verseCount - 4) / 5) * 80) + 72;
+      }
+    }
   }
 }
 
@@ -237,6 +256,7 @@ class _TableOfContectVerseGridWidgetState
             chapterVerse.gitaChapterById!.gitaVersesByChapterId!.nodes!;
 
         return GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             crossAxisSpacing: kDefaultPadding * 2,

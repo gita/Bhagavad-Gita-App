@@ -97,7 +97,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                         setState(() {
                           isSelectedIndex = index;
                         });
-                        SharedPref.saveVerseTranslationSelection(
+                        SharedPref.saveVerseCommentarySetting(
                             listTranslationResponseModel[index]);
                         setState(() {
                           savedVerseCommentary =
@@ -106,10 +106,18 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                       },
                       child: Container(
                         height: 50,
-                        child: Text(
-                          listTranslationResponseModel[index].title ?? "",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.subtitle1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Text(
+                                listTranslationResponseModel[index].title ?? "",
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

@@ -68,7 +68,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                         children: [
                                           SizedBox(width: kDefaultPadding),
                                           SvgPicture.asset(
-                                              'assets/icons/icon_delete.svg'),
+                                              'assets/icons/icon_delete_.svg'),
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!
@@ -96,12 +96,8 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                       child: Row(
                                         children: [
                                           SizedBox(width: kDefaultPadding),
-                                          Container(
-                                            height: kPadding * 2,
-                                            width: kPadding * 2,
-                                            child: SvgPicture.asset(
-                                                'assets/icons/Icon_writenote_pen.svg'),
-                                          ),
+                                          SvgPicture.asset(
+                                              'assets/icons/Icon_writenote_pen.svg'),
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!
@@ -207,7 +203,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             ),
                             SizedBox(width: kPadding),
                             Container(
-                              width: 290,
+                              width: 280,
                               child: Text(
                                 '${writeNotes[index].verseNote}',
                                 maxLines: 5,

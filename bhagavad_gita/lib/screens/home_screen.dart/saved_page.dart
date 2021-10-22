@@ -10,7 +10,8 @@ class SavedPage extends StatefulWidget {
   _SavedPageState createState() => _SavedPageState();
 }
 
-class _SavedPageState extends State<SavedPage> {
+class _SavedPageState extends State<SavedPage>
+    with AutomaticKeepAliveClientMixin {
   bool isShowDialoug = true;
   final PageController controller = PageController();
   var isPageIndex = 0;
@@ -27,6 +28,7 @@ class _SavedPageState extends State<SavedPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -127,4 +129,7 @@ class _SavedPageState extends State<SavedPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

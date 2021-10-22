@@ -229,7 +229,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
             maxLines: 4,
             text: TextSpan(
               text:
-                  '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber} | ',
+                  '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber ?? 0}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber ?? 0} | ',
               style: Theme.of(context).textTheme.headline2!.copyWith(
                     color: orangeColor,
                     fontSize: width * 0.037,
@@ -237,7 +237,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               children: <TextSpan>[
                 TextSpan(
                   text:
-                      '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description}',
+                      verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes!.length > 0 ?'${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? ''}' : '',
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                         overflow: TextOverflow.ellipsis,
                         color: whiteColor,

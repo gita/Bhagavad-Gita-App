@@ -302,46 +302,52 @@ class _ContinueReadingState extends State<ContinueReading> {
                           SizedBox(
                             height: kDefaultPadding,
                           ),
-                          Text("${data.gitaVerseById!.text}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: fontFamily,
-                                  color: formatingColor.style1,
-                                  fontSize: fontSize,
-                                  fontWeight: FontWeight.w400)),
-                          SizedBox(
-                            height: kPadding * 3,
+                          Text(
+                            "${data.gitaVerseById!.text}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: fontFamily,
+                                color: formatingColor.style1,
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.w400),
                           ),
                           showTraliteration
-                              ? Text(
-                                  "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1!
-                                      .copyWith(
-                                          fontSize: fontSize,
-                                          height: lineSpacing,
-                                          color: formatingColor.textColor,
-                                          fontFamily: fontFamily),
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: kPadding * 3,
+                                    ),
+                                    Text(
+                                      "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .copyWith(
+                                              fontSize: fontSize,
+                                              height: lineSpacing,
+                                              color: formatingColor.textColor,
+                                              fontFamily: fontFamily),
+                                    ),
+                                    SizedBox(
+                                      height: kDefaultPadding * 2,
+                                    ),
+                                    Text(
+                                      "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .copyWith(
+                                              fontSize: fontSize,
+                                              height: lineSpacing,
+                                              color: formatingColor.textColor,
+                                              fontFamily: fontFamily),
+                                    ),
+                                    SizedBox(height: kDefaultPadding * 2)
+                                  ],
                                 )
-                              : Container(),
-                          SizedBox(
-                            height: kDefaultPadding * 2,
-                          ),
-                          Text(
-                            "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontSize: fontSize,
-                                    height: lineSpacing,
-                                    color: formatingColor.textColor,
-                                    fontFamily: fontFamily),
-                          ),
-                          SizedBox(height: kDefaultPadding * 2),
+                              : Text(''),
                           showTranslation
                               ? Column(
                                   children: [
@@ -395,10 +401,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     ),
                                   ],
                                 )
-                              : Container(),
-                          SizedBox(
-                            height: kDefaultPadding,
-                          ),
+                              : Text(''),
                           showCommentry
                               ? Column(
                                   children: [
@@ -466,27 +469,21 @@ class _ContinueReadingState extends State<ContinueReading> {
               Positioned(
                 top: MediaQuery.of(context).size.height / 100 * 71,
                 left: kDefaultPadding,
-                child: InkWell(
-                  onTap: () {
-                    versId == 1 ? versId = 1 : reverschangeVersePage();
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: editBoxBorderColor,
-                          blurRadius: 10,
-                        )
-                      ],
+                child: Material(
+                  elevation: 8.0,
+                  shape: CircleBorder(),
+                  color: Colors.transparent,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      versId == 1 ? versId = 1 : reverschangeVersePage();
+                    },
+                    child: SvgPicture.asset(
+                      "assets/icons/icon_slider_verse.svg",
                     ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        "assets/icons/icon_slider_verse.svg",
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      primary: whiteColor,
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(20),
                     ),
                   ),
                 ),
@@ -494,28 +491,21 @@ class _ContinueReadingState extends State<ContinueReading> {
               Positioned(
                 top: MediaQuery.of(context).size.height / 100 * 71,
                 right: kDefaultPadding,
-                child: InkWell(
-                  onTap: () {
-                    print('change Verse');
-                    changeVersePage();
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: editBoxBorderColor,
-                          blurRadius: 10,
-                        )
-                      ],
+                child: Material(
+                  elevation: 8.0,
+                  shape: CircleBorder(),
+                  color: Colors.transparent,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      changeVersePage();
+                    },
+                    child: SvgPicture.asset(
+                      "assets/icons/Icon_slider_verseNext.svg",
                     ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        "assets/icons/Icon_slider_verseNext.svg",
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      primary: whiteColor,
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(20),
                     ),
                   ),
                 ),

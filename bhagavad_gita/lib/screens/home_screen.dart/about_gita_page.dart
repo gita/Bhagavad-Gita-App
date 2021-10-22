@@ -9,9 +9,11 @@ class AboutGitaScreen extends StatefulWidget {
   _AboutGitaScreenState createState() => _AboutGitaScreenState();
 }
 
-class _AboutGitaScreenState extends State<AboutGitaScreen> {
+class _AboutGitaScreenState extends State<AboutGitaScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -193,4 +195,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

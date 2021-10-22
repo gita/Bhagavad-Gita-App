@@ -106,9 +106,15 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                       },
                       child: Container(
                         height: 40,
-                        child: Text(
-                          listTranslationResponseModel[index].title ?? "",
-                          style: Theme.of(context).textTheme.subtitle1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              listTranslationResponseModel[index].title ?? "",
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          ],
                         ),
                       ),
                     ),

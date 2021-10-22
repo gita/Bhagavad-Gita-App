@@ -12,6 +12,10 @@ import 'package:flutter_svg/svg.dart';
 import '../../locator.dart';
 
 class LanguageSettingScreen extends StatefulWidget {
+  const LanguageSettingScreen({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _LanguageSettingScreenState createState() => _LanguageSettingScreenState();
 }

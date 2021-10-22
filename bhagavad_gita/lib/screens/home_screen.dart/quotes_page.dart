@@ -11,7 +11,8 @@ class QuotesScreen extends StatefulWidget {
   _QuotesScreenState createState() => _QuotesScreenState();
 }
 
-class _QuotesScreenState extends State<QuotesScreen> {
+class _QuotesScreenState extends State<QuotesScreen>
+    with AutomaticKeepAliveClientMixin {
   String quote = "";
   final PageController controller = PageController();
   @override
@@ -38,6 +39,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -90,10 +92,10 @@ class _QuotesScreenState extends State<QuotesScreen> {
                 child: Text(
                   quote,
                   textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: whiteColor, fontWeight: FontWeight.w500,height: 1.7),
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      color: whiteColor,
+                      fontWeight: FontWeight.w500,
+                      height: 1.7),
                 ),
               ),
             ),
@@ -164,4 +166,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

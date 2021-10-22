@@ -25,7 +25,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   final NavigationService navigationService = locator<NavigationService>();
   LastReadVerse? lastReadVerse;
   bool isSortChapterNum = true;
@@ -61,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -238,4 +240,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  @override
+  bool get wantKeepAlive => true;
 }

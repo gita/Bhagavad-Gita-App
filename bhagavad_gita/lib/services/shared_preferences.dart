@@ -17,6 +17,7 @@ class PreferenceConstant {
   static String verseCustomisation = 'verseCustomisation';
   static String verseListCustomisation = 'verseListCustomisation';
   static String verseTranslation = 'verseTranslation';
+  static String verseCommentary = 'verseCommentary';
   static String verseTransliterationSetting = 'verseTransliterationSetting';
   static String verseTranslationSetting = 'verseTranslationSetting';
   static String verseCommentarySetting = 'verseCommentarySetting';
@@ -337,6 +338,31 @@ class SharedPref {
         authorName: 'Swami Sivananda',
         language: 'english',
         title: 'English translation by Swami Sivananda');
+  }
+
+  //// Verse Commentary From setting Screen...
+  static saveVerseCommentarySetting(
+      TranslationResponseModel translationResponseModel) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(PreferenceConstant.verseCommentary,
+        jsonEncode(translationResponseModel));
+  }
+
+  static Future<TranslationResponseModel>
+      getSavedVerseCommentarySetting() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? strVerseCommetaryCustomisation =
+        sharedPreferences.getString(PreferenceConstant.verseCommentary);
+    if (strVerseCommetaryCustomisation != null) {
+      var saveCommentarty = jsonDecode(strVerseCommetaryCustomisation);
+      var readStr = saveCommentarty as Map<String, dynamic>;
+      return TranslationResponseModel.fromJson(readStr);
+    }
+    return TranslationResponseModel(
+      authorName: 'Swami Sivananda',
+      language: 'english',
+      title: 'English Commentary by Swami Sivananda',
+    );
   }
 
   //// Set and get bool value
