@@ -3,7 +3,7 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class VerseDetailWidget extends StatefulWidget {
     required this.formatingColor,
     required this.lineSpacing,
     required this.fontSize,
-    required this.fontFamily,
+    required this.fontFamily, required this.refreshEditing,
   }) : super(key: key);
 
   final GitaVersesByChapterIdNode verse;
@@ -26,6 +26,7 @@ class VerseDetailWidget extends StatefulWidget {
   final double lineSpacing;
   final double fontSize;
   final String fontFamily;
+  final Function refreshEditing;
 
   @override
   State<VerseDetailWidget> createState() => _VerseDetailWidgetState();
@@ -38,11 +39,18 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        navigationService.pushNamed(r_ContinueReading,
-            arguments: widget.verse.gitaTranslationsByVerseId!.nodes!.length > 0
-                ? "${widget.verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}"
-                : "0");
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ContinueReading(
+                verseID: widget.verse.gitaTranslationsByVerseId!.nodes!.length >
+                        0
+                    ? "${widget.verse.gitaTranslationsByVerseId!.nodes![0].verseId ?? 0}"
+                    : "0"),
+          ),
+        );
+        widget.refreshEditing();
       },
       child: Column(
         children: [

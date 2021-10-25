@@ -139,7 +139,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                     },
                     child: Expanded(
                       child: Center(

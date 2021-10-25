@@ -7,7 +7,6 @@ import 'package:bhagavad_gita/screens/chapter_detail/chapter_tableview.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/about_gita_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
-import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:bhagavad_gita/screens/on_board_screen/OnBoardingScreen_one.dart';
 import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
@@ -36,14 +35,14 @@ class AppRouter {
           routeName: settings.name!,
           viewToShow: HomeScreen(),
         );
-      case r_ContinueReading:
-        String verseNumber = settings.arguments as String;
-        return _getPageRoute(
-          routeName: settings.name!,
-          viewToShow: ContinueReading(
-            verseID: verseNumber,
-          ),
-        );
+      // case r_ContinueReading:
+      //   String verseNumber = settings.arguments as String;
+      //   return _getPageRoute(
+      //     routeName: settings.name!,
+      //     viewToShow: ContinueReading(
+      //       verseID: verseNumber,
+      //     ),
+      //   );
       case r_ChapterDetail:
         int chapterNumber = settings.arguments as int;
         return _getPageRoute(

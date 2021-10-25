@@ -49,6 +49,10 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
     chapterNumber = widget.chapterNumber;
     getChapterDetail();
 
+    refreshChapterDetailPage();
+  }
+
+  refreshChapterDetailPage() {
     SharedPref.getSavedVerseListCustomisation().then((value) {
       verseCustomissation = value;
       setState(() {
@@ -297,12 +301,16 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                     .gitaVersesByChapterId!.nodes!.length,
                                 itemBuilder: (BuildContext context, index) {
                                   return VerseDetailWidget(
-                                      verse: chapterDetailData.gitaChapterById!
-                                          .gitaVersesByChapterId!.nodes![index],
-                                      formatingColor: formatingColor,
-                                      lineSpacing: lineSpacing,
-                                      fontSize: fontSize,
-                                      fontFamily: fontFamily);
+                                    verse: chapterDetailData.gitaChapterById!
+                                        .gitaVersesByChapterId!.nodes![index],
+                                    formatingColor: formatingColor,
+                                    lineSpacing: lineSpacing,
+                                    fontSize: fontSize,
+                                    fontFamily: fontFamily,
+                                    refreshEditing: () {
+                                      refreshChapterDetailPage();
+                                    },
+                                  );
                                 },
                               ),
                             ],
@@ -314,62 +322,80 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                 ),
               ),
             ),
-            Positioned(
-              top: MediaQuery.of(context).size.height / 100 * 75,
-              left: kDefaultPadding,
-              child: InkWell(
-                onTap: () {
-                  reverschangeChapterPage();
-                },
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: editBoxBorderColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/icon_slider_verse.svg",
+            chapterNumber == 1
+                ? Container()
+                : Positioned(
+                    top: MediaQuery.of(context).size.height / 100 * 75,
+                    left: kDefaultPadding,
+                    child: Container(
+                      height: 48,
+                      width: 48,
+                      decoration: BoxDecoration(
+                        color: whiteColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: editBoxBorderColor,
+                            blurRadius: 10,
+                          )
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            reverschangeChapterPage();
+                          },
+                          child: Expanded(
+                            child: Center(
+                              child: SvgPicture.asset(
+                                "assets/icons/icon_slider_verse.svg",
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height / 100 * 75,
-              right: kDefaultPadding,
-              child: InkWell(
-                onTap: () {
-                  changeChapterPage();
-                },
-                child: Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: editBoxBorderColor,
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/Icon_slider_verseNext.svg",
+            chapterNumber == 18
+                ? Container()
+                : Positioned(
+                    top: MediaQuery.of(context).size.height / 100 * 75,
+                    right: kDefaultPadding,
+                    child: Container(
+                      height: 48,
+                      width: 48,
+                      decoration: BoxDecoration(
+                        color: whiteColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: editBoxBorderColor,
+                            blurRadius: 10,
+                          )
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            changeChapterPage();
+                          },
+                          child: Expanded(
+                            child: Center(
+                              child: SvgPicture.asset(
+                                "assets/icons/Icon_slider_verseNext.svg",
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

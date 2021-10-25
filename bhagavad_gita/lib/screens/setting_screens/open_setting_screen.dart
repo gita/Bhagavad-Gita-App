@@ -4,6 +4,8 @@ import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
+import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/set_notificationTimer_widget.dart';
@@ -30,7 +32,10 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
+    setDefaultVar();
+  }
 
+  setDefaultVar() {
     Future.delayed(Duration(milliseconds: 10), () async {
       var temp1 = await SharedPref.getSavedBoolValue(
           PreferenceConstant.verseTransliterationSetting);
@@ -231,8 +236,14 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
                 child: InkWell(
-                  onTap: () {
-                    navigationService.pushNamed(r_VerseTranslation);
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VerseTranslationScreen(),
+                      ),
+                    );
+                    setDefaultVar();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -292,9 +303,14 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
                 child: InkWell(
-                  onTap: () {
-                    print('tapppp');
-                    navigationService.pushNamed(r_VerseCommentary);
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VerseCommentaryScreen(),
+                      ),
+                    );
+                    setDefaultVar();
                   },
                   child: Container(
                     decoration: BoxDecoration(

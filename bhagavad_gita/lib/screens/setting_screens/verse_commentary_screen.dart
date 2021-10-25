@@ -142,7 +142,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                     },
                     child: Expanded(
                       child: Center(

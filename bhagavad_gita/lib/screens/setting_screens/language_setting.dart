@@ -27,6 +27,17 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
   List<String> listLang = ["English", "Hindi"];
 
   @override
+  void initState() {
+    super.initState();
+
+    var index = listLang.indexWhere(
+        (element) => element.toLowerCase() == langauge.toLowerCase());
+    setState(() {
+      selectedlanguage = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

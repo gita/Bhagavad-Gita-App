@@ -62,7 +62,7 @@ class _ContinueReadingState extends State<ContinueReading> {
       getVersDetails();
     });
 
-    SharedPref.getSavedVerseCustomisation().then((value) {
+    SharedPref.getSavedVerseListCustomisation().then((value) {
       verseCustomissation = value;
       setState(() {
         lineSpacing = value.lineSpacing;
@@ -189,7 +189,7 @@ class _ContinueReadingState extends State<ContinueReading> {
         backgroundColor: formatingColor.bgColor,
         leading: InkWell(
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(true);
           },
           child: Center(
             child: SvgPicture.asset("assets/icons/icon_back_arrow.svg",
@@ -366,9 +366,10 @@ class _ContinueReadingState extends State<ContinueReading> {
                                               .textTheme
                                               .subtitle1!
                                               .copyWith(
+                                                fontFamily: fontFamily,
                                                 fontSize: fontSize - 2,
                                                 color: formatingColor.textColor,
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                         ),
                                         SizedBox(width: kDefaultPadding),
@@ -402,6 +403,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                   ],
                                 )
                               : Text(''),
+                          SizedBox(height: kDefaultPadding * 2),
                           showCommentry
                               ? Column(
                                   children: [
@@ -466,54 +468,87 @@ class _ContinueReadingState extends State<ContinueReading> {
                   },
                 ),
               ),
-              Positioned(
-                top: MediaQuery.of(context).size.height / 100 * 71,
-                left: kDefaultPadding,
-                child: Material(
-                  elevation: 8.0,
-                  shape: CircleBorder(),
-                  color: Colors.transparent,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      versId == 1 ? versId = 1 : reverschangeVersePage();
-                    },
-                    child: SvgPicture.asset(
-                      "assets/icons/icon_slider_verse.svg",
+              versId == 1
+                  ? Container()
+                  : Positioned(
+                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      left: kDefaultPadding,
+                      child: Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: editBoxBorderColor,
+                              blurRadius: 10,
+                            )
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          shape: CircleBorder(),
+                          clipBehavior: Clip.hardEdge,
+                          child: InkWell(
+                            onTap: () {
+                              versId == 1
+                                  ? versId = 1
+                                  : reverschangeVersePage();
+                            },
+                            child: Expanded(
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/icon_slider_verse.svg",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: whiteColor,
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(20),
+              versId == 701
+                  ? Container()
+                  : Positioned(
+                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      right: kDefaultPadding,
+                      child: Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: editBoxBorderColor,
+                              blurRadius: 10,
+                            )
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          shape: CircleBorder(),
+                          clipBehavior: Clip.hardEdge,
+                          child: InkWell(
+                            onTap: () {
+                              changeVersePage();
+                            },
+                            child: Expanded(
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/Icon_slider_verseNext.svg",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).size.height / 100 * 71,
-                right: kDefaultPadding,
-                child: Material(
-                  elevation: 8.0,
-                  shape: CircleBorder(),
-                  color: Colors.transparent,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      changeVersePage();
-                    },
-                    child: SvgPicture.asset(
-                      "assets/icons/Icon_slider_verseNext.svg",
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: whiteColor,
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(20),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
+      //   changeVersePage
       bottomNavigationBar: BottomAppBar(
         elevation: 15,
         child: Container(
@@ -633,7 +668,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                   lineSpacing = value;
                 });
                 verseCustomissation.lineSpacing = value;
-                SharedPref.saveVerseCustomisation(verseCustomissation);
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               initialLineSpacing: lineSpacing,
               selectedFontFamily: (String strFontFamily) {
@@ -641,7 +676,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                   fontFamily = strFontFamily;
                 });
                 verseCustomissation.fontfamily = strFontFamily;
-                SharedPref.saveVerseCustomisation(verseCustomissation);
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               selectedFontSize: (int) {},
               fontName: fontFamily,
@@ -656,14 +691,14 @@ class _ContinueReadingState extends State<ContinueReading> {
                   });
                 }
                 verseCustomissation.fontsize = fontSize.toInt();
-                SharedPref.saveVerseCustomisation(verseCustomissation);
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               formatingColorSelection: (FormatingColor colorMode) {
                 setState(() {
                   formatingColor = colorMode;
                 });
                 verseCustomissation.colorId = colorMode.id;
-                SharedPref.saveVerseCustomisation(verseCustomissation);
+                SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               formatingColor: formatingColor,
             ),
