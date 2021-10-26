@@ -77,6 +77,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(left: kPadding * 2.8, right: kPadding * 2.8),

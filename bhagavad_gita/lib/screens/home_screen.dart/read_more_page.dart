@@ -7,14 +7,13 @@ import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -40,6 +39,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   bool isVerseSaved = false;
   VerseNotes? verseNotes;
   int versId = 1;
+  bool isScrolleScreen = false;
 
   LastReadVerse? lastReadVerse;
 
@@ -53,13 +53,34 @@ class _ContinueReadingState extends State<ContinueReading> {
   bool showTraliteration = true;
   bool showTranslation = true;
   bool showCommentry = true;
-
+  late ScrollController _hideButtomController;
   @override
   void initState() {
     super.initState();
     setState(() {
       versId = int.parse(widget.verseID);
       getVersDetails();
+
+      _isVisible = true;
+      _hideButtomController = new ScrollController();
+      _hideButtomController.addListener(() {
+        if (_hideButtomController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+          if (_isVisible)
+            setState(() {
+              _isVisible = false;
+              print("**** $_isVisible up");
+            });
+        }
+        if (_hideButtomController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (!_isVisible)
+            setState(() {
+              _isVisible = true;
+              print("**** $_isVisible down");
+            });
+        }
+      });
     });
 
     SharedPref.getSavedVerseListCustomisation().then((value) {
@@ -178,6 +199,8 @@ class _ContinueReadingState extends State<ContinueReading> {
     );
   }
 
+  var _isVisible;
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -251,6 +274,7 @@ class _ContinueReadingState extends State<ContinueReading> {
             alignment: Alignment.bottomCenter,
             children: [
               SingleChildScrollView(
+                controller: _hideButtomController,
                 child: Query(
                   options: QueryOptions(document: gql(verseDetailQuery)),
                   builder: (
@@ -512,44 +536,97 @@ class _ContinueReadingState extends State<ContinueReading> {
                   : Positioned(
                       top: MediaQuery.of(context).size.height / 100 * 71,
                       right: kDefaultPadding,
-                      child: Container(
-                        height: 48,
-                        width: 48,
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: editBoxBorderColor,
-                              blurRadius: 10,
-                            )
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          shape: CircleBorder(),
-                          clipBehavior: Clip.hardEdge,
-                          child: InkWell(
-                            onTap: () {
-                              changeVersePage();
-                            },
-                            child: Expanded(
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  "assets/icons/Icon_slider_verseNext.svg",
+                      child: AnimatedContainer(
+                        duration: Duration(),
+                        child: Container(
+                          height: 48,
+                          width: 48,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: editBoxBorderColor,
+                                blurRadius: 10,
+                              )
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            shape: CircleBorder(),
+                            clipBehavior: Clip.hardEdge,
+                            child: InkWell(
+                              onTap: () {
+                                changeVersePage();
+                              },
+                              child: Expanded(
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    "assets/icons/Icon_slider_verseNext.svg",
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    )
             ],
           ),
         ),
       ),
-      //   changeVersePage
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: AnimatedContainer(
+        duration: Duration(milliseconds: 500),
+        height: _isVisible ? 90.0 : 0.0,
+        child: _isVisible
+            ? BottomNavigationBar(
+                backgroundColor: whiteColor,
+                showSelectedLabels: true,
+                showUnselectedLabels: true,
+                type: BottomNavigationBarType.fixed,
+                onTap: (int index) {},
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Center(
+                      child:
+                          SvgPicture.asset("assets/icons/Icon_menu_bottom.svg"),
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Center(
+                      child: SvgPicture.asset(
+                          "assets/icons/Icon_shear_bottom.svg"),
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Center(
+                      child: verseNotes == null
+                          ? SvgPicture.asset(
+                              "assets/icons/Icon_write_bottom.svg")
+                          : SvgPicture.asset(
+                              'assets/icons/Icon_fill_addNote.svg'),
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Center(
+                      child: isVerseSaved
+                          ? SvgPicture.asset(
+                              "assets/icons/Icon_saved_bottom.svg")
+                          : SvgPicture.asset(
+                              "assets/icons/Icon_save_bottom.svg"),
+                    ),
+                    label: '',
+                  ),
+                ],
+                currentIndex: 0,
+              )
+            : Container(),
+      ),
+
+      /*BottomAppBar(
         elevation: 15,
         child: Container(
           height: 48,
@@ -650,7 +727,7 @@ class _ContinueReadingState extends State<ContinueReading> {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 
