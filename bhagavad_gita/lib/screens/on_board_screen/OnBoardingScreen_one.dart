@@ -81,97 +81,91 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(left: kPadding * 2.8, right: kPadding * 2.8),
-          child: Stack(
+          child: Column(
             children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: PageView.builder(
-                      onPageChanged: _pageChange,
-                      scrollDirection: Axis.horizontal,
-                      controller: controller,
-                      itemCount: allPages.length,
-                      itemBuilder: (context, index) {
-                        return allPages[index];
-                      },
-                    ),
-                  ),
-                  PageIndicator(pagerIndex: pagerIndex, totalPages: 4),
-                  SizedBox(height: kPadding * 7),
-                  pagerIndex == 3
-                      ? Container(
-                          height: 50,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(245, 121, 3, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                buildShowDialog(context);
-                              },
-                              child: Expanded(
-                                child: Center(
-                                  child: Text(
-                                    DemoLocalization.of(context)!
-                                        .getTranslatedValue('getStarted')
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
+              Expanded(
+                child: PageView.builder(
+                  onPageChanged: _pageChange,
+                  scrollDirection: Axis.horizontal,
+                  controller: controller,
+                  itemCount: allPages.length,
+                  itemBuilder: (context, index) {
+                    return allPages[index];
+                  },
+                ),
+              ),
+              PageIndicator(pagerIndex: pagerIndex, totalPages: 4),
+              SizedBox(height: kPadding * 7),
+              pagerIndex == 3
+                  ? Container(
+                      height: 50,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(245, 121, 3, 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            buildShowDialog(context);
+                          },
+                          child: Center(
+                            child: Text(
+                              DemoLocalization.of(context)!
+                                  .getTranslatedValue('getStarted')
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: whiteColor,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
-                        )
-                      : Row(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                _navigateToLastPage();
-                              },
-                              child: Text(
+                        ),
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            _navigateToLastPage();
+                          },
+                          child: Text(
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('skip')
+                                .toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(color: textLightGreyColor),
+                          ),
+                        ),
+                        Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            _pageChange(pagerIndex + 1);
+                          },
+                          child: Row(
+                            children: [
+                              Text(
                                 DemoLocalization.of(context)!
-                                    .getTranslatedValue('skip')
+                                    .getTranslatedValue('next')
                                     .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
-                                    .copyWith(color: textLightGreyColor),
+                                    .copyWith(color: orangeColor),
                               ),
-                            ),
-                            Spacer(),
-                            TextButton(
-                              onPressed: () {
-                                _pageChange(pagerIndex + 1);
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    DemoLocalization.of(context)!
-                                        .getTranslatedValue('next')
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(color: orangeColor),
-                                  ),
-                                  SizedBox(width: 5),
-                                  SvgPicture.asset(
-                                      'assets/icons/RightSide_Arrow_Image.svg'),
-                                ],
-                              ),
-                            ),
-                          ],
+                              SizedBox(width: 5),
+                              SvgPicture.asset(
+                                  'assets/icons/RightSide_Arrow_Image.svg'),
+                            ],
+                          ),
                         ),
-                  SizedBox(height: kPadding * 2),
-                ],
-              ),
+                      ],
+                    ),
+              SizedBox(height: kPadding * 2),
             ],
           ),
         ),
@@ -180,8 +174,6 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
   }
 
   buildShowDialog(context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -283,17 +275,15 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 navigationService
                                     .pushNamedAndRemoveUntil(r_Tabbar);
                               },
-                              child: Expanded(
-                                child: Center(
-                                  child: Text(
-                                    DemoLocalization.of(context)!
-                                        .getTranslatedValue('okLetsGo')
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  DemoLocalization.of(context)!
+                                      .getTranslatedValue('okLetsGo')
+                                      .toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),

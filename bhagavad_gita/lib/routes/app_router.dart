@@ -35,14 +35,6 @@ class AppRouter {
           routeName: settings.name!,
           viewToShow: HomeScreen(),
         );
-      // case r_ContinueReading:
-      //   String verseNumber = settings.arguments as String;
-      //   return _getPageRoute(
-      //     routeName: settings.name!,
-      //     viewToShow: ContinueReading(
-      //       verseID: verseNumber,
-      //     ),
-      //   );
       case r_ChapterDetail:
         int chapterNumber = settings.arguments as int;
         return _getPageRoute(
@@ -100,6 +92,7 @@ class AppRouter {
           viewToShow: VerseCommentaryScreen(),
         );
       default:
+        print('Route Name : ${settings.name}');
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(

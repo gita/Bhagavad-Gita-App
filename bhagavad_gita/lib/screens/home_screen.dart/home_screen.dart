@@ -8,6 +8,8 @@ import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
+import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/chapter_list_tile_widget.dart';
@@ -50,10 +52,19 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
 
+    print('-->> Init State');
     Future.delayed(Duration(milliseconds: 200), () async {
       var tempLastRead = await SharedPref.getLastRead();
       setState(() {
         lastReadVerse = tempLastRead;
+      });
+      if (tempLastRead != null) {
+        LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
+      }
+    });
+    LocalNotification.instance.needToShowLastRead.addListener(() {
+      setState(() {
+        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
       });
     });
 
@@ -133,12 +144,16 @@ class _HomeScreenState extends State<HomeScreen>
                               : LastReadWidget(
                                   lastReadVerse: lastReadVerse!,
                                   onButtonTap: () {
-                                    navigationService.pushNamed(
-                                        r_ContinueReading,
-                                        arguments:
-                                            "${lastReadVerse!.verseID ?? 0}");
-                                  },
-                                ),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ContinueReading(
+                                          verseID:
+                                              "${lastReadVerse!.verseID ?? 0}",
+                                        ),
+                                      ),
+                                    );
+                                  }),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: kDefaultPadding,
@@ -240,6 +255,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+
   @override
   bool get wantKeepAlive => true;
 }

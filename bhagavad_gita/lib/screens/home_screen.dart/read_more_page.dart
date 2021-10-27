@@ -7,10 +7,13 @@ import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
+import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/bottom_navigation_menu/bottom_navigation_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
+import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -32,6 +35,8 @@ class ContinueReading extends StatefulWidget {
 
 class _ContinueReadingState extends State<ContinueReading> {
   final NavigationService navigationService = locator<NavigationService>();
+  final LastReadVerseService lastReadVerseService =
+      locator<LastReadVerseService>();
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
   late ValueNotifier<GraphQLClient> client;
   late String verseDetailQuery;
@@ -305,7 +310,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                     lastReadVerse = LastReadVerse(
                         verseID: widget.verseID,
                         gitaVerseById: data.gitaVerseById!);
-                    SharedPref.saveLastRead(lastReadVerse!);
+                    //SharedPref.saveLastRead(lastReadVerse!);
+                    LocalNotification.instance
+                        .setNeedToShowLastRead(lastReadVerse!);
                     return Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -497,237 +504,202 @@ class _ContinueReadingState extends State<ContinueReading> {
                   : Positioned(
                       top: MediaQuery.of(context).size.height / 100 * 71,
                       left: kDefaultPadding,
-                      child: Container(
-                        height: 48,
-                        width: 48,
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: editBoxBorderColor,
-                              blurRadius: 10,
-                            )
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          shape: CircleBorder(),
-                          clipBehavior: Clip.hardEdge,
-                          child: InkWell(
-                            onTap: () {
-                              versId == 1
-                                  ? versId = 1
-                                  : reverschangeVersePage();
-                            },
-                            child: Expanded(
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  "assets/icons/icon_slider_verse.svg",
+                      child: _isVisible
+                          ? AnimatedContainer(
+                              duration: Duration(milliseconds: 200),
+                              child: Container(
+                                height: 48,
+                                width: 48,
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: editBoxBorderColor,
+                                      blurRadius: 10,
+                                    )
+                                  ],
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder(),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: InkWell(
+                                    onTap: () {
+                                      versId == 1
+                                          ? versId = 1
+                                          : reverschangeVersePage();
+                                    },
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        "assets/icons/icon_slider_verse.svg",
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
+                            )
+                          : Container(),
                     ),
               versId == 701
                   ? Container()
                   : Positioned(
                       top: MediaQuery.of(context).size.height / 100 * 71,
                       right: kDefaultPadding,
-                      child: AnimatedContainer(
-                        duration: Duration(),
-                        child: Container(
-                          height: 48,
-                          width: 48,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: editBoxBorderColor,
-                                blurRadius: 10,
-                              )
-                            ],
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            shape: CircleBorder(),
-                            clipBehavior: Clip.hardEdge,
-                            child: InkWell(
-                              onTap: () {
-                                changeVersePage();
-                              },
-                              child: Expanded(
-                                child: Center(
-                                  child: SvgPicture.asset(
-                                    "assets/icons/Icon_slider_verseNext.svg",
+                      child: _isVisible
+                          ? AnimatedContainer(
+                              duration: Duration(milliseconds: 200),
+                              child: Container(
+                                height: 48,
+                                width: 48,
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: editBoxBorderColor,
+                                      blurRadius: 10,
+                                    )
+                                  ],
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  shape: CircleBorder(),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: InkWell(
+                                    onTap: () {
+                                      changeVersePage();
+                                    },
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        "assets/icons/Icon_slider_verseNext.svg",
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
+                            )
+                          : Container(),
                     )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
-        height: _isVisible ? 90.0 : 0.0,
-        child: _isVisible
-            ? BottomNavigationBar(
-                backgroundColor: whiteColor,
-                showSelectedLabels: true,
-                showUnselectedLabels: true,
-                type: BottomNavigationBarType.fixed,
-                onTap: (int index) {},
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Center(
-                      child:
-                          SvgPicture.asset("assets/icons/Icon_menu_bottom.svg"),
+      bottomNavigationBar: SafeArea(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          height: _isVisible ? 48.0 : 0.0,
+          child: _isVisible
+              ? BottomAppBar(
+                  elevation: 0,
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              navigationService.pushNamed(r_ChapterTableView);
+                            },
+                            child: Container(
+                              child: Center(
+                                child: SvgPicture.asset(
+                                    "assets/icons/Icon_menu_bottom.svg"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              shareVerse();
+                            },
+                            child: Container(
+                              child: Center(
+                                child: SvgPicture.asset(
+                                    "assets/icons/Icon_shear_bottom.svg"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              if (verseNotes == null) {
+                                VerseNotes temp = VerseNotes(
+                                    verseID: widget.verseID,
+                                    gitaVerseById: lastReadVerse!.gitaVerseById,
+                                    verseNote: "");
+                                bool saved = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AddNotesWidget(verseNotes: temp),
+                                  ),
+                                );
+                                if (saved) {
+                                  getVerseNotes();
+                                }
+                              } else {
+                                bool saved = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddNotesWidget(
+                                          verseNotes: verseNotes!)),
+                                );
+                                if (saved) {
+                                  getVerseNotes();
+                                }
+                              }
+                            },
+                            child: Container(
+                              child: Center(
+                                  child: verseNotes == null
+                                      ? SvgPicture.asset(
+                                          "assets/icons/Icon_write_bottom.svg")
+                                      : SvgPicture.asset(
+                                          'assets/icons/Icon_fill_addNote.svg')),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              if (lastReadVerse != null) {
+                                if (isVerseSaved) {
+                                  await SharedPref.removeVerseFromSaved(
+                                      widget.verseID);
+                                  setState(() {
+                                    isVerseSaved = !isVerseSaved;
+                                  });
+                                } else {
+                                  await SharedPref.saveBookmarkVerse(
+                                      lastReadVerse!);
+                                  setState(() {
+                                    isVerseSaved = !isVerseSaved;
+                                  });
+                                }
+                              }
+                            },
+                            child: Container(
+                              child: Center(
+                                child: isVerseSaved
+                                    ? SvgPicture.asset(
+                                        "assets/icons/Icon_saved_bottom.svg")
+                                    : SvgPicture.asset(
+                                        "assets/icons/Icon_save_bottom.svg"),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    label: '',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Center(
-                      child: SvgPicture.asset(
-                          "assets/icons/Icon_shear_bottom.svg"),
-                    ),
-                    label: '',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Center(
-                      child: verseNotes == null
-                          ? SvgPicture.asset(
-                              "assets/icons/Icon_write_bottom.svg")
-                          : SvgPicture.asset(
-                              'assets/icons/Icon_fill_addNote.svg'),
-                    ),
-                    label: '',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Center(
-                      child: isVerseSaved
-                          ? SvgPicture.asset(
-                              "assets/icons/Icon_saved_bottom.svg")
-                          : SvgPicture.asset(
-                              "assets/icons/Icon_save_bottom.svg"),
-                    ),
-                    label: '',
-                  ),
-                ],
-                currentIndex: 0,
-              )
-            : Container(),
-      ),
-
-      /*BottomAppBar(
-        elevation: 15,
-        child: Container(
-          height: 48,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InkWell(
-                onTap: () {
-                  navigationService.pushNamed(r_ChapterTableView);
-                },
-                child: Container(
-                  height: 48,
-                  width: 70,
-                  child: Center(
-                    child:
-                        SvgPicture.asset("assets/icons/Icon_menu_bottom.svg"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  shareVerse();
-                },
-                child: Container(
-                  height: 48,
-                  width: 70,
-                  child: Center(
-                    child:
-                        SvgPicture.asset("assets/icons/Icon_shear_bottom.svg"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  if (verseNotes == null) {
-                    VerseNotes temp = VerseNotes(
-                        verseID: widget.verseID,
-                        gitaVerseById: lastReadVerse!.gitaVerseById,
-                        verseNote: "");
-                    bool saved = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddNotesWidget(verseNotes: temp),
-                      ),
-                    );
-                    if (saved) {
-                      getVerseNotes();
-                    }
-                  } else {
-                    bool saved = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AddNotesWidget(verseNotes: verseNotes!)),
-                    );
-                    if (saved) {
-                      getVerseNotes();
-                    }
-                  }
-                },
-                child: Container(
-                  height: 48,
-                  width: 70,
-                  child: Center(
-                      child: verseNotes == null
-                          ? SvgPicture.asset(
-                              "assets/icons/Icon_write_bottom.svg")
-                          : SvgPicture.asset(
-                              'assets/icons/Icon_fill_addNote.svg')),
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  if (lastReadVerse != null) {
-                    if (isVerseSaved) {
-                      await SharedPref.removeVerseFromSaved(widget.verseID);
-                      setState(() {
-                        isVerseSaved = !isVerseSaved;
-                      });
-                    } else {
-                      await SharedPref.saveBookmarkVerse(lastReadVerse!);
-                      setState(() {
-                        isVerseSaved = !isVerseSaved;
-                      });
-                    }
-                  }
-                },
-                child: Container(
-                  height: 48,
-                  width: 70,
-                  child: Center(
-                    child: isVerseSaved
-                        ? SvgPicture.asset("assets/icons/Icon_saved_bottom.svg")
-                        : SvgPicture.asset("assets/icons/Icon_save_bottom.svg"),
-                  ),
-                ),
-              ),
-            ],
-          ),
+                )
+              : Container(),
         ),
-      ),*/
+      ),
     );
   }
 

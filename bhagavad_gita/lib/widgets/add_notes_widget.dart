@@ -159,17 +159,15 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                           await SharedPref.saveVerseNotes(verseNotes);
                           Navigator.of(context).pop(true);
                         },
-                        child: Expanded(
-                          child: Center(
-                            child: Text(
-                              DemoLocalization.of(context)!
-                                  .getTranslatedValue('save')
-                                  .toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(fontSize: 14, color: whiteColor),
-                            ),
+                        child: Center(
+                          child: Text(
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('save')
+                                .toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(fontSize: 14, color: whiteColor),
                           ),
                         ),
                       ),

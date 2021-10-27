@@ -6,7 +6,7 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_chapter_verse_model.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/tableof_content_Chapter_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -270,8 +270,14 @@ class _TableOfContectVerseGridWidgetState
                   selectedIndex = index;
                 });
 
-                navigationService.pushNamed(r_ContinueReading,
-                    arguments: "${verse[index].id}");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ContinueReading(
+                      verseID: "${verse[index].id}",
+                    ),
+                  ),
+                );
               },
               child: Container(
                 height: 32,

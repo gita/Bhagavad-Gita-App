@@ -6,7 +6,7 @@ import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -129,10 +129,16 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                         // Spacer(),
                         TextButton(
                           onPressed: () {
-                            navigationService.pushNamed(r_ContinueReading,
-                                arguments: allVerseOTheDayResponseModel
-                                    .allVerseOfTheDays!.nodes![0].verseOrder
-                                    .toString());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContinueReading(
+                                  verseID: allVerseOTheDayResponseModel
+                                      .allVerseOfTheDays!.nodes![0].verseOrder
+                                      .toString(),
+                                ),
+                              ),
+                            );
                           },
                           child: Text(
                             DemoLocalization.of(context)!
@@ -236,8 +242,11 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                   ),
               children: <TextSpan>[
                 TextSpan(
-                  text:
-                      verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes!.length > 0 ?'${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? ''}' : '',
+                  text: verseOTheDayDetailResponseModel.gitaVerseById!
+                              .gitaTranslationsByVerseId!.nodes!.length >
+                          0
+                      ? '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? ''}'
+                      : '',
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                         overflow: TextOverflow.ellipsis,
                         color: whiteColor,

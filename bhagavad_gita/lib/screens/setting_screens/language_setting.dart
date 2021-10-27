@@ -129,17 +129,15 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                       _changeLanguage(listLang[selectedlanguage]);
                       Navigator.pop(context);
                     },
-                    child: Expanded(
-                      child: Center(
-                        child: Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('saveChange')
-                              .toString(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: whiteColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                    child: Center(
+                      child: Text(
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('saveChange')
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: whiteColor,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),

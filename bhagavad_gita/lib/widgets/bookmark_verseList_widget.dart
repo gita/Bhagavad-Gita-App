@@ -2,7 +2,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -119,10 +119,16 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                       onTap: () {
                                         Future.delayed(
                                             Duration(milliseconds: 200), () {
-                                          navigationService.pushNamed(
-                                              r_ContinueReading,
-                                              arguments:
-                                                  "${listLastReadVerse[indexVerse].verseID ?? 0}");
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ContinueReading(
+                                                verseID:
+                                                    "${listLastReadVerse[indexVerse].verseID ?? 0}",
+                                              ),
+                                            ),
+                                          );
                                         });
                                       },
                                     );

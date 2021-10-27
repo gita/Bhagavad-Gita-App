@@ -141,17 +141,15 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                     onTap: () {
                       Navigator.of(context).pop(true);
                     },
-                    child: Expanded(
-                      child: Center(
-                        child: Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('saveChange')
-                              .toString(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: whiteColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                    child: Center(
+                      child: Text(
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('saveChange')
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: whiteColor,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),

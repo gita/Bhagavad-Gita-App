@@ -46,34 +46,33 @@ class LastReadWidget extends StatelessWidget {
           SizedBox(
             height: kDefaultPadding,
           ),
-          Text(lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes!.length > 0 ?
-            lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
-                .description! : "---",
+          Text(
+            lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!.nodes!
+                        .length >
+                    0
+                ? lastReadVerse.gitaVerseById!.gitaTranslationsByVerseId!
+                    .nodes![0].description!
+                : "---",
             maxLines: 4,
             style: Theme.of(context)
                 .textTheme
                 .subtitle1!
                 .copyWith(color: greyScalLableColor),
           ),
-          Container(
-            height: kDefaultPadding * 2,
-            child: InkWell(
-              onTap: () {
-                onButtonTap();
-              },
-              child: Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(top: kPadding),
-                  child: Text(
-                    DemoLocalization.of(context)!
-                        .getTranslatedValue('continueReading')
-                        .toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: primaryColor, fontSize: width * 0.037),
-                  ),
-                ),
+          InkWell(
+            onTap: () {
+              onButtonTap();
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: kPadding, bottom: kPadding),
+              child: Text(
+                DemoLocalization.of(context)!
+                    .getTranslatedValue('continueReading')
+                    .toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .copyWith(color: primaryColor, fontSize: width * 0.037),
               ),
             ),
           )

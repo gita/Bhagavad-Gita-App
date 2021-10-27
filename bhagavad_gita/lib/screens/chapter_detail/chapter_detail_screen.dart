@@ -348,11 +348,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                           onTap: () {
                             reverschangeChapterPage();
                           },
-                          child: Expanded(
-                            child: Center(
-                              child: SvgPicture.asset(
-                                "assets/icons/icon_slider_verse.svg",
-                              ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              "assets/icons/icon_slider_verse.svg",
                             ),
                           ),
                         ),
@@ -385,11 +383,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                           onTap: () {
                             changeChapterPage();
                           },
-                          child: Expanded(
-                            child: Center(
-                              child: SvgPicture.asset(
-                                "assets/icons/Icon_slider_verseNext.svg",
-                              ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              "assets/icons/Icon_slider_verseNext.svg",
                             ),
                           ),
                         ),

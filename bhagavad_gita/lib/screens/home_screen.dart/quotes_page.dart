@@ -65,6 +65,8 @@ class _QuotesScreenState extends State<QuotesScreen>
               right: width / kDefaultPadding,
               child: Material(
                 color: Colors.transparent,
+                shape: CircleBorder(),
+                clipBehavior: Clip.hardEdge,
                 child: InkWell(
                   onTap: () async {
                     print('Shear Quote');
@@ -102,25 +104,27 @@ class _QuotesScreenState extends State<QuotesScreen>
             Positioned(
               bottom: kDefaultPadding,
               left: kDefaultPadding,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    getQuote();
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: textLightGreyColor,
-                          blurRadius: 10,
-                        )
-                      ],
-                    ),
+              child: Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: textLightGreyColor,
+                      blurRadius: 10,
+                    )
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  shape: CircleBorder(),
+                  clipBehavior: Clip.hardEdge,
+                  child: InkWell(
+                    onTap: () {
+                      getQuote();
+                    },
                     child: Center(
                       child: SvgPicture.asset(
                         "assets/icons/icon_slider_verse.svg",
@@ -133,25 +137,27 @@ class _QuotesScreenState extends State<QuotesScreen>
             Positioned(
               bottom: kDefaultPadding,
               right: kDefaultPadding,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    getQuote();
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: textLightGreyColor,
-                          blurRadius: 10,
-                        )
-                      ],
-                    ),
+              child: Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: textLightGreyColor,
+                      blurRadius: 10,
+                    )
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  shape: CircleBorder(),
+                  clipBehavior: Clip.hardEdge,
+                  child: InkWell(
+                    onTap: () {
+                      getQuote();
+                    },
                     child: Center(
                       child: SvgPicture.asset(
                         "assets/icons/Icon_slider_verseNext.svg",
