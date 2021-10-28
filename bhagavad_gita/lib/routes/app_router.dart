@@ -9,7 +9,6 @@ import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/saved_page.dart';
 import 'package:bhagavad_gita/screens/on_board_screen/OnBoardingScreen_one.dart';
-import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/open_setting_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
@@ -68,11 +67,11 @@ class AppRouter {
           routeName: settings.name!,
           viewToShow: SettingScreen(),
         );
-      case r_Language:
-        return _getPageRoute(
-          routeName: settings.name!,
-          viewToShow: LanguageSettingScreen(),
-        );
+      // case r_Language:
+      //   return _getPageRoute(
+      //     routeName: settings.name!,
+      //     viewToShow: LanguageSettingScreen(),
+      //   );
       case r_AddNote:
         VerseNotes notes = settings.arguments as VerseNotes;
         return _getPageRoute(

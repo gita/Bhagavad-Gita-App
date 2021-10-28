@@ -1,14 +1,15 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
+import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/main.dart';
+import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../locator.dart';
 
 class LanguageSettingScreen extends StatefulWidget {
@@ -127,7 +128,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                         return;
                       }
                       _changeLanguage(listLang[selectedlanguage]);
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     },
                     child: Center(
                       child: Text(
@@ -159,9 +160,50 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
     switch (strlang.toLowerCase()) {
       case 'english':
         _temp = Locale('en', 'US');
+        SharedPref.saveBoolValue(
+            PreferenceConstant.verseTransliterationSetting, true);
+        TranslationResponseModel temp = TranslationResponseModel(
+          authorName: 'Swami Adidevananda',
+          language: 'english',
+          title: 'English translation by Swami Adidevananda',
+        );
+        SharedPref.saveVerseTranslationSelection(temp);
+        SharedPref.saveBoolValue(
+            PreferenceConstant.verseCommentarySetting, true);
+        TranslationResponseModel temp2 = TranslationResponseModel(
+          authorName: 'Swami Sivananda',
+          language: 'english',
+          title: 'English Commentary by Swami Sivananda',
+        );
+        SharedPref.saveVerseCommentarySetting(temp2);
+        setState(() {
+          savedVerseTranslation = temp;
+          savedVerseCommentary = temp2;
+        });
+
         break;
       default:
         _temp = Locale('hi', 'IN');
+        SharedPref.saveBoolValue(
+            PreferenceConstant.verseTransliterationSetting, false);
+        TranslationResponseModel temp = TranslationResponseModel(
+          authorName: 'Swami Tejomayananda',
+          language: 'hindi',
+          title: 'Hindi translation by Swami Tejomayananda',
+        );
+        SharedPref.saveVerseTranslationSelection(temp);
+        SharedPref.saveBoolValue(
+            PreferenceConstant.verseCommentarySetting, true);
+        TranslationResponseModel temp2 = TranslationResponseModel(
+          authorName: 'Swami Chinmayananda',
+          language: 'hindi',
+          title: 'Hindi Commentary by Swami Chinmayananda',
+        );
+        SharedPref.saveVerseCommentarySetting(temp2);
+        setState(() {
+          savedVerseTranslation = temp;
+          savedVerseCommentary = temp2;
+        });
     }
     MyApp.setLocales(context, _temp);
   }

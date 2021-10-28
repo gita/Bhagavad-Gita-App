@@ -3,12 +3,11 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
-import 'package:bhagavad_gita/routes/route_names.dart';
+import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:bhagavad_gita/widgets/set_notificationTimer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -123,8 +122,14 @@ class _SettingScreenState extends State<SettingScreen> {
             Padding(
               padding: EdgeInsets.all(kDefaultPadding),
               child: InkWell(
-                onTap: () {
-                  navigationService.pushNamed(r_Language);
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LanguageSettingScreen(),
+                    ),
+                  );
+                  setDefaultVar();
                 },
                 child: Container(
                   height: 40,
@@ -413,7 +418,7 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  setNotificationTimer(BuildContext context) {
+  /*setNotificationTimer(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -433,5 +438,5 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       },
     );
-  }
+  }*/
 }

@@ -1,13 +1,13 @@
 import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 
 TranslationResponseModel savedVerseTranslation = TranslationResponseModel(
-  authorName: 'Swami Sivananda',
+  authorName: 'Swami Adidevananda',
   language: 'english',
-  title: 'English translation by Swami Sivananda',
+  title: 'English translation by Swami Adidevananda',
 );
 
 TranslationResponseModel savedVerseCommentary = TranslationResponseModel(
-  authorName: 'Swami Ramsukhdas',
-  language: 'hindi',
-  title: 'Hindi Commentary by Swami Ramsukhdas',
+  authorName: 'Swami Sivananda',
+  language: 'english',
+  title: 'English Commentary by Swami Sivananda',
 );
