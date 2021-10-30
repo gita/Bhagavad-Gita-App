@@ -147,7 +147,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             ),
                           ],
                         ),
-                        SizedBox(height: kPadding * 2),
+                        SizedBox(height: kPadding),
                         Text(
                           listLastReadVerse[indexVerse]
                                   .gitaVerseById!

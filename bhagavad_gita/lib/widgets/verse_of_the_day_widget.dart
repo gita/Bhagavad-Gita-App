@@ -7,6 +7,7 @@ import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_verse_of_the_day_model.dart';
 import 'package:bhagavad_gita/models/verse_of_the_day_detail_model.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
+import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -38,13 +39,14 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
 
     verseOfTheDayQuery = """
     query GetVerseOfTheDayId {
-      allVerseOfTheDays(condition: {date: "2021-09-20"}) {
+      allVerseOfTheDays(condition: {date: "${DateTime.now()}"}) {
         nodes {
           verseOrder
         }
       }
     }
     """;
+    print('====>>>dateTime ${DateTime.now()}');
   }
 
   @override
@@ -184,6 +186,27 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
     super.initState();
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
+
+    LocalNotification.instance.needToRefreshVerseOfTheDay.addListener(() {
+      print("-->>>>>>>>>>");
+      setState(() {
+        String language1 = savedVerseTranslation.language ?? "english";
+        String auther1 = savedVerseTranslation.authorName ?? "Swami Sivananda";
+        getVerseDetail = """
+            query GetVerseDetailsById {
+              gitaVerseById(id: ${widget.verseID}) {
+              chapterNumber
+              verseNumber
+              gitaTranslationsByVerseId(condition: { language: "$language1", authorName: "$auther1" }) {
+                nodes {
+                  description
+                }
+              }
+            }
+          }
+          """;
+      });
+    });
 
     String language1 = savedVerseTranslation.language ?? "english";
     String auther1 = savedVerseTranslation.authorName ?? "Swami Sivananda";

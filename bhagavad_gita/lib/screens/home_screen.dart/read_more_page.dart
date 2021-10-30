@@ -35,8 +35,6 @@ class ContinueReading extends StatefulWidget {
 
 class _ContinueReadingState extends State<ContinueReading> {
   final NavigationService navigationService = locator<NavigationService>();
-  final LastReadVerseService lastReadVerseService =
-      locator<LastReadVerseService>();
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
   late ValueNotifier<GraphQLClient> client;
   late String verseDetailQuery;
@@ -133,7 +131,6 @@ class _ContinueReadingState extends State<ContinueReading> {
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
     print('object-------$versId');
-    //print("Languade : ${savedVerseTranslation.language}");
     String language1 = savedVerseTranslation.language ?? "english";
     String language2 = savedVerseCommentary.language ?? "english";
 
@@ -376,7 +373,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
-                                      SizedBox(height: kDefaultPadding * 2)
+                                      SizedBox(height: kDefaultPadding * 1.5)
                                     ],
                                   )
                                 : Text(''),
@@ -437,7 +434,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     ],
                                   )
                                 : Text(''),
-                            SizedBox(height: kDefaultPadding * 2),
+                            showTranslation
+                                ? SizedBox(height: kDefaultPadding * 2)
+                                : Container(),
                             showCommentry
                                 ? Column(
                                     children: [
@@ -496,7 +495,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     ],
                                   )
                                 : Container(),
-                                SizedBox(height: kDefaultPadding *5),
+                            SizedBox(height: kDefaultPadding * 5),
                           ],
                         ),
                       );
@@ -650,8 +649,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 bool saved = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AddNotesWidget(
-                                          verseNotes: verseNotes!)),
+                                    builder: (context) =>
+                                        AddNotesWidget(verseNotes: verseNotes!),
+                                  ),
                                 );
                                 if (saved) {
                                   getVerseNotes();

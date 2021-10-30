@@ -5,6 +5,7 @@ import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/main.dart';
 import 'package:bhagavad_gita/models/tanslation_response_model.dart';
+import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/searchbar_widget.dart';
@@ -180,7 +181,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
           savedVerseTranslation = temp;
           savedVerseCommentary = temp2;
         });
-
+        LocalNotification.instance.refreshVerseOfTheDay();
         break;
       default:
         _temp = Locale('hi', 'IN');
@@ -204,6 +205,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
           savedVerseTranslation = temp;
           savedVerseCommentary = temp2;
         });
+        LocalNotification.instance.refreshVerseOfTheDay();
     }
     MyApp.setLocales(context, _temp);
   }

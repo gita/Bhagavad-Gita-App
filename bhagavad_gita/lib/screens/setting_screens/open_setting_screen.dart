@@ -63,7 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
         actions: [
           InkWell(
             onTap: () {
-              navigationService.goBack();
+              Navigator.of(context).pop(true);
             },
             child: Container(
               width: 50,
@@ -121,32 +121,39 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(kDefaultPadding),
-              child: InkWell(
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LanguageSettingScreen(),
-                    ),
-                  );
-                  setDefaultVar();
-                },
-                child: Container(
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 0.5, color: textLightGreyColor),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: kPadding * 2, right: kDefaultPadding),
-                    child: Row(
-                      children: [
-                        Text(langauge.toUpperCase().replaceAll("\"", "")),
-                        Spacer(),
-                        SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                      ],
+              child: Container(
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 0.5, color: textLightGreyColor),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LanguageSettingScreen(),
+                          ),
+                        );
+                        setDefaultVar();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: kPadding * 2, right: kDefaultPadding),
+                        child: Row(
+                          children: [
+                            Text(langauge.toUpperCase().replaceAll("\"", "")),
+                            Spacer(),
+                            SvgPicture.asset(
+                                'assets/icons/icn_arrow_forward.svg')
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -240,35 +247,48 @@ class _SettingScreenState extends State<SettingScreen> {
               duration: Duration(milliseconds: 300),
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
-                child: InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VerseTranslationScreen(),
-                      ),
-                    );
-                    setDefaultVar();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              savedVerseTranslation.title!,
-                              maxLines: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VerseTranslationScreen(),
                             ),
+                          );
+                          setDefaultVar();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: kPadding * 1.5, right: kPadding * 1.5),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  savedVerseTranslation.title!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(fontSize: 13),
+                                  overflow: TextOverflow.fade,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                              ),
+                              SizedBox(width: 4),
+                              SvgPicture.asset(
+                                  'assets/icons/icn_arrow_forward.svg')
+                            ],
                           ),
-                          Spacer(),
-                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -307,34 +327,48 @@ class _SettingScreenState extends State<SettingScreen> {
               duration: Duration(milliseconds: 300),
               child: Padding(
                 padding: EdgeInsets.all(kPadding * 1.5),
-                child: InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VerseCommentaryScreen(),
-                      ),
-                    );
-                    setDefaultVar();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 0.5, color: textLightGreyColor),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: kPadding * 2, right: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              savedVerseCommentary.title!,
-                              maxLines: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VerseCommentaryScreen(),
                             ),
+                          );
+                          setDefaultVar();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: kPadding * 1.5, right: kPadding * 1.5),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  savedVerseCommentary.title!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(fontSize: 13),
+                                  overflow: TextOverflow.fade,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                              ),
+                              SizedBox(width: 4),
+                              SvgPicture.asset(
+                                  'assets/icons/icn_arrow_forward.svg')
+                            ],
                           ),
-                          SvgPicture.asset('assets/icons/icn_arrow_forward.svg')
-                        ],
+                        ),
                       ),
                     ),
                   ),

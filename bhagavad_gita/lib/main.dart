@@ -17,25 +17,23 @@ Future<void> main() async {
 
   setupServiceLocator();
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
-  bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
+  ///bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
   savedVerseTranslation = await SharedPref.getSavedVerseTranslationSetting();
   savedVerseCommentary = await SharedPref.getSavedVerseCommentarySetting();
   //savedLastReadVerse = await SharedPref.getLastRead();
   print("Selected lang : $langauge");
   runApp(MyApp(
-    isOnBoardSkip: onBoardSkip,
+    
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key, required this.isOnBoardSkip}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   static void setLocales(BuildContext context, Locale locale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.setLocale(locale);
   }
-
-  final bool isOnBoardSkip;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -108,7 +106,8 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: Colors.white),
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: widget.isOnBoardSkip ? r_Tabbar : r_Onboarding,
+      initialRoute: r_SpalshScreen,
+      // initialRoute: widget.isOnBoardSkip ? r_SpalshScreen : r_Onboarding,
       //home: FirstLoadPage(),
     );
   }
