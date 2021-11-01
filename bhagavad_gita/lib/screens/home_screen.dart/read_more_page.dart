@@ -306,7 +306,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                         return Container();
                       }
                       lastReadVerse = LastReadVerse(
-                          verseID: widget.verseID,
+                          verseID: "$versId",
                           gitaVerseById: data.gitaVerseById!);
                       //SharedPref.saveLastRead(lastReadVerse!);
                       LocalNotification.instance
@@ -434,9 +434,6 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     ],
                                   )
                                 : Text(''),
-                            showTranslation
-                                ? SizedBox(height: kDefaultPadding * 2)
-                                : Container(),
                             showCommentry
                                 ? Column(
                                     children: [
@@ -632,7 +629,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                             onTap: () async {
                               if (verseNotes == null) {
                                 VerseNotes temp = VerseNotes(
-                                    verseID: widget.verseID,
+                                    verseID: "$versId",
                                     gitaVerseById: lastReadVerse!.gitaVerseById,
                                     verseNote: "");
                                 bool saved = await Navigator.push(
@@ -660,11 +657,12 @@ class _ContinueReadingState extends State<ContinueReading> {
                             },
                             child: Container(
                               child: Center(
-                                  child: verseNotes == null
-                                      ? SvgPicture.asset(
-                                          "assets/icons/Icon_write_bottom.svg")
-                                      : SvgPicture.asset(
-                                          'assets/icons/Icon_fill_addNote.svg')),
+                                child: verseNotes == null
+                                    ? SvgPicture.asset(
+                                        "assets/icons/Icon_write_bottom.svg")
+                                    : SvgPicture.asset(
+                                        'assets/icons/Icon_fill_addNote.svg'),
+                              ),
                             ),
                           ),
                         ),
@@ -674,7 +672,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                               if (lastReadVerse != null) {
                                 if (isVerseSaved) {
                                   await SharedPref.removeVerseFromSaved(
-                                      widget.verseID);
+                                      "$versId");
                                   setState(() {
                                     isVerseSaved = !isVerseSaved;
                                   });

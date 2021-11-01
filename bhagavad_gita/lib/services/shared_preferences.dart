@@ -274,27 +274,6 @@ class SharedPref {
     return isSkip;
   }
 
-  //// Save Verse Setting....
-  static saveVerseCustomisation(VerseCustomissation verseCustomissation) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(
-        PreferenceConstant.verseCustomisation, jsonEncode(verseCustomissation));
-  }
-
-  static Future<VerseCustomissation> getSavedVerseCustomisation() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? strVerseCustomisation =
-        sharedPreferences.getString(PreferenceConstant.verseCustomisation);
-    if (strVerseCustomisation != null) {
-      var lastRead = jsonDecode(strVerseCustomisation);
-      print("Last Read : $lastRead");
-      var tempRead = lastRead as Map<String, dynamic>;
-      return VerseCustomissation.fromJson(tempRead);
-    }
-    return VerseCustomissation(
-        fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: "1");
-  }
-
   //// Save Verse Listing Setting....
   static saveVerseListCustomisation(
       VerseCustomissation verseCustomissation) async {
@@ -307,13 +286,15 @@ class SharedPref {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? strVerseListCustomisation =
         sharedPreferences.getString(PreferenceConstant.verseListCustomisation);
+    print('Get customisation : $strVerseListCustomisation');
     if (strVerseListCustomisation != null) {
       var saveSatting = jsonDecode(strVerseListCustomisation);
       var readTemp = saveSatting as Map<String, dynamic>;
       return VerseCustomissation.fromJson(readTemp);
+    } else {
+      return VerseCustomissation(
+          fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: '1');
     }
-    return VerseCustomissation(
-        fontsize: 16, fontfamily: 'Inter', lineSpacing: 1.5, colorId: '1');
   }
 
 ////// Verse translation from setting screen

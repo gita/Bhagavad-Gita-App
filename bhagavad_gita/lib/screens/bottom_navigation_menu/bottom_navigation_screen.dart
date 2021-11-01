@@ -155,6 +155,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                             setState(() {
                               fontFamilyName = fontFamily;
                             });
+                            print('Selected font famlily 0: $fontFamily');
                             widget.selectedFontFamily(fontFamily);
                           });
                         },

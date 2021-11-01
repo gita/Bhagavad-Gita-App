@@ -28,7 +28,7 @@ class _InterClickState extends State<InterClick> {
   @override
   void initState() {
     super.initState();
-    SharedPref.getSavedVerseCustomisation().then((value) {
+    SharedPref.getSavedVerseListCustomisation().then((value) {
       var index = allFontFamily.indexWhere(
           (element) => element.toLowerCase() == value.fontfamily.toLowerCase());
       setState(() {

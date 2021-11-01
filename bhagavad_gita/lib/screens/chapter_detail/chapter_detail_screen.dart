@@ -211,7 +211,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                           Map<String, dynamic>? res = result.data;
                           ChapterDetailData chapterDetailData =
                               ChapterDetailData.fromJson(res!);
-                          print("API Response : $res");
+                          //print("API Response : $res");
                           return Column(
                             children: [
                               SizedBox(height: kDefaultPadding * 2),
@@ -420,6 +420,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                   fontFamily = strFontFamily;
                 });
                 verseCustomissation.fontfamily = strFontFamily;
+                print(
+                    'Selected font famlily 1: ${verseCustomissation.fontfamily}');
                 SharedPref.saveVerseListCustomisation(verseCustomissation);
               },
               selectedFontSize: (int) {},
