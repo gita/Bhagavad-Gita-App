@@ -66,7 +66,9 @@ class AppRouter {
       case r_Setting:
         return _getPageRoute(
           routeName: settings.name!,
-          viewToShow: SettingScreen(),
+          viewToShow: SettingScreen(
+            refresh: () {},
+          ),
         );
       case r_SpalshScreen:
         return _getPageRoute(

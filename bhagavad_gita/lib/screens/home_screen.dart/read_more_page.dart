@@ -245,7 +245,14 @@ class _ContinueReadingState extends State<ContinueReading> {
               var temp = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SettingScreen(),
+                  builder: (context) => SettingScreen(
+                    refresh: () {
+                      getAllToggelValueFormShowingContent();
+                      setState(() {
+                        getVersDetails();
+                      });
+                    },
+                  ),
                 ),
               );
               if (temp) {
@@ -258,7 +265,8 @@ class _ContinueReadingState extends State<ContinueReading> {
             child: Container(
               width: 40,
               child: Center(
-                child: SvgPicture.asset('assets/icons/icon_setting_nonsele.svg',
+                child: SvgPicture.asset(
+                    'assets/icons/icon_setting_nonsele.svg',
                     color: formatingColor.naviagationIconColor),
               ),
             ),
@@ -355,7 +363,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 fontSize: fontSize,
                                                 height: lineSpacing,
-                                                color: formatingColor.textColor,
+                                                color:
+                                                    formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                       SizedBox(
@@ -370,7 +379,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 fontSize: fontSize,
                                                 height: lineSpacing,
-                                                color: formatingColor.textColor,
+                                                color:
+                                                    formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                       SizedBox(height: kDefaultPadding * 1.5)
@@ -398,8 +408,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: fontSize - 2,
-                                                  color:
-                                                      formatingColor.textColor,
+                                                  color: formatingColor
+                                                      .textColor,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                           ),
@@ -428,7 +438,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize: fontSize,
-                                                color: formatingColor.textColor,
+                                                color:
+                                                    formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                     ],
@@ -446,7 +457,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!
-                                                .getTranslatedValue('commentry')
+                                                .getTranslatedValue(
+                                                    'commentry')
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
@@ -486,7 +498,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize: fontSize,
-                                                color: formatingColor.textColor,
+                                                color:
+                                                    formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                     ],
@@ -630,7 +643,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                               if (verseNotes == null) {
                                 VerseNotes temp = VerseNotes(
                                     verseID: "$versId",
-                                    gitaVerseById: lastReadVerse!.gitaVerseById,
+                                    gitaVerseById:
+                                        lastReadVerse!.gitaVerseById,
                                     verseNote: "");
                                 bool saved = await Navigator.push(
                                   context,
@@ -646,8 +660,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 bool saved = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddNotesWidget(verseNotes: verseNotes!),
+                                    builder: (context) => AddNotesWidget(
+                                        verseNotes: verseNotes!),
                                   ),
                                 );
                                 if (saved) {

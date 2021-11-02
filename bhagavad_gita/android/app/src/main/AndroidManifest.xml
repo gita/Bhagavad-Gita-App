@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bhagavad_gita">
+    package="com.gitainitiative.bhagavadgita">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="bhagavad_gita"
+        android:label="Bhagavad Gita"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,4 @@
-package com.example.bhagavad_gita
+package com.gitainitiative.bhagavadgita
 
 import io.flutter.embedding.android.FlutterActivity
 

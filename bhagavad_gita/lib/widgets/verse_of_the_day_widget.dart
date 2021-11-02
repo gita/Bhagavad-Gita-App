@@ -25,7 +25,7 @@ class VerseOfTheDayWidget extends StatefulWidget {
 
 class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
   final NavigationService navigationService = locator<NavigationService>();
-  var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  // var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
 
   late ValueNotifier<GraphQLClient> client;
