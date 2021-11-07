@@ -50,7 +50,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
       }
     }
     """;
-    print('====>>>dateTime ${DateTime.now()}');
+    print('====>>>dateTime $formattedDate');
   }
 
   @override
