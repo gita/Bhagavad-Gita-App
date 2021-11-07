@@ -143,6 +143,8 @@ class _ContinueReadingState extends State<ContinueReading> {
       chapterNumber
       verseNumber
       text
+      transliteration
+      wordMeanings
       gitaTranslationsByVerseId(condition: { language: "$language1", authorName: "$auther1" }) {
         nodes {
           description
@@ -193,7 +195,7 @@ class _ContinueReadingState extends State<ContinueReading> {
 
   Future<void> shareVerse() async {
     await FlutterShare.share(
-      title: 'Transaltion',
+      title: 'Translation',
       text: lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
               .description ??
           "",
@@ -355,7 +357,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         height: kPadding * 3,
                                       ),
                                       Text(
-                                        "dhṛitarāśhtra uvācha\ndharma-kṣhetre kuru-kṣhetre\nsamavetā yuyutsavaḥ\nmāmakāḥ pāṇḍavāśhchaiva\nkimakurvata sañjaya",
+                                        "${data.gitaVerseById!.transliteration}",
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -371,7 +373,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         height: kDefaultPadding * 2,
                                       ),
                                       Text(
-                                        "dhṛitarāśhtraḥ uvācha—Dhritarashtra said;\ndharma-kṣhetre—the land of dharma;\nkuru-kṣhetre—at Kurukshetra;\nsamavetāḥ—having gathered;\nyuyutsavaḥ—desiring to fight;\nmāmakāḥ—my sons; pāṇḍavāḥ—the sons\nof Pandu; cha—and; eva—certainly;\nkim—what; akurvata—did they do;\nsañjaya—Sanjay",
+                                        "${data.gitaVerseById!.wordMeanings}",
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
