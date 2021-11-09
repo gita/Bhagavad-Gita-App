@@ -17,7 +17,7 @@ Future<bool> network_check() async {
 
     var connectivityResult = await (Connectivity().checkConnectivity());
 
-    /* CHECK FOR NETWORK THROUGH MOBILE DATA CONNECTION */
+    /* CHECK FOR NETWORK THROUGH MOBILE DATA CONNECTION  IN PHONE */
     if (connectivityResult == ConnectivityResult.mobile) {
 
         if (await DataConnectionChecker().hasConnection) {
