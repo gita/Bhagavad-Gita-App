@@ -12,6 +12,43 @@ import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+/* CHECK FOR NETWORK ISSUES AND DISPLAY SOME CONFIRMATION OF IT */
+Future<bool> network_check() async {
+
+    var connectivityResult = await (Connectivity().checkConnectivity());
+
+    /* CHECK FOR NETWORK THROUGH MOBILE DATA CONNECTION */
+    if (connectivityResult == ConnectivityResult.mobile) {
+
+        if (await DataConnectionChecker().hasConnection) {
+            /* MOBILE DATA / CONNECTION CONFIRMED */
+            return true;
+        } 
+        else {
+            /* CAN DISPLAY A TOAST ABOUT NO NETWORK CONNECTION */ 
+            return false;
+        }
+
+    } 
+    /* IF WIFI CONNECTION IS THERE ,THEN CHECK NETWORK CONNECTIVITY*/ 
+    else if (connectivityResult == ConnectivityResult.wifi) {
+
+        if (await DataConnectionChecker().hasConnection) {
+            /* INTERNET CONNECTION CONFIRMED */
+            return true;
+        } 
+        else {
+            /* NO INTERNET CONNNECTION ALTHOUGH CONNECTED TO WIFI */
+            return false;
+        }
+    }
+    /* NIETHER MOBILE DATA NOR WIFI CONNECTION */
+    else {
+        return false;
+    }
+
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
