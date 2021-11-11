@@ -37,6 +37,8 @@ class GitaVerseById {
     this.chapterNumber,
     this.verseNumber,
     this.text,
+    this.transliteration,
+    this.wordMeanings,
     this.gitaTranslationsByVerseId,
     this.gitaCommentariesByVerseId,
   });
@@ -44,6 +46,8 @@ class GitaVerseById {
   int? chapterNumber;
   int? verseNumber;
   String? text;
+  String? transliteration;
+  String? wordMeanings;
   GitaSByVerseId? gitaTranslationsByVerseId;
   GitaSByVerseId? gitaCommentariesByVerseId;
 
@@ -51,6 +55,8 @@ class GitaVerseById {
         chapterNumber: json["chapterNumber"],
         verseNumber: json["verseNumber"],
         text: json["text"],
+        transliteration: json["transliteration"],
+        wordMeanings: json["wordMeanings"],
         gitaTranslationsByVerseId:
             GitaSByVerseId.fromJson(json["gitaTranslationsByVerseId"]),
         gitaCommentariesByVerseId:
@@ -61,6 +67,8 @@ class GitaVerseById {
         "chapterNumber": chapterNumber,
         "verseNumber": verseNumber,
         "text": text,
+        "transliteration": transliteration,
+        "wordMeanings": wordMeanings,
         "gitaTranslationsByVerseId": gitaTranslationsByVerseId!.toJson(),
         "gitaCommentariesByVerseId": gitaCommentariesByVerseId!.toJson(),
       };

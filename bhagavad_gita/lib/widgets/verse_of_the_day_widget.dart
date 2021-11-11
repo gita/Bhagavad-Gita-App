@@ -24,8 +24,7 @@ class VerseOfTheDayWidget extends StatefulWidget {
 }
 
 class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
-  final NavigationService navigationService = locator<NavigationService>();
-  // var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  final NavigationService navigationService = locator<NavigationService>();  
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
 
   late ValueNotifier<GraphQLClient> client;
@@ -50,7 +49,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
       }
     }
     """;
-    print('====>>>dateTime ${DateTime.now()}');
+    print('====>>>verse Of the day $verseOfTheDayQuery');
   }
 
   @override
@@ -132,7 +131,6 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                           verseID:
                               "${allVerseOTheDayResponseModel.allVerseOfTheDays!.nodes![0].verseOrder ?? 0}",
                         ),
-                        // Spacer(),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -209,6 +207,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
             }
           }
           """;
+        print('verse Detail Query===>>>--->>>$getVerseDetail');
       });
     });
 

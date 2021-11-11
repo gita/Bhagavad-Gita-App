@@ -17,9 +17,10 @@ import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_share/flutter_share.dart';
+// import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:share/share.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
@@ -191,13 +192,11 @@ class _ContinueReadingState extends State<ContinueReading> {
     });
   }
 
-  Future<void> shareVerse() async {
-    await FlutterShare.share(
-      title: 'Transaltion',
-      text: lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
+  shareVerse() async {
+    await Share.share(
+      lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0]
               .description ??
           "",
-      linkUrl: "https://bhagavadgita.graphcdn.app/",
     );
   }
 
@@ -265,8 +264,7 @@ class _ContinueReadingState extends State<ContinueReading> {
             child: Container(
               width: 40,
               child: Center(
-                child: SvgPicture.asset(
-                    'assets/icons/icon_setting_nonsele.svg',
+                child: SvgPicture.asset('assets/icons/icon_setting_nonsele.svg',
                     color: formatingColor.naviagationIconColor),
               ),
             ),
@@ -363,8 +361,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 fontSize: fontSize,
                                                 height: lineSpacing,
-                                                color:
-                                                    formatingColor.textColor,
+                                                color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                       SizedBox(
@@ -379,8 +376,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 fontSize: fontSize,
                                                 height: lineSpacing,
-                                                color:
-                                                    formatingColor.textColor,
+                                                color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                       SizedBox(height: kDefaultPadding * 1.5)
@@ -408,8 +404,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: fontSize - 2,
-                                                  color: formatingColor
-                                                      .textColor,
+                                                  color:
+                                                      formatingColor.textColor,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                           ),
@@ -438,8 +434,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize: fontSize,
-                                                color:
-                                                    formatingColor.textColor,
+                                                color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                     ],
@@ -457,8 +452,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                           SizedBox(width: kDefaultPadding),
                                           Text(
                                             DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                    'commentry')
+                                                .getTranslatedValue('commentry')
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
@@ -498,8 +492,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize: fontSize,
-                                                color:
-                                                    formatingColor.textColor,
+                                                color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
                                     ],
@@ -643,8 +636,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                               if (verseNotes == null) {
                                 VerseNotes temp = VerseNotes(
                                     verseID: "$versId",
-                                    gitaVerseById:
-                                        lastReadVerse!.gitaVerseById,
+                                    gitaVerseById: lastReadVerse!.gitaVerseById,
                                     verseNote: "");
                                 bool saved = await Navigator.push(
                                   context,
@@ -660,8 +652,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 bool saved = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AddNotesWidget(
-                                        verseNotes: verseNotes!),
+                                    builder: (context) =>
+                                        AddNotesWidget(verseNotes: verseNotes!),
                                   ),
                                 );
                                 if (saved) {

@@ -4,7 +4,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_share/flutter_share.dart';
+import 'package:share/share.dart';
 
 class QuotesScreen extends StatefulWidget {
   @override
@@ -29,12 +29,10 @@ class _QuotesScreenState extends State<QuotesScreen>
     });
   }
 
-  Future<void> share() async {
-    await FlutterShare.share(
-      title: quote,
-      text: quote,
-      linkUrl: "https://bhagavadgita.graphcdn.app/",
-    );
+  share(BuildContext context) async {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    await Share.share(quote,
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
   @override
@@ -70,7 +68,7 @@ class _QuotesScreenState extends State<QuotesScreen>
                 child: InkWell(
                   onTap: () async {
                     print('Shear Quote');
-                    share();
+                    share(context);
                   },
                   child: Container(
                     child:

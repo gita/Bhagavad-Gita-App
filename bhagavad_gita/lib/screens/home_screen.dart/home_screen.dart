@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
               !connected
                   ? Center(
                       child: Text(
-                        'Offline!',
+                        'connect to internet',
                         style: AppBarTheme.of(context).textTheme!.headline1,
                       ),
                     )

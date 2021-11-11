@@ -18,7 +18,7 @@ dependencies:
   graphql_flutter: ^5.0.0
   intl: ^0.17.0
   list_tile_switch: ^1.0.0
-  flutter_share: ^2.0.0
+  share: ^2.0.4
   shared_preferences: ^2.0.7
   flutter_offline: "^2.0.0"
   flutter_localizations: 
