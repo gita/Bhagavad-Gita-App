@@ -49,7 +49,6 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
       }
     }
     """;
-    print('====>>>verse Of the day $verseOfTheDayQuery');
   }
 
   @override
