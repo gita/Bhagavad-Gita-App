@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="13df4f48-5995-4174-ac84-abdb363cb1ea" name="Default Changelist" comment="Upgrade build.gradle">
+      <change beforePath="$PROJECT_DIR$/bhagavad_gita/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/bhagavad_gita/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bhagavad_gita/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/bhagavad_gita/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bhagavad_gita/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/bhagavad_gita/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/radhakrishna/.android/avd/Pixel_5_API_31.avd]" />
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../hanuman.jks" />
+    <option name="KEY_ALIAS" value="radhakrishna" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1xoRUY4MnkYlLEwQcs3jjdfGs6h" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="AndroidRunProguardForReleaseBuild" value="false" />
+    <property name="ApkExportedModule" value="Bhagavad-Gita-App" />
+    <property name="BundleExportedModule" value="Bhagavad-Gita-App" />
+    <property name="ExportedApkPath" value="$PROJECT_DIR$/../../bhagavadgita.apk" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable" value="ALL" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="additionalArgs" value="--release" />
+      <option name="filePath" value="$PROJECT_DIR$/bhagavad_gita/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="13df4f48-5995-4174-ac84-abdb363cb1ea" name="Default Changelist" comment="" />
+      <created>1631019472486</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631019472486</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added transliteration and word meanings">
+      <created>1636285248932</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1636285248932</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix verse of the day">
+      <created>1636285922110</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1636285922110</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Upgrade build.gradle">
+      <created>1636289464043</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1636289464043</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added transliteration and word meanings" />
+    <MESSAGE value="Fix verse of the day" />
+    <MESSAGE value="Upgrade build.gradle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upgrade build.gradle" />
+  </component>
+</project>
