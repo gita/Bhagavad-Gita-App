@@ -326,6 +326,18 @@ class _ContinueReadingState extends State<ContinueReading> {
                             SizedBox(
                               height: kDefaultPadding,
                             ),
+                             Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  child: Icon(
+                                    Icons.play_circle_filled,
+                                    color: HexColor.fromHex('#FFBE80'),
+                                    size: 48,
+                                  ),
+                                )
+                              ],
+                            ),
                             Text(
                                 "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
                                 style: Theme.of(context)
