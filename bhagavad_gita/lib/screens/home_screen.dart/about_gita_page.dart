@@ -52,23 +52,23 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       children: [
                         Text(
                           DemoLocalization.of(context)!
-                              .getTranslatedValue('about')
+                              .getTranslatedValue('about_gita')
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(fontSize: 28, color: whiteColor),
                         ),
-                        Text(
-                          DemoLocalization.of(context)!
-                              .getTranslatedValue('gita')
-                              .toString(),
-                          textAlign: TextAlign.justify,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontSize: 28, color: orangeColor),
-                        ),
+                        // Text(
+                        //   DemoLocalization.of(context)!
+                        //       .getTranslatedValue('gita')
+                        //       .toString(),
+                        //   textAlign: TextAlign.justify,
+                        //   style: Theme.of(context)
+                        //       .textTheme
+                        //       .headline1!
+                        //       .copyWith(fontSize: 28, color: orangeColor),
+                        // ),
                       ],
                     ),
                   ),

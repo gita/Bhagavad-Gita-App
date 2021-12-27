@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
     allGitaChapters {
       nodes {
         chapterNumber
+        name
         nameTranslated
         versesCount
       }

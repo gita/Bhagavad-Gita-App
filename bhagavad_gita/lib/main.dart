@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bhagvad Gita',
+      title: 'Bhagavad Gita',
       debugShowCheckedModeBanner: false,
       locale: _locale,
       supportedLocales: [

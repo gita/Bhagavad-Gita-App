@@ -2,8 +2,8 @@
     package="com.gitainitiative.bhagavadgita">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Bhagavad Gita"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Gita"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

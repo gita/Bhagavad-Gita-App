@@ -344,15 +344,42 @@ class _ContinueReadingState extends State<ContinueReading> {
                               style: TextStyle(
                                   fontFamily: fontFamily,
                                   color: formatingColor.style1,
-                                  fontSize: fontSize,
-                                  fontWeight: FontWeight.w400),
+                                  fontSize: fontSize + 2,
+                                  fontWeight: FontWeight.w500),
                             ),
+                            SizedBox(height: kDefaultPadding * 1.5),
                             showTraliteration
                                 ? Column(
                                     children: [
-                                      SizedBox(
-                                        height: kPadding * 3,
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              "assets/icons/icon_left_rtansection.svg"),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue(
+                                                'transliteration')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                              fontFamily: fontFamily,
+                                              fontSize: fontSize - 2,
+                                              color:
+                                              formatingColor.textColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              "assets/icons/icon_right_translation.svg")
+                                        ],
                                       ),
+                                      SizedBox(height: kDefaultPadding),
                                       Text(
                                         "${data.gitaVerseById!.transliteration}",
                                         textAlign: TextAlign.center,
@@ -365,9 +392,36 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
-                                      SizedBox(
-                                        height: kDefaultPadding * 2,
+                                      SizedBox(height: kDefaultPadding),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              "assets/icons/icon_left_rtansection.svg"),
+                                          SizedBox(width: kDefaultPadding),
+                                          Text(
+                                            DemoLocalization.of(context)!
+                                                .getTranslatedValue(
+                                                'word_meanings')
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                              fontFamily: fontFamily,
+                                              fontSize: fontSize - 2,
+                                              color:
+                                              formatingColor.textColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          SizedBox(width: kDefaultPadding),
+                                          SvgPicture.asset(
+                                              "assets/icons/icon_right_translation.svg")
+                                        ],
                                       ),
+                                      SizedBox(height: kDefaultPadding),
                                       Text(
                                         "${data.gitaVerseById!.wordMeanings}",
                                         textAlign: TextAlign.center,
