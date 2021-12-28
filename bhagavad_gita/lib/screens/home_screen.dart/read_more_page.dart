@@ -50,7 +50,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   //// Customisation
   double lineSpacing = 1.5;
   String fontFamily = 'Inter';
-  double fontSize = 16;
+  double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
   late VerseCustomissation verseCustomissation;
 
@@ -330,10 +330,10 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .headline2!
                                     .copyWith(
                                         fontFamily: fontFamily,
-                                        fontSize: fontSize + 10,
+                                        fontSize: fontSize + 5,
                                         color: formatingColor.textColor)),
                             SizedBox(
                               height: kDefaultPadding,
@@ -345,7 +345,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                   fontFamily: fontFamily,
                                   color: formatingColor.style1,
                                   fontSize: fontSize + 2,
-                                  fontWeight: FontWeight.w500),
+                                  fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: kDefaultPadding * 1.5),
                             showTraliteration
@@ -388,6 +388,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .subtitle1!
                                             .copyWith(
                                                 fontSize: fontSize,
+                                                fontStyle: FontStyle.italic,
                                                 height: lineSpacing,
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),

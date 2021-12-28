@@ -59,7 +59,7 @@ class ChapterListTileWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        chapter.nameTranslated ?? "",
+                        (Localizations.localeOf(context).languageCode == 'hi') ? (chapter.name ?? "") : chapter.nameTranslated ?? "",
                         style: Theme.of(context)
                             .textTheme
                             .headline2!

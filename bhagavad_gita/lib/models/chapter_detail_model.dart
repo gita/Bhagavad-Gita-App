@@ -19,12 +19,14 @@ class GitaChapterById {
   GitaChapterById({
     this.chapterNumber,
     this.nameTranslated,
+    this.name,
     this.chapterSummary,
     this.gitaVersesByChapterId,
   });
 
   int? chapterNumber;
   String? nameTranslated;
+  String? name;
   String? chapterSummary;
   GitaVersesByChapterId? gitaVersesByChapterId;
 
@@ -32,6 +34,7 @@ class GitaChapterById {
       GitaChapterById(
         chapterNumber: json["chapterNumber"],
         nameTranslated: json["nameTranslated"],
+        name: json["name"],
         chapterSummary: json["chapterSummary"],
         gitaVersesByChapterId:
             GitaVersesByChapterId.fromJson(json["gitaVersesByChapterId"]),
@@ -40,6 +43,7 @@ class GitaChapterById {
   Map<String, dynamic> toJson() => {
         "chapterNumber": chapterNumber,
         "nameTranslated": nameTranslated,
+        "name": name,
         "chapterSummary": chapterSummary,
         "gitaVersesByChapterId": gitaVersesByChapterId!.toJson(),
       };
