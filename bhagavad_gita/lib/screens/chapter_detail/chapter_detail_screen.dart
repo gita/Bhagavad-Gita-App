@@ -79,6 +79,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
     {
     gitaChapterById(id: $chapterNumber) {
       chapterNumber
+      name
       nameTranslated
       chapterSummary
       gitaVersesByChapterId {
@@ -231,9 +232,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                               ),
                               SizedBox(height: kPadding),
                               Text(
-                                chapterDetailData
-                                        .gitaChapterById!.nameTranslated ??
-                                    "",
+                                (Localizations.localeOf(context).languageCode == 'hi') ? (chapterDetailData
+                                    .gitaChapterById!.name ?? "") : chapterDetailData
+                                    .gitaChapterById!.nameTranslated ?? "",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -284,7 +285,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                           .textTheme
                                           .headline2!
                                           .copyWith(
-                                            fontSize: fontSize,
+                                            fontSize: fontSize - 3,
                                             height: lineSpacing,
                                             fontFamily: fontFamily,
                                             color: textLightGreyColor,

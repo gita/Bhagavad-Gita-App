@@ -101,3 +101,7 @@ var quotesList = [
   "I have shared this profound truth with you, Arjuna. Those who understand it will attain wisdom; they will have done that which has to be done.",
   "I give you these precious words of wisdom; reflect on them and then do as you choose."
 ];
+
+var quotesListHindi = [
+  "जब भी धर्म का ह्रास होता है और जीवन का उद्देश्य भूल जाता है, तो मैं स्वयं को पृथ्वी पर प्रकट करता हूं। मैं हर युग में अच्छाई की रक्षा, बुराई को नष्ट करने और धर्म की स्थापना के लिए पैदा हुआ हूं।",
+];
