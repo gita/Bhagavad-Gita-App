@@ -18,12 +18,20 @@ class _QuotesScreenState extends State<QuotesScreen>
   @override
   void initState() {
     super.initState();
-    getQuote();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    this.getQuote();
   }
 
   getQuote() {
     final random = Random();
-    var result = quotesList[random.nextInt(quotesList.length)];
+    var result = (Localizations.localeOf(context).languageCode == 'hi') ?
+        quotesListHindi[random.nextInt(quotesListHindi.length)] :
+        quotesList[random.nextInt(quotesList.length)];
     setState(() {
       quote = result;
     });
@@ -67,7 +75,7 @@ class _QuotesScreenState extends State<QuotesScreen>
                 clipBehavior: Clip.hardEdge,
                 child: InkWell(
                   onTap: () async {
-                    print('Shear Quote');
+                    print('Share Quote');
                     share(context);
                   },
                   child: Container(
@@ -94,6 +102,7 @@ class _QuotesScreenState extends State<QuotesScreen>
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: whiteColor,
+                      fontSize: 18,
                       fontWeight: FontWeight.w500,
                       height: 1.7),
                 ),

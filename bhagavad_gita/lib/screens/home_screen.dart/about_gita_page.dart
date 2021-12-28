@@ -28,7 +28,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     image: DecorationImage(
-                        image: AssetImage('assets/images/image_aboutGita.png'),
+                        image: AssetImage('assets/images/image_aboutGita.jpg'),
                         fit: BoxFit.cover),
                   ),
                 ),
