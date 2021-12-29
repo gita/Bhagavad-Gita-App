@@ -41,6 +41,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
         nodes {
           chapterNumber
           nameTranslated
+          name
           versesCount
         }
       }
