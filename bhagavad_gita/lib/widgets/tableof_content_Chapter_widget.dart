@@ -47,7 +47,8 @@ class TableOfContentChapterWidget extends StatelessWidget {
               )
             ],
           ),
-          Text("${chapter.nameTranslated ?? ""}",
+          Text(
+              "${(Localizations.localeOf(context).languageCode == 'hi') ? (chapter.name ?? "") : chapter.nameTranslated ?? ""}",
               style: Theme.of(context).textTheme.subtitle1),
           SizedBox(height: kDefaultPadding),
           !chapter.isExpanded!
