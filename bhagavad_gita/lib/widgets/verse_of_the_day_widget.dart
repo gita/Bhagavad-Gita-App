@@ -36,11 +36,9 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
-    var now = new DateTime.now();
-
     verseOfTheDayQuery = """
     query GetVerseOfTheDayId {
-    allVerseOfTheDays(condition: {date: "$now"}) {
+    allVerseOfTheDays(last: 1) {
     nodes {
       verseOrder
         } 
