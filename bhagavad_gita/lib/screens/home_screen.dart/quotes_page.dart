@@ -102,7 +102,8 @@ class _QuotesScreenState extends State<QuotesScreen>
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: whiteColor,
-                      fontSize: 18,
+                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                      23 : 20,
                       fontWeight: FontWeight.w500,
                       height: 1.7),
                 ),

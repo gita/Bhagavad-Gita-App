@@ -23,7 +23,7 @@ class InterClick extends StatefulWidget {
 class _InterClickState extends State<InterClick> {
   final NavigationService navigationService = locator<NavigationService>();
   var isSelectedFont = 0;
-  List<String> allFontFamily = ['Inter', 'Hind', 'Mukta', 'Poppins'];
+  List<String> allFontFamily = ['Inter', 'Times New Roman', 'Arial', 'Roboto'];
 
   @override
   void initState() {

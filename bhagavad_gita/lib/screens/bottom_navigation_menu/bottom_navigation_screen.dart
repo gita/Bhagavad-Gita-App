@@ -155,13 +155,13 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                             setState(() {
                               fontFamilyName = fontFamily;
                             });
-                            print('Selected font famlily 0: $fontFamily');
+                            print('Selected font family 0: $fontFamily');
                             widget.selectedFontFamily(fontFamily);
                           });
                         },
                         child: Container(
                           height: 40,
-                          width: 144,
+                          width: 180,
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: editBoxBorderColor,

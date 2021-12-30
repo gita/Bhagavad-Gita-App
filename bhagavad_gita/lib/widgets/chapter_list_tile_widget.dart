@@ -63,7 +63,8 @@ class ChapterListTileWidget extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
-                            .copyWith(fontSize: 16, color: titleLableColor),
+                            .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                        18 : 16, color: titleLableColor),
                       ),
                       SizedBox(
                         height: kDefaultPadding * 0.5,

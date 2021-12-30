@@ -65,35 +65,25 @@ flutter:
           weight: 600
         - asset: fonts/Inter-Medium.ttf
           weight: 500
-    - family: Hind
+    - family: Roboto
       fonts:
-        - asset: fonts/Hind-Regular.ttf
+        - asset: fonts/Roboto-Regular.ttf
           weight: 400
-        - asset: fonts/Hind-Bold.ttf
+        - asset: fonts/Roboto-Black.ttf
           weight: 700
-        - asset: fonts/Hind-SemiBold.ttf
+        - asset: fonts/Roboto-Bold.ttf
           weight: 600
-        - asset: fonts/Hind-Medium.ttf
+        - asset: fonts/Roboto-Medium.ttf
           weight: 500
-    - family: Mukta
+    - family: Arial
       fonts:
-        - asset: fonts/Mukta-Regular.ttf
+        - asset: fonts/Arial-Regular.ttf
           weight: 400
-        - asset: fonts/Mukta-Bold.ttf
+        - asset: fonts/Arial-Black.ttf
           weight: 700
-        - asset: fonts/Mukta-SemiBold.ttf
+        - asset: fonts/Arial-Bold.ttf
           weight: 600
-        - asset: fonts/Mukta-Medium.ttf
-          weight: 500
-    - family: Poppins
-      fonts:
-        - asset: fonts/Poppins-Regular.ttf
-          weight: 400
-        - asset: fonts/Poppins-Bold.ttf
-          weight: 700
-        - asset: fonts/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: fonts/Poppins-Medium.ttf
+        - asset: fonts/Arial-Medium.ttf
           weight: 500
   #
   # For details regarding fonts from package dependencies,
