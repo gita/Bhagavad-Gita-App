@@ -343,9 +343,9 @@ class _ContinueReadingState extends State<ContinueReading> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: fontFamily,
-                                  color: formatingColor.style1,
+                                  color: Color(0xffd97706),
                                   fontSize: fontSize + 2,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w500),
                             ),
                             SizedBox(height: kDefaultPadding * 1.5),
                             showTraliteration
@@ -368,7 +368,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .subtitle1!
                                                 .copyWith(
                                               fontFamily: fontFamily,
-                                              fontSize: fontSize - 2,
+                                              fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                              fontSize + 2 : fontSize - 2,
                                               color:
                                               formatingColor.textColor,
                                               fontWeight: FontWeight.w700,
@@ -387,7 +388,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .textTheme
                                             .subtitle1!
                                             .copyWith(
-                                                fontSize: fontSize,
+                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                fontSize + 2 : fontSize,
                                                 fontStyle: FontStyle.italic,
                                                 height: lineSpacing,
                                                 color: formatingColor.textColor,
@@ -411,7 +413,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .subtitle1!
                                                 .copyWith(
                                               fontFamily: fontFamily,
-                                              fontSize: fontSize - 2,
+                                              fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                              fontSize + 2 : fontSize - 2,
                                               color:
                                               formatingColor.textColor,
                                               fontWeight: FontWeight.w700,
@@ -430,7 +433,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .textTheme
                                             .subtitle1!
                                             .copyWith(
-                                                fontSize: fontSize,
+                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                fontSize + 2 : fontSize,
                                                 height: lineSpacing,
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
@@ -459,7 +463,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .subtitle1!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
-                                                  fontSize: fontSize - 2,
+                                                  fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                  fontSize + 2 : fontSize - 2,
                                                   color:
                                                       formatingColor.textColor,
                                                   fontWeight: FontWeight.w700,
@@ -489,7 +494,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .subtitle1!
                                             .copyWith(
                                                 height: lineSpacing,
-                                                fontSize: fontSize,
+                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                fontSize + 2 : fontSize,
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),
@@ -515,7 +521,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .subtitle1!
                                                 .copyWith(
                                                     fontFamily: fontFamily,
-                                                    fontSize: fontSize - 2,
+                                                    fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                    fontSize + 2 : fontSize - 2,
                                                     color: formatingColor
                                                         .textColor,
                                                     fontWeight:
@@ -547,7 +554,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             .subtitle1!
                                             .copyWith(
                                                 height: lineSpacing,
-                                                fontSize: fontSize,
+                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                                fontSize + 2 : fontSize,
                                                 color: formatingColor.textColor,
                                                 fontFamily: fontFamily),
                                       ),

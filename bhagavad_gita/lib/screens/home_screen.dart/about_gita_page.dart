@@ -57,7 +57,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
-                              .copyWith(fontSize: 28, color: whiteColor),
+                              .copyWith(fontSize: 30, color: whiteColor),
                         ),
                         // Text(
                         //   DemoLocalization.of(context)!
@@ -102,13 +102,18 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
-                              .copyWith(fontSize: 18, color: orangeColor),
+                              .copyWith(fontSize:
+                          (Localizations.localeOf(context).languageCode == 'hi') ?
+                          21 : 20, color: orangeColor),
                         ),
                       ),
                     ),
                   ],
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -119,19 +124,14 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: DemoLocalization.of(context)!
-                              .getTranslatedValue('bhagvadgitaAbout')
-                              .toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontSize: 16, color: blackColor),
-                        ),
-                        TextSpan(
                             text: DemoLocalization.of(context)!
                                 .getTranslatedValue('gitaStory')
                                 .toString(),
-                            style: Theme.of(context).textTheme.subtitle1)
+                            style: Theme.of(context)
+                                .textTheme.subtitle1!
+                                .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                            20 : 18, color: blackColor),
+                        )
                       ],
                     ),
                   ),
@@ -147,7 +147,8 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             .getTranslatedValue('story')
                             .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                            fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                            20 : 18, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(width: kDefaultPadding),
                       SvgPicture.asset(
@@ -159,7 +160,10 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       DemoLocalization.of(context)!
                           .getTranslatedValue('gitaStoryDetail')
                           .toString(),
-                      style: Theme.of(context).textTheme.subtitle1),
+                      style: Theme.of(context)
+                          .textTheme.subtitle1!
+                          .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                      20 : 18, color: blackColor)),
                   SizedBox(height: kDefaultPadding * 1.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -172,7 +176,8 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             .getTranslatedValue('conclusion')
                             .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                            fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                            20 : 18, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(width: kDefaultPadding),
                       SvgPicture.asset(
@@ -184,7 +189,10 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                     DemoLocalization.of(context)!
                         .getTranslatedValue('conclusionDetail')
                         .toString(),
-                    style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context)
+                          .textTheme.subtitle1!
+                          .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                      20 : 18, color: blackColor),
                   ),
                   SizedBox(height: kDefaultPadding),
                 ],

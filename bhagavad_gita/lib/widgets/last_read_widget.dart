@@ -57,7 +57,7 @@ class LastReadWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .subtitle1!
-                .copyWith(color: greyScalLableColor),
+                .copyWith(color: greyScalLableColor, fontSize: (Localizations.localeOf(context).languageCode == 'hi') ? 18 : 16),
           ),
           InkWell(
             onTap: () {

@@ -21,6 +21,7 @@ class GitaChapterById {
     this.nameTranslated,
     this.name,
     this.chapterSummary,
+    this.chapterSummaryHindi,
     this.gitaVersesByChapterId,
   });
 
@@ -28,6 +29,7 @@ class GitaChapterById {
   String? nameTranslated;
   String? name;
   String? chapterSummary;
+  String? chapterSummaryHindi;
   GitaVersesByChapterId? gitaVersesByChapterId;
 
   factory GitaChapterById.fromJson(Map<String, dynamic> json) =>
@@ -36,6 +38,7 @@ class GitaChapterById {
         nameTranslated: json["nameTranslated"],
         name: json["name"],
         chapterSummary: json["chapterSummary"],
+        chapterSummaryHindi: json["chapterSummaryHindi"],
         gitaVersesByChapterId:
             GitaVersesByChapterId.fromJson(json["gitaVersesByChapterId"]),
       );
@@ -45,6 +48,7 @@ class GitaChapterById {
         "nameTranslated": nameTranslated,
         "name": name,
         "chapterSummary": chapterSummary,
+        "chapterSummaryHindi": chapterSummaryHindi,
         "gitaVersesByChapterId": gitaVersesByChapterId!.toJson(),
       };
 }

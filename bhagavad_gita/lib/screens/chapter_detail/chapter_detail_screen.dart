@@ -36,7 +36,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
   bool isShowMoreChapterDetail = false;
   String fontFamily = 'Inter';
   double lineSpacing = 1.5;
-  double fontSize = 16;
+  double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
   bool isChapterNumSave = false;
   Chapter? chapter;
@@ -82,6 +82,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
       name
       nameTranslated
       chapterSummary
+      chapterSummaryHindi
       gitaVersesByChapterId {
         nodes {
           chapterNumber
@@ -212,7 +213,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                           Map<String, dynamic>? res = result.data;
                           ChapterDetailData chapterDetailData =
                               ChapterDetailData.fromJson(res!);
-                          //print("API Response : $res");
+                          // print("API Response : $res");
                           return Column(
                             children: [
                               SizedBox(height: kDefaultPadding * 2),
@@ -224,8 +225,9 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                       .headline1!
                                       .copyWith(
                                         height: lineSpacing,
-                                        color: orangeColor,
-                                        fontSize: fontSize,
+                                        color: Color(0xffd97706),
+                                        fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                        fontSize + 2 : fontSize,
                                         fontFamily: fontFamily,
                                       ),
                                 ),
@@ -240,7 +242,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                     .headline2!
                                     .copyWith(
                                       height: lineSpacing,
-                                      fontSize: fontSize,
+                                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                      fontSize + 4 : fontSize + 2,
                                       fontFamily: fontFamily,
                                       color:
                                           formatingColor.naviagationIconColor,
@@ -248,16 +251,17 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                               ),
                               SizedBox(height: kDefaultPadding * 2),
                               Text(
-                                chapterDetailData
-                                        .gitaChapterById!.chapterSummary ??
-                                    '',
+                                (Localizations.localeOf(context).languageCode == 'hi') ? (chapterDetailData
+                                    .gitaChapterById!.chapterSummaryHindi ?? "") : chapterDetailData
+                                    .gitaChapterById!.chapterSummary ?? "",
                                 maxLines: isShowMoreChapterDetail ? 500 : 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1!
                                     .copyWith(
-                                      fontSize: fontSize,
+                                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                      fontSize + 2 : fontSize,
                                       height: lineSpacing,
                                       fontFamily: fontFamily,
                                       color:
@@ -285,7 +289,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                           .textTheme
                                           .headline2!
                                           .copyWith(
-                                            fontSize: fontSize - 3,
+                                            fontSize: fontSize - 2,
                                             height: lineSpacing,
                                             fontFamily: fontFamily,
                                             color: textLightGreyColor,
@@ -306,7 +310,8 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                         .gitaVersesByChapterId!.nodes![index],
                                     formatingColor: formatingColor,
                                     lineSpacing: lineSpacing,
-                                    fontSize: fontSize,
+                                    fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
+                                    fontSize + 2 : fontSize,
                                     fontFamily: fontFamily,
                                     refreshEditing: () {
                                       refreshChapterDetailPage();
