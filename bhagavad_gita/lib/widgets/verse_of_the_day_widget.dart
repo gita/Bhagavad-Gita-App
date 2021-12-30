@@ -24,7 +24,7 @@ class VerseOfTheDayWidget extends StatefulWidget {
 }
 
 class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
-  final NavigationService navigationService = locator<NavigationService>();  
+  final NavigationService navigationService = locator<NavigationService>();
   final HttpLink httpLink = HttpLink(strGitaHttpLink);
 
   late ValueNotifier<GraphQLClient> client;
@@ -36,13 +36,10 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
     client = ValueNotifier<GraphQLClient>(
         GraphQLClient(link: httpLink, cache: GraphQLCache()));
 
-    var now = new DateTime.now();
-    var formatter = new DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(now);
-
+    var now = new DateTime.now().toUtc();
     verseOfTheDayQuery = """
     query GetVerseOfTheDayId {
-      allVerseOfTheDays(condition: {date: "$formattedDate"}) {
+      allVerseOfTheDays(condition: {date: "$now"}) {
         nodes {
           verseOrder
         }
