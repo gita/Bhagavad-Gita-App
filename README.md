@@ -82,4 +82,16 @@ The code is this repo is licensed under the [MIT License](License). Feel free to
 
 <a href="https://github.com/gita/Bhagavad-Gita-App/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=gita/Bhagavad-Gita-App" />
+<<<<<<< HEAD
 </a>
+=======
+</a>
+
+---
+
+<div align="center">
+ <img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="love" />
+ <img src="https://forthebadge.com/images/badges/thats-how-they-get-you.svg" alt="how">
+</div>
+
+>>>>>>> c5562951d67597c307fa1a655f7e66721274a881
