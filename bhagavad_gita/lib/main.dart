@@ -9,22 +9,57 @@ import 'package:bhagavad_gita/routes/app_router.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+///// firbase push notification in Background
+Future<void> onBackgroundMessage(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  flutterLocalNotificationsPlugin.show(
+      message.data.hashCode,
+      message.data['title'],
+      message.data['body'],
+      NotificationDetails(
+          android: AndroidNotificationDetails(channel.id, channel.name,
+              icon: message.notification?.android?.smallIcon)));
+}
+
+///// Android notification channel 
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'id',
+  'android.intent.category.DEFAULT',
+  importance: Importance.high,
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  //// firebase initialized
+  await Firebase.initializeApp();
+  //// firebase subscribeTopic
+  await FirebaseMessaging.instance.subscribeToTopic('Bhagavad-gita-app');
+  FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   setupServiceLocator();
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
+
   ///bool onBoardSkip = await SharedPref.checkOnBoardScreenIsSkip();
   savedVerseTranslation = await SharedPref.getSavedVerseTranslationSetting();
   savedVerseCommentary = await SharedPref.getSavedVerseCommentarySetting();
   //savedLastReadVerse = await SharedPref.getLastRead();
   print("Selected lang : $langauge");
-  runApp(MyApp(
-    
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -41,11 +76,37 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = SharedPref().getLocal();
+  String? token;
 
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //// firebase forground notification
+    final AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/launcher_icon');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(channel.id, channel.name,
+                    icon: android.smallIcon)));
+      }
+    });
+    getToken();
   }
 
   @override
@@ -110,5 +171,10 @@ class _MyAppState extends State<MyApp> {
       // initialRoute: widget.isOnBoardSkip ? r_SpalshScreen : r_Onboarding,
       //home: FirstLoadPage(),
     );
+  }
+
+  getToken() async {
+    token = await FirebaseMessaging.instance.getToken();
+    print("token  $token");
   }
 }

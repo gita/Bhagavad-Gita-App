@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "421327281615",
+    "project_id": "bhagavad-gita-app-890ca",
+    "storage_bucket": "bhagavad-gita-app-890ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421327281615:android:1c4147419a8383312c86ba",
+        "android_client_info": {
+          "package_name": "com.gitainitiative.bhagavadgita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421327281615-nppoptmt62l3c3csaptcqfslvh7kr540.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvvpsaFyLn4m2nnIZyLJOGBR3YlE8Tqn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421327281615-nppoptmt62l3c3csaptcqfslvh7kr540.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
