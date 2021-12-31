@@ -1,5 +1,4 @@
-# Bhagavad-Gita-App
-Flutter app for Gita
+
 <h1 align="center">Getting Started with Bhagavad Gita App </h1> 
 <br>
 
@@ -10,22 +9,9 @@ Flutter app for Gita
 ![License](https://img.shields.io/badge/License-MIT-red)
 ![Stars](https://img.shields.io/github/stars/gita/Bhagavad-Gita-App?style=flat&logo=github)
 ![Forks](https://img.shields.io/github/forks/gita/Bhagavad-Gita-App?style=flat&logo=github)
-
+![Shree Bhagavad Gita](https://cdn.discordapp.com/attachments/926055068271251467/926426925164032051/splashScreen.png)
 </div>
-
-<div align="center">
-  <img height=240 src="../Bhagavad-Gita-App-1/bhagavad_gita/assets/images/gita.png" alt="Bhagavad-Gita-Image">
-</div>
-
 <br>
-
-<div align="center">
-<img src ="https://forthebadge.com/images/badges/winter-is-coming.svg"/>
-  <img src="https://forthebadge.com/images/badges/for-you.svg" />
-
-  <img src="https://forthebadge.com/images/badges/check-it-out.svg" alt="check">
-  <img src="https://forthebadge.com/images/badges/built-by-developers.svg" />
-</div>
 
 ## **Getting Started**
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/gita/Bhagavad-Gita-App?logo=github)](https://gita/Bhagavad-Gita-App/) [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gita/Bhagavad-Gita-App?color=bluevoilet&logo=github)](https://github.com/gita/Bhagavad-Gita-App/commits/) [![GitHub repo size](https://img.shields.io/github/repo-size/gita/Bhagavad-Gita-App?logo=github)](https://github.com/gita/Bhagavad-Gita-App)
@@ -97,9 +83,3 @@ The code is this repo is licensed under the [MIT License](License). Feel free to
 <a href="https://github.com/gita/Bhagavad-Gita-App/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=gita/Bhagavad-Gita-App" />
 </a>
-
-<div align="center">
- <img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="love" />
- <img src="https://forthebadge.com/images/badges/thats-how-they-get-you.svg" alt="how">
-</div>
-
