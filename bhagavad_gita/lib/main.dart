@@ -19,18 +19,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 ///// firbase push notification in Background
 Future<void> onBackgroundMessage(RemoteMessage message) async {
-  print("remote background message${message.data.hashCode}");
-  await Firebase.initializeApp();
-  // flutterLocalNotificationsPlugin.show(
-  //     message.data.hashCode,
-  //     message.data['title'],
-  //     message.data['body'],
-  //     NotificationDetails(
-  //         android: AndroidNotificationDetails(channel.id, channel.name,
-  //             icon: message.notification?.android?.smallIcon)));
+  
 }
 
-///// Android notification channel 
+///// Android notification channel
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'id',
   'android.intent.category.DEFAULT',
@@ -47,7 +39,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   //// firebase subscribeTopic
   await FirebaseMessaging.instance.subscribeToTopic('Bhagavad-gita-app');
-  //FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
+  FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -90,12 +82,11 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     //// firebase forground notification
     final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launcher_icon');
+        AndroidInitializationSettings('@mipmap/ic_notification');
     final InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("remote message${message.notification}");
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
@@ -105,7 +96,9 @@ class _MyAppState extends State<MyApp> {
             notification.body,
             NotificationDetails(
                 android: AndroidNotificationDetails(channel.id, channel.name,
-                    icon: android.smallIcon)));
+                    icon: android.smallIcon,
+                    largeIcon: DrawableResourceAndroidBitmap(
+                        '@mipmap/ic_notification'))));
       }
     });
     getToken();
