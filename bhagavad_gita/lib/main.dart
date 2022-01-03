@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
@@ -29,6 +31,24 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
+ IOSNotificationDetails _iosNotificationDetails = IOSNotificationDetails(
+    presentAlert: false,
+    presentBadge: false,
+    presentSound: true,
+    subtitle: "", 
+        threadIdentifier: ""
+  );
+
+
+enableIOSNotifications() async {
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+  }
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -37,6 +57,11 @@ Future<void> main() async {
 
   //// firebase initialized
   await Firebase.initializeApp();
+  if(Platform.isIOS){
+    await enableIOSNotifications();
+  }
+  
+  
   //// firebase subscribeTopic
   await FirebaseMessaging.instance.subscribeToTopic('Bhagavad-gita-app');
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
@@ -44,6 +69,15 @@ Future<void> main() async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
+      await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: false,
+        badge: false,
+        sound: true,
+      );
   setupServiceLocator();
   langauge = (await SharedPref.getLanguage())!.replaceAll("\"", "");
 
@@ -75,17 +109,38 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _locale = locale;
     });
+
+    void requestIOSPermissions(
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+}
   }
 
   @override
   void initState() {
     super.initState();
     //// firebase forground notification
-    final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_notification');
+
+final AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_notification');
+    var iOSSettings = IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+    );
+
     final InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+        InitializationSettings(android: initializationSettingsAndroid, iOS: iOSSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (message) async {
+          print("message-----$message");
+    });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -99,6 +154,8 @@ class _MyAppState extends State<MyApp> {
                     icon: android.smallIcon,
                     largeIcon: DrawableResourceAndroidBitmap(
                         '@mipmap/ic_notification'))));
+      } else {
+        print("ios");
       }
     });
     getToken();
