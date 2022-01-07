@@ -1,8 +1,12 @@
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/widgets/stars_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:in_app_review/in_app_review.dart';
+
+bool notRatedOnce = true;
 
 class AboutGitaScreen extends StatefulWidget {
   @override
@@ -11,6 +15,8 @@ class AboutGitaScreen extends StatefulWidget {
 
 class _AboutGitaScreenState extends State<AboutGitaScreen>
     with AutomaticKeepAliveClientMixin {
+  int _rating = 0;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -102,9 +108,13 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
-                              .copyWith(fontSize:
-                          (Localizations.localeOf(context).languageCode == 'hi') ?
-                          21 : 20, color: orangeColor),
+                              .copyWith(
+                                  fontSize: (Localizations.localeOf(context)
+                                              .languageCode ==
+                                          'hi')
+                                      ? 21
+                                      : 20,
+                                  color: orangeColor),
                         ),
                       ),
                     ),
@@ -124,13 +134,19 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: DemoLocalization.of(context)!
-                                .getTranslatedValue('gitaStory')
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme.subtitle1!
-                                .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                            20 : 18, color: blackColor),
+                          text: DemoLocalization.of(context)!
+                              .getTranslatedValue('gitaStory')
+                              .toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  fontSize: (Localizations.localeOf(context)
+                                              .languageCode ==
+                                          'hi')
+                                      ? 20
+                                      : 18,
+                                  color: blackColor),
                         )
                       ],
                     ),
@@ -147,8 +163,12 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             .getTranslatedValue('story')
                             .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                            20 : 18, fontWeight: FontWeight.w600),
+                            fontSize:
+                                (Localizations.localeOf(context).languageCode ==
+                                        'hi')
+                                    ? 20
+                                    : 18,
+                            fontWeight: FontWeight.w600),
                       ),
                       SizedBox(width: kDefaultPadding),
                       SvgPicture.asset(
@@ -160,10 +180,13 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       DemoLocalization.of(context)!
                           .getTranslatedValue('gitaStoryDetail')
                           .toString(),
-                      style: Theme.of(context)
-                          .textTheme.subtitle1!
-                          .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                      20 : 18, color: blackColor)),
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontSize:
+                              (Localizations.localeOf(context).languageCode ==
+                                      'hi')
+                                  ? 20
+                                  : 18,
+                          color: blackColor)),
                   SizedBox(height: kDefaultPadding * 1.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -176,8 +199,12 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             .getTranslatedValue('conclusion')
                             .toString(),
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                            20 : 18, fontWeight: FontWeight.w600),
+                            fontSize:
+                                (Localizations.localeOf(context).languageCode ==
+                                        'hi')
+                                    ? 20
+                                    : 18,
+                            fontWeight: FontWeight.w600),
                       ),
                       SizedBox(width: kDefaultPadding),
                       SvgPicture.asset(
@@ -189,12 +216,99 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                     DemoLocalization.of(context)!
                         .getTranslatedValue('conclusionDetail')
                         .toString(),
-                      style: Theme.of(context)
-                          .textTheme.subtitle1!
-                          .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                      20 : 18, color: blackColor),
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        fontSize:
+                            (Localizations.localeOf(context).languageCode ==
+                                    'hi')
+                                ? 20
+                                : 18,
+                        color: blackColor),
+                  ),
+                  SizedBox(height: kDefaultPadding * 1.5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                          "assets/icons/icon_left_rtansection.svg"),
+                      SizedBox(width: kDefaultPadding),
+                      Text(
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('rateUs')
+                            .toString(),
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            fontSize:
+                                (Localizations.localeOf(context).languageCode ==
+                                        'hi')
+                                    ? 20
+                                    : 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(width: kDefaultPadding),
+                      SvgPicture.asset(
+                          "assets/icons/icon_right_translation.svg")
+                    ],
                   ),
                   SizedBox(height: kDefaultPadding),
+                  Visibility(
+                    visible: notRatedOnce,
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 250,
+                            child: Text(
+                              DemoLocalization.of(context)!
+                                  .getTranslatedValue('giveUsRating')
+                                  .toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      fontSize: (Localizations.localeOf(context)
+                                                  .languageCode ==
+                                              'hi')
+                                          ? 20
+                                          : 18,
+                                      color: blackColor),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        StarStripe((rating) {
+                          setState(() {
+                            _rating = rating;
+                            if (notRatedOnce == true && _rating > 2) {
+                              final InAppReview _inAppReview =
+                                  InAppReview.instance;
+                              _inAppReview.openStoreListing(
+                                appStoreId: "// add when uploaded to appStore",
+                              ); 
+                              notRatedOnce = false;
+                            }
+                          });
+                        }, 5),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                      visible: !notRatedOnce,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            DemoLocalization.of(context)!
+                                .getTranslatedValue('thanksForRating')
+                                .toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    fontSize: (Localizations.localeOf(context)
+                                                .languageCode ==
+                                            'hi')
+                                        ? 20
+                                        : 18,
+                                    color: blackColor)),
+                      )),
                 ],
               ),
             ),

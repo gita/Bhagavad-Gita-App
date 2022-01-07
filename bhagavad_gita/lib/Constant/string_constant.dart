@@ -579,6 +579,40 @@ class StringConstant {
     }
   }
 
+  static String strRateUs() {
+    switch (langauge.toLowerCase()) {
+      case 'hindi':
+        return StringHindiConstant.strRateUs;
+      default:
+        return '';
+    }
+  }
+  
+  static String strThanksForRating() {
+    switch (langauge.toLowerCase()) {
+      case 'hindi':
+        return StringHindiConstant.strThanksForRating;
+      default:
+        return '';
+    }
+  }
+  
+  static String strFeedback() {
+    switch (langauge.toLowerCase()) {
+      case 'hindi':
+        return StringHindiConstant.strFeedback;
+      default:
+        return '';
+    }
+  }
+  static String strGiveUsRating() {
+    switch (langauge.toLowerCase()) {
+      case 'hindi':
+        return StringHindiConstant.strGiveUsRating;
+      default:
+        return '';
+    }
+  }
   // static String strTabbarTitleHome = 'Home';
   // static String strTabbarTitleSaved = 'Saved';
   // static String strTabbarTitleQuotes = 'Quotes';

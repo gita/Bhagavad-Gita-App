@@ -67,5 +67,9 @@
     "addNotes": "Add Note",
     "editNote": "Edit Note",
     "save": "SAVE",
-    "pleaseAddYourNote": "Please add your note here..."
+    "pleaseAddYourNote": "Please add your note here...",
+    "rateUs": "RATE US",
+    "feedback": "FEEDBACK",
+    "thanksForRating": "Thank you for rating our app",
+    "giveUsRating":"Give us a rating on Playstore, if you like the app" 
 }

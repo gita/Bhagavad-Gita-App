@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen>
   final NavigationService navigationService = locator<NavigationService>();
   LastReadVerse? lastReadVerse;
   bool isSortChapterNum = true;
+  int numberOfChapRead = 0;
+  bool reviewDialogShown = false;
 
   String fontFamily = 'Inter';
   bool isReverse = false;
@@ -234,11 +238,20 @@ class _HomeScreenState extends State<HomeScreen>
                                       Chapter.fromJson(chapterTemp);
                                   return ChapterListTileWidget(
                                     index: index,
-                                    onTap: () {
-                                      navigationService.pushNamed(
-                                          r_ChapterDetail,
-                                          arguments:
-                                              chapter.chapterNumber ?? 1);
+                                    onTap: () async {
+                                      if (reviewDialogShown == false) {
+                                        numberOfChapRead = numberOfChapRead + 1;
+                                      }
+                                      if (numberOfChapRead == 5) {
+                                        showReviewDialog();
+                                        numberOfChapRead = numberOfChapRead + 1;
+                                        reviewDialogShown = true;
+                                      } else {
+                                        navigationService.pushNamed(
+                                            r_ChapterDetail,
+                                            arguments:
+                                                chapter.chapterNumber ?? 1);
+                                      }
                                     },
                                     chapter: chapter,
                                   );
@@ -256,6 +269,14 @@ class _HomeScreenState extends State<HomeScreen>
         child: Container(),
       ),
     );
+  }
+
+  Future<void> showReviewDialog() async {
+    final InAppReview inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
   }
 
   @override

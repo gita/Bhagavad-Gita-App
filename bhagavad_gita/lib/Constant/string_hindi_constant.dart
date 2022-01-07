@@ -70,4 +70,8 @@ class StringHindiConstant {
   static String strEditNote = 'नोट संपादित करें';
   static String strSave = "सहेजें";
   static String strPleaseAddYourNote = "कृपया अपना नोट यहां जोड़ें...";
+  static String strRateUs = "हमें रेटिंग दें";
+  static String strThanksForRating = "हमारे ऐप को रेटिंग देने के लिए धन्यवाद";
+  static String strFeedback = "प्रतिक्रिया";
+  static String strGiveUsRating = "अगर आपको ऐप पसंद है तो हमें प्ले स्टोर पर रेटिंग दें";
 }

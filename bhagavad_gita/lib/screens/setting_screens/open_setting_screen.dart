@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
@@ -8,11 +10,14 @@ import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.da
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bhagavad_gita/widgets/stars_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import '../../locator.dart';
+
+bool notRatedOnce = true;
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key, required this.refresh}) : super(key: key);
@@ -29,6 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
   bool isTranslationsource = false;
   bool isCommentarySource = false;
   bool isNotificationOn = false;
+  int _rating = 0;
 
   List<bool> _switchValues = List.generate(7, (_) => false);
 
@@ -386,6 +392,70 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
+              Container(
+                height: kPadding * 3,
+                width: double.infinity,
+                color: Colors.orange[50],
+                child: Row(
+                  children: [
+                    SizedBox(width: kDefaultPadding),
+                    Text(
+                      DemoLocalization.of(context)!
+                          .getTranslatedValue('feedback')
+                          .toString(),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                          color: settingColor, fontSize: 12, letterSpacing: 1),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: notRatedOnce,
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 200,
+                        child: Text(
+                          DemoLocalization.of(context)!
+                              .getTranslatedValue('giveUsRating')
+                              .toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2!
+                              .copyWith(color: greyScalBodyColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    StarStripe((rating) {
+                      setState(() {
+                        _rating = rating;
+                        if (notRatedOnce == true && _rating > 2) {
+                          final InAppReview _inAppReview = InAppReview.instance;
+                          _inAppReview.openStoreListing(
+                            appStoreId: "// add when uploaded to appStore",
+                          );
+                          notRatedOnce = false;
+                        }
+                      });
+                    }, 5),
+                  ],
+                ),
+              ),
+              Visibility(
+                  visible: !notRatedOnce,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        DemoLocalization.of(context)!
+                            .getTranslatedValue('thanksForRating')
+                            .toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(color: greyScalBodyColor)),
+                  )),
               /*Container(
                 height: kPadding * 3,
                 width: double.infinity,
