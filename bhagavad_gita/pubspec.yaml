@@ -88,6 +88,36 @@ flutter:
           weight: 600
         - asset: fonts/Arial-Medium.ttf
           weight: 500
+    - family: Norwester
+      fonts:
+        - asset: fonts/Norwester-Regular.ttf
+          weight: 400
+        - asset: fonts/Norwester-Black.ttf
+          weight: 700
+        - asset: fonts/Norwester-Bold.ttf
+          weight: 600
+        - asset: fonts/Norwester-Medium.ttf
+          weight: 500
+     - family: Helvetica
+      fonts:
+        - asset: fonts/Helvetica-Regular.ttf
+          weight: 400
+        - asset: fonts/Helvetica-Black.ttf
+          weight: 700
+        - asset: fonts/Helvetica-Bold.ttf
+          weight: 600
+        - asset: fonts/Helvetica-Medium.ttf
+          weight: 500     
+      - family: Baskerville
+      fonts:
+        - asset: fonts/Baskerville-Regular.ttf
+          weight: 400
+        - asset: fonts/Baskerville-Black.ttf
+          weight: 700
+        - asset: fonts/Baskerville-Bold.ttf
+          weight: 600
+        - asset: fonts/Baskerville-Medium.ttf
+          weight: 500       
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
