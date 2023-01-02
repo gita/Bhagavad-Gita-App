@@ -90,8 +90,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
               height: (width - kDefaultPadding) * 0.52,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/gyan-vigyana-yoga.jpg'),
+                      image: AssetImage('assets/images/gyan-vigyana-yoga.jpg'),
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(kDefaultCornerRadius)),
               child: Stack(
@@ -109,8 +108,9 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                         left: kDefaultPadding,
                         top: kDefaultPadding,
                         bottom: kPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         Text(
                           DemoLocalization.of(context)!
@@ -120,37 +120,56 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                               .textTheme
                               .headline2!
                               .copyWith(
-                                  color: Colors.orangeAccent, fontSize: width * 0.04, fontWeight: FontWeight.w700),
+                                  color: Colors.orangeAccent,
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.w700),
                         ),
-                        Spacer(),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
                         VerseOfTheDayTextWidget(
                           verseID:
                               "${allVerseOTheDayResponseModel.allVerseOfTheDays!.nodes![0].verseOrder ?? 0}",
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ContinueReading(
-                                  verseID: allVerseOTheDayResponseModel
-                                      .allVerseOfTheDays!.nodes![0].verseOrder
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.042,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ContinueReading(
+                                        verseID: allVerseOTheDayResponseModel
+                                            .allVerseOfTheDays!
+                                            .nodes![0]
+                                            .verseOrder
+                                            .toString(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  DemoLocalization.of(context)!
+                                      .getTranslatedValue('readMore')
                                       .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.white,
+                                          fontSize: width * 0.035),
                                 ),
                               ),
-                            );
-                          },
-                          child: Text(
-                            DemoLocalization.of(context)!
-                                .getTranslatedValue('readMore')
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(
-                                    color: Colors.white, fontSize: width * 0.035),
-                          ),
-                        )
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
                       ],
                     ),
                   )
@@ -257,8 +276,8 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               padding: EdgeInsets.only(
                 right: 18.0,
               ),
-              child:  RichText(
-                maxLines: 4,
+              child: RichText(
+                maxLines: null,
                 text: TextSpan(
                   // text:
                   //     '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber ?? 0}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber ?? 0} | ',
@@ -281,8 +300,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                     ),
                   ],
                 ),
-              )
-          );
+              ));
         },
       ),
     );
