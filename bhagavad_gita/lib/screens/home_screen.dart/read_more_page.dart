@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
@@ -14,12 +15,12 @@ import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
 import '../../locator.dart';
 
@@ -58,9 +59,38 @@ class _ContinueReadingState extends State<ContinueReading> {
   bool showTranslation = true;
   bool showCommentry = true;
   late ScrollController _hideButtomController;
+  final audioPlayer =AudioPlayer();
+  int chapterNumber=0;
+  int verseNumber=0;
+  bool isPlay =false;
+  Duration audioDuration=Duration.zero;
+  Duration audioPlayedDuration=Duration.zero;
+  AnimationController? animationController;
   @override
   void initState() {
     super.initState();
+    audioPlayer.onPlayerStateChanged.listen((state){
+      setState(() {
+        isPlay=state==PlayerState.playing;
+      });
+      });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      if (mounted) {
+        setState(() {
+        audioDuration=newDuration;
+      });
+      }
+    });
+
+    audioPlayer.onPositionChanged.listen((event) {
+      if (mounted) {
+        setState(() {
+          audioPlayedDuration=event;
+      });
+      }
+    });
+
     setState(() {
       versId = int.parse(widget.verseID);
       getVersDetails();
@@ -106,6 +136,11 @@ class _ContinueReadingState extends State<ContinueReading> {
     getAllToggelValueFormShowingContent();
   }
 
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
   getAllToggelValueFormShowingContent() {
     SharedPref.getSavedBoolValue(PreferenceConstant.verseTransliterationSetting)
         .then((value) {
@@ -318,6 +353,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                       //SharedPref.saveLastRead(lastReadVerse!);
                       LocalNotification.instance
                           .setNeedToShowLastRead(lastReadVerse!);
+                          chapterNumber=data.gitaVerseById!.chapterNumber??0;
+                          verseNumber=data.gitaVerseById!.verseNumber??0;
                       return Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -573,7 +610,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               versId == 1
                   ? Container()
                   : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      top: MediaQuery.of(context).size.height / 100 * 69,
                       left: kDefaultPadding,
                       child: _isVisible
                           ? AnimatedContainer(
@@ -600,6 +637,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       versId == 1
                                           ? versId = 1
                                           : reverschangeVersePage();
+                                          audioPlayer.stop();
                                     },
                                     child: Center(
                                       child: SvgPicture.asset(
@@ -615,7 +653,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               versId == 701
                   ? Container()
                   : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      top: MediaQuery.of(context).size.height / 100 * 69,
                       right: kDefaultPadding,
                       child: _isVisible
                           ? AnimatedContainer(
@@ -640,6 +678,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                   child: InkWell(
                                     onTap: () {
                                       changeVersePage();
+                                      audioPlayer.stop();
                                     },
                                     child: Center(
                                       child: SvgPicture.asset(
@@ -773,7 +812,120 @@ class _ContinueReadingState extends State<ContinueReading> {
               : Container(),
         ),
       ),
+      floatingActionButton: isPlay
+            ? GestureDetector(
+              onTap: (){
+                audioPlayerBottomSheet(context);
+              },
+              child: CircularPercentIndicator(
+                animation: true,
+                animateFromLastPercent: true,
+                animationDuration: 10000,
+                  radius: 25.0,
+                  percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
+                  fillColor: Colors.white,
+                  center: Icon(Icons.pause,color: Color(0xffd97706), size: 35),
+                  backgroundColor: Colors.grey.shade300,
+                  progressColor: Color(0xffd97706),
+                ),
+            )
+            : FloatingActionButton(
+                onPressed: () {  
+             audioPlayerBottomSheet(context);
+            },
+            child: Icon(isPlay?Icons.pause:Icons.play_arrow, color: Colors.white, size: 35))
     );
+  }
+
+  Future<dynamic> audioPlayerBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context,StateSetter builderSetState) {
+             audioPlayer.onPlayerStateChanged.listen((state){
+              try{
+              builderSetState(() {
+                isPlay = state == PlayerState.playing;
+              });}catch(e){}
+            });
+
+            audioPlayer.onDurationChanged.listen((newDuration) {
+              try {
+                builderSetState(() {
+                audioDuration = newDuration;
+              });
+              } catch (e) {}
+            });
+
+            audioPlayer.onPositionChanged.listen((event) {
+              try {
+                 builderSetState(() {
+                audioPlayedDuration = event;
+              });
+              } catch (e) {}
+              });
+              return Column(mainAxisSize: MainAxisSize.min, children: [
+                    SizedBox(height: 10),
+                    Row(mainAxisSize: MainAxisSize.max, children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(trackHeight: 5),
+                              child: Slider(
+                                activeColor: Color(0xffd97706),
+                                thumbColor: Color(0xffd97706),
+                                min: 0,
+                                max: audioDuration.inSeconds.toDouble(),
+                                value: audioPlayedDuration.inSeconds.toDouble(),
+                                onChanged: (value) {},
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(convertDuration(audioPlayedDuration)),
+                                  Text(convertDuration(audioDuration))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: GestureDetector(
+                              onTap: () async {
+                                if (isPlay) {
+                                  audioPlayer.pause();
+                                } else {
+                                  String audioUrl="https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                                  Source source= UrlSource(audioUrl);
+                                  audioPlayer.play(source);
+                                }
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffd97706), shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(isPlay ? Icons.pause : Icons.play_arrow,
+                                        color: Colors.white, size: 35),
+                                  ))))
+                    ]),
+                    SizedBox(height: 15),
+                  ]);
+            }
+          );        
+        });
   }
 
   _onPressedEditButton(context) {
@@ -836,4 +988,10 @@ class _ContinueReadingState extends State<ContinueReading> {
       },
     );
   }
+}
+String convertDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "$twoDigitMinutes:$twoDigitSeconds";
 }

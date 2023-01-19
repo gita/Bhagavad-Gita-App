@@ -64,11 +64,12 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
     LocalNotification.instance.needToShowLastRead.addListener(() {
-      setState(() {
+    /*   if (mounted) {
+      setState(() { */
         lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
-      });
+      // });}
     });
-
+ 
     print("selected language : $langauge");
   }
 
