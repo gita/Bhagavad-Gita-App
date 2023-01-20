@@ -357,7 +357,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         children: [
                                           SvgPicture.asset(
                                               "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
+                                          SizedBox(width: 7),
                                           Text(
                                             DemoLocalization.of(context)!
                                                 .getTranslatedValue(
@@ -375,7 +375,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          SizedBox(width: kDefaultPadding),
+                                          SizedBox(width: 7),
                                           SvgPicture.asset(
                                               "assets/icons/icon_right_translation.svg")
                                         ],
@@ -402,7 +402,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         children: [
                                           SvgPicture.asset(
                                               "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
+                                          SizedBox(width: 7),
                                           Text(
                                             DemoLocalization.of(context)!
                                                 .getTranslatedValue(
@@ -420,7 +420,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          SizedBox(width: kDefaultPadding),
+                                          SizedBox(width: 7),
                                           SvgPicture.asset(
                                               "assets/icons/icon_right_translation.svg")
                                         ],

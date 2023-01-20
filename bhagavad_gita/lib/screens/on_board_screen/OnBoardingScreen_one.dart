@@ -180,7 +180,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
         return AlertDialog(
           actions: [
             Container(
-              height: 480, //MediaQuery.of(context).size.height / 100 * 80,
+              height: 425, //MediaQuery.of(context).size.height / 100 * 80,
               width: 1000,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(15)),
@@ -197,11 +197,11 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
-                        height: 30,
+                        height: height*0.030,
                       ),
                       SvgPicture.asset("assets/icons/abc_language.svg"),
                       SizedBox(
-                        height: kPadding * 3,
+                        height: height *0.02,
                       ),
                       Text(
                         DemoLocalization.of(context)!
@@ -259,7 +259,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         ),
                       )),
                       Padding(
-                        padding: EdgeInsets.all(30),
+                        padding: EdgeInsets.symmetric(horizontal:30,vertical: height*0.030),
                         child: Container(
                           height: kPadding * 5,
                           width: kPadding * 19,
@@ -324,16 +324,16 @@ class SimplifiedPageOne extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: kPadding * 9),
-        SvgPicture.asset('assets/icons/img_simplified_one.svg'),
-        SizedBox(height: kPadding * 5),
+        SizedBox(height: height * 0.089),
+        SvgPicture.asset('assets/icons/img_simplified_one.svg',height: height*0.39,),
+        SizedBox(height: height *0.052),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('bhagvadGitaSimplified')
               .toString(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
-        SizedBox(height: kPadding * 2),
+        SizedBox(height: height * 0.02),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('readTheGita')
@@ -354,7 +354,7 @@ class BeautifulDesignPageTwo extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SvgPicture.asset('assets/icons/img_beautiful_two.svg'),
+        SvgPicture.asset('assets/icons/img_beautiful_two.svg',height: height*0.45,),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('beautifulDesign')
@@ -384,26 +384,26 @@ class ExploreEachVerePageThree extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: kPadding * 7),
-        SvgPicture.asset('assets/icons/img_exploreverse_three.svg'),
-        SizedBox(height: kPadding * 3),
+        SizedBox(height: height * 0.07),
+        SvgPicture.asset('assets/icons/img_exploreverse_three.svg',height: height*0.35,),
+        SizedBox(height: height * 0.03),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('exploreEachVerse')
               .toString(),
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
         ),
-        SizedBox(height: kPadding),
+        SizedBox(height: kPadding-4),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('divedeepEachVerse')
               .toString(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                color: textLightGreyColor,
+                color: textLightGreyColor,fontSize:height* 0.022
               ),
         ),
-        SizedBox(height: kPadding),
+        // SizedBox(height: kPadding),
       ],
     );
   }
@@ -421,7 +421,7 @@ class MakeItOwnPageFour extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: kPadding * 7),
-        SvgPicture.asset('assets/icons/img_makeitowe_forth.svg'),
+        SvgPicture.asset('assets/icons/img_makeitowe_forth.svg',height: height*0.32,),
         SizedBox(height: kPadding * 3),
         Text(
           DemoLocalization.of(context)!
