@@ -14,6 +14,7 @@ dependencies:
   firebase_core_platform_interface: 4.5.1
 
   # Custome packages
+  firebase_core_platform_interface: 4.5.1
   get_it: ^7.2.0
   flutter_svg: ^0.22.0
   graphql_flutter: ^5.0.0
