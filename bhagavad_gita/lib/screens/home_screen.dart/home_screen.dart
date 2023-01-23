@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen>
                   : SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
+                          /* Container(
                             height: kDefaultPadding * 2.2,
                             width: kDefaultPadding * 16.8,
                             child: TextFormField(
@@ -164,20 +164,8 @@ class _HomeScreenState extends State<HomeScreen>
                                   color: Colors.black,
                                 ),
                               ),
-                              // decoration: InputDecoration(
-                              //   hintText: "Search",
-                              //   floatingLabelBehavior:
-                              //       FloatingLabelBehavior.never,
-                              //   border: new OutlineInputBorder(
-                              //     borderRadius: new BorderRadius.circular(10.0),
-                              //     // borderSide: new BorderSide(),
-                              //   ),
-                              //   suffixIcon: Icon(
-                              //     Icons.search,
-                              //   ),
-                              // ),
                             ),
-                          ),
+                          ), */
                           VerseOfTheDayWidget(),
                           lastReadVerse == null
                               ? Container()
