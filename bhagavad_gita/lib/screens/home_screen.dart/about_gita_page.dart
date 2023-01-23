@@ -280,15 +280,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
     submitButtonText: "Submit",
     onSubmitted: (response) {
       print('rating: ${response.rating}, comment: ${response.comment}');
-      if (response.rating < 3.0) {
-        // send their comments to your email or anywhere you wish
-        // ask the user to contact you instead of leaving a bad review
-      } else {
-        //go to app store
         StoreRedirect.redirect(
             androidAppId: 'com.gitainitiative.bhagavadgita',
             iOSAppId: 'com.gitainitiative.bhagavadgita');
-      }
     },
   );
 
