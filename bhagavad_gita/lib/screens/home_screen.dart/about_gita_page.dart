@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -263,27 +265,21 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
 
   final _dialog = RatingDialog(
     starSize: 35,
-    // your app's name?
     title: Text(
-      'Rate Us On play Store',
+      Platform.isAndroid ? 'Rate Us On Play Store' : 'Rate Us On App Store',
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
     ),
-    // encourage your user to leave a high rating?
     message: Text(
       'Tap a star to set your rating',
       style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
-    // your app's logo?
     image: Image.asset(
       "assets/images/splashScreenLogo.JPG",
       height: 100,
-      // width: 50,
     ),
     submitButtonText: "Submit",
-    // onCancelled: () => print('cancelled'),
     onSubmitted: (response) {
       print('rating: ${response.rating}, comment: ${response.comment}');
-      // TODO: add your own logic
       if (response.rating < 3.0) {
         // send their comments to your email or anywhere you wish
         // ask the user to contact you instead of leaving a bad review
