@@ -108,7 +108,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                     padding: EdgeInsets.only(
                         left: kDefaultPadding,
                         top: kDefaultPadding,
-                        bottom: kPadding),
+                        bottom: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -276,7 +276,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                             overflow: TextOverflow.ellipsis,
                             color: whiteColor,
-                            fontSize: 16,
+                            fontSize: height*0.020,
                           ),
                     ),
                   ],
