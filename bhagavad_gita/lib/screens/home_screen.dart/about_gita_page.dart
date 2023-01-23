@@ -203,7 +203,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                            "assets/icons/icon_left_rtansection.svg"),
+                            "assets/icons/icon_left_rtansection.svg",height: height*0.020,),
                         SizedBox(width: kDefaultPadding),
                         Text(
                           DemoLocalization.of(context)!
@@ -222,7 +222,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                         ),
                         SizedBox(width: kDefaultPadding),
                         SvgPicture.asset(
-                            "assets/icons/icon_right_translation.svg")
+                            "assets/icons/icon_right_translation.svg",height: height*0.020,)
                       ],
                     ),
                     SizedBox(height: kDefaultPadding),
