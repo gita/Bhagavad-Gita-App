@@ -66,7 +66,7 @@ class _ContinueReadingState extends State<ContinueReading> {
       _isVisible = true;
       _hideButtomController = new ScrollController();
       _hideButtomController.addListener(() {
-        if (_hideButtomController.position.userScrollDirection ==
+        /* if (_hideButtomController.position.userScrollDirection ==
             ScrollDirection.reverse) {
           if (_isVisible)
             setState(() {
@@ -81,10 +81,9 @@ class _ContinueReadingState extends State<ContinueReading> {
               _isVisible = true;
               print("** $_isVisible down");
             });
-        }
+        } */
       });
     });
-
     SharedPref.getSavedVerseListCustomisation().then((value) {
       verseCustomissation = value;
       setState(() {
@@ -284,12 +283,19 @@ class _ContinueReadingState extends State<ContinueReading> {
               if (value.velocity.pixelsPerSecond.dx > 1) {
                 if (versId > 1) {
                   reverschangeVersePage();
+                  _hideButtomController.animateTo(
+                      _hideButtomController.position.minScrollExtent,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 200));
                 }
               }
               // Swiping in left direction.
               if (value.velocity.pixelsPerSecond.dx < 1) {
                   changeVersePage();
-              }
+                   _hideButtomController.animateTo(
+                      _hideButtomController.position.minScrollExtent,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 200));}
             },
             child: Stack(
               children: [
