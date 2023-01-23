@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/quotes.dart';
@@ -15,23 +14,58 @@ class _QuotesScreenState extends State<QuotesScreen>
     with AutomaticKeepAliveClientMixin {
   String quote = "";
   final PageController controller = PageController();
+  int index=0;
   @override
   void initState() {
     super.initState();
+      quotesListHindi.shuffle();
+      quotesList.shuffle();
+      Future.delayed(Duration.zero,(){
+      getFirstQuote();
+      });
   }
 
-  @override
+ /*  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    this.getQuote();
-  }
+    this.getFirstQuote();
+  } */
 
-  getQuote() {
+  /* getQuote() {
     final random = Random();
     var result = (Localizations.localeOf(context).languageCode == 'hi') ?
         quotesListHindi[random.nextInt(quotesListHindi.length)] :
         quotesList[random.nextInt(quotesList.length)];
+    setState(() {
+      quote = result;
+    });
+  } */
+
+  getFirstQuote(){
+     var result = (Localizations.localeOf(context).languageCode == 'hi') ?
+        quotesListHindi[index] :
+        quotesList[index];
+    setState(() {
+      quote = result;
+    });
+  }
+
+  getQuote() {
+    index++;
+    var result = (Localizations.localeOf(context).languageCode == 'hi') ?
+        quotesListHindi[index] :
+        quotesList[index];
+    setState(() {
+      quote = result;
+    });
+  }
+
+   reverseQuote() {
+    index--;
+    var result = (Localizations.localeOf(context).languageCode == 'hi') ?
+        quotesListHindi[index] :
+        quotesList[index];
     setState(() {
       quote = result;
     });
@@ -112,30 +146,35 @@ class _QuotesScreenState extends State<QuotesScreen>
             Positioned(
               bottom: kDefaultPadding,
               left: kDefaultPadding,
-              child: Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: textLightGreyColor,
-                      blurRadius: 10,
-                    )
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  shape: CircleBorder(),
-                  clipBehavior: Clip.hardEdge,
-                  child: InkWell(
-                    onTap: () {
-                      getQuote();
-                    },
-                    child: Center(
-                      child: SvgPicture.asset(
-                        "assets/icons/icon_slider_verse.svg",
+              child: Visibility(
+                visible: index>0,
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: textLightGreyColor,
+                        blurRadius: 10,
+                      )
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: CircleBorder(),
+                    clipBehavior: Clip.hardEdge,
+                    child: InkWell(
+                      onTap: () {
+                        if (index>0) { 
+                        reverseQuote();
+                        }
+                      },
+                      child: Center(
+                        child: SvgPicture.asset(
+                          "assets/icons/icon_slider_verse.svg",
+                        ),
                       ),
                     ),
                   ),
