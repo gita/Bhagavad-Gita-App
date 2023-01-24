@@ -53,6 +53,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   String fontFamily = 'Inter';
   double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
+  Color audioBottoSheetColor=Colors.white;
   late VerseCustomissation verseCustomissation;
 
   bool showTraliteration = true;
@@ -129,6 +130,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           formatingColor = orangeFormatingColor;
         } else if (value.colorId == "3") {
           formatingColor = blackFormatingColor;
+          audioBottoSheetColor=Color(0xff606368);
         }
       });
     });
@@ -812,28 +814,43 @@ class _ContinueReadingState extends State<ContinueReading> {
               : Container(),
         ),
       ),
-      floatingActionButton: isPlay
-            ? GestureDetector(
-              onTap: (){
-                audioPlayerBottomSheet(context);
-              },
-              child: CircularPercentIndicator(
-                animation: true,
-                animateFromLastPercent: true,
-                animationDuration: 10000,
-                  radius: 25.0,
-                  percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
-                  fillColor: Colors.white,
-                  center: Icon(Icons.pause,color: Color(0xffd97706), size: 35),
-                  backgroundColor: Colors.grey.shade300,
-                  progressColor: Color(0xffd97706),
-                ),
-            )
-            : FloatingActionButton(
+      floatingActionButton:isPlay
+          ? GestureDetector(
+            onTap: (){
+              audioPlayerBottomSheet(context);
+            },
+            child: CircularPercentIndicator(
+              backgroundWidth:3.5,lineWidth:3.5,
+              circularStrokeCap:CircularStrokeCap.round ,
+              animation: true,
+              animateFromLastPercent: true,
+              animationDuration: 10000,
+                radius: 25.0,
+                percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
+                fillColor: Colors.white,
+                center: SvgPicture.asset('assets/icons/pause.svg'),
+                // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
+                backgroundColor: Colors.grey.shade300,
+                progressColor: Color(0xffF57903),
+              ),
+          )
+          : Container(
+            height: height*0.0593,
+            width: width*0.122,
+            decoration: BoxDecoration(
+              boxShadow: [
+                  BoxShadow(
+                      color: Color(0xff162233).withOpacity(0.12),
+                      offset: Offset(0, 0),
+                      spreadRadius: 4,blurRadius:20),
+                ], shape: BoxShape.circle),
+            child: FloatingActionButton(
+              elevation: 12,
                 onPressed: () {  
              audioPlayerBottomSheet(context);
             },
-            child: Icon(isPlay?Icons.pause:Icons.play_arrow, color: Colors.white, size: 35))
+            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0284 ,),backgroundColor: Color(0xffF57903)),
+          )
     );
   }
 
@@ -845,6 +862,17 @@ class _ContinueReadingState extends State<ContinueReading> {
         builder: (BuildContext context) {
           return StatefulBuilder(
             builder: (context,StateSetter builderSetState) {
+            SharedPref.getSavedVerseListCustomisation().then((value) {
+              if (value.colorId=='3') {
+                builderSetState(() {
+                  audioBottoSheetColor=Color(0xff606368);
+                });
+              }else{
+                 builderSetState(() {
+                  audioBottoSheetColor=Colors.white;
+                });
+              }
+            });
              audioPlayer.onPlayerStateChanged.listen((state){
               try{
               builderSetState(() {
@@ -867,62 +895,79 @@ class _ContinueReadingState extends State<ContinueReading> {
               });
               } catch (e) {}
               });
-              return Column(mainAxisSize: MainAxisSize.min, children: [
-                    SizedBox(height: 10),
-                    Row(mainAxisSize: MainAxisSize.max, children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SliderTheme(
-                              data: SliderTheme.of(context).copyWith(trackHeight: 5),
-                              child: Slider(
-                                activeColor: Color(0xffd97706),
-                                thumbColor: Color(0xffd97706),
-                                min: 0,
-                                max: audioDuration.inSeconds.toDouble(),
-                                value: audioPlayedDuration.inSeconds.toDouble(),
-                                onChanged: (value) {},
+              return Container(
+                height: height*0.145,
+                decoration: BoxDecoration(color: audioBottoSheetColor,borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight:Radius.circular(15) )),
+                child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: height*0.0147,),
+                  Container(
+                    height: height*0.005,
+                    width: width*0.163,decoration: BoxDecoration(color: Color(0xffD9DBE9),borderRadius: BorderRadius.circular(5))),
+                      SizedBox(height: 10),
+                      Row(mainAxisSize: MainAxisSize.max, 
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SliderTheme(
+                                data: SliderTheme.of(context).copyWith(trackHeight: height*0.0154,thumbShape: RoundSliderThumbShape(enabledThumbRadius: 13,elevation: 5)),
+                                child: Slider(
+                                  inactiveColor: Color(0xffD9DBE9),
+                                  activeColor: Color(0xffF57903),
+                                  thumbColor: Color(0xffF57903),
+                                  min: 0,
+                                  max: audioDuration.inSeconds.toDouble(),
+                                  value: audioPlayedDuration.inSeconds.toDouble(),
+                                  onChanged: (value) {
+                                    setState(() { 
+                                    audioPlayedDuration=Duration(seconds: value.toInt());
+                                    });
+                                    audioPlayer.seek(audioPlayedDuration);
+                                  },
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(convertDuration(audioPlayedDuration)),
-                                  Text(convertDuration(audioDuration))
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(convertDuration(audioPlayedDuration)),
+                                    Text(convertDuration(audioDuration))
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: GestureDetector(
-                              onTap: () async {
-                                if (isPlay) {
-                                  audioPlayer.pause();
-                                } else {
-                                  String audioUrl="https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
-                                  Source source= UrlSource(audioUrl);
-                                  audioPlayer.play(source);
-                                }
-                              },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffd97706), shape: BoxShape.circle),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(isPlay ? Icons.pause : Icons.play_arrow,
-                                        color: Colors.white, size: 35),
-                                  ))))
+                        Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: GestureDetector(
+                                onTap: () async {
+                                  if (isPlay) {
+                                    audioPlayer.pause();
+                                  } else {
+                                    String audioUrl="https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                                    Source source= UrlSource(audioUrl);
+                                    audioPlayer.play(source);
+                                  }
+                                },
+                                child: Container(
+                                  height: height*0.055,
+                                  width: height*0.055,
+                                  alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffF57903), shape: BoxShape.circle),
+                                    child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg',
+                                        color: Colors.white,height:height*0.0284,))))
+                      ]),
+                      SizedBox(height: 15),
                     ]),
-                    SizedBox(height: 15),
-                  ]);
+              );
             }
           );        
         });
