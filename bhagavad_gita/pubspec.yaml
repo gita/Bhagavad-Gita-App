@@ -7,28 +7,26 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
+  firebase_core: ^1.10.6
+  firebase_core_platform_interface: 4.5.1
+  firebase_messaging: ^11.2.4
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
-
-  # Custome packages
-  firebase_core_platform_interface: 4.5.1
-  get_it: ^7.2.0
+  flutter_local_notifications: ^9.2.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_offline: ^2.0.0
   flutter_svg: ^0.22.0
+  get_it: ^7.2.0
   graphql_flutter: ^5.0.0
+  in_app_review: ^2.0.6
   intl: ^0.17.0
   list_tile_switch: ^1.0.0
+  # rating_dialog: ^2.0.1
   share: ^2.0.4
   shared_preferences: ^2.0.7
-  flutter_offline: "^2.0.0"
-  flutter_localizations: 
-    sdk: flutter 
-  firebase_messaging: ^11.2.4
-  firebase_core: ^1.10.6
-  flutter_local_notifications: ^9.2.0
-  rating_dialog: ^2.0.1
-  store_redirect: ^2.0.1
+  # store_redirect: ^2.0.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2
@@ -42,7 +40,6 @@ flutter_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -91,6 +88,5 @@ flutter:
           weight: 600
         - asset: fonts/Arial-Medium.ttf
           weight: 500
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

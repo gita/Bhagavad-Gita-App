@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rating_dialog/rating_dialog.dart';
-import 'package:store_redirect/store_redirect.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class AboutGitaScreen extends StatefulWidget {
   @override
@@ -15,6 +12,7 @@ class AboutGitaScreen extends StatefulWidget {
 
 class _AboutGitaScreenState extends State<AboutGitaScreen>
     with AutomaticKeepAliveClientMixin {
+      final InAppReview inAppReview = InAppReview.instance;
   // final Uri _url = Uri.parse(
   //     'https://bhagavadgita.io/privacy-policy/');
 
@@ -247,11 +245,18 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
           ),
         ),
         floatingActionButton: FloatingActionButton.small(
-          onPressed: () {
-            showDialog(
+          onPressed: () async{
+            final avaial =await inAppReview.isAvailable();
+            print("Availabale==> $avaial");
+            if (avaial) {
+                await inAppReview.openStoreListing(
+                  appStoreId: "com.gitainitiative.bhagavadgita"
+                );
+            }
+            /* showDialog(
               context: context,
               builder: (context) => _dialog,
-            );
+            ); */
           },
           child: Icon(
             Icons.star,
@@ -263,7 +268,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
     );
   }
 
-  final _dialog = RatingDialog(
+  /* final _dialog = RatingDialog(
     starSize: 35,
     title: Text(
       Platform.isAndroid ? 'Rate Us On Play Store' : 'Rate Us On App Store',
@@ -284,7 +289,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
             androidAppId: 'com.gitainitiative.bhagavadgita',
             iOSAppId: 'com.gitainitiative.bhagavadgita');
     },
-  );
+  ); */
 
   @override
   bool get wantKeepAlive => true;
