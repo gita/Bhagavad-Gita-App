@@ -14,10 +14,8 @@ import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:share/share.dart';
@@ -68,12 +66,12 @@ class _ContinueReadingState extends State<ContinueReading> {
       _isVisible = true;
       _hideButtomController = new ScrollController();
       _hideButtomController.addListener(() {
-        if (_hideButtomController.position.userScrollDirection ==
+        /* if (_hideButtomController.position.userScrollDirection ==
             ScrollDirection.reverse) {
           if (_isVisible)
             setState(() {
               _isVisible = false;
-              print("**** $_isVisible up");
+              print("** $_isVisible up");
             });
         }
         if (_hideButtomController.position.userScrollDirection ==
@@ -81,12 +79,11 @@ class _ContinueReadingState extends State<ContinueReading> {
           if (!_isVisible)
             setState(() {
               _isVisible = true;
-              print("**** $_isVisible down");
+              print("** $_isVisible down");
             });
-        }
+        } */
       });
     });
-
     SharedPref.getSavedVerseListCustomisation().then((value) {
       verseCustomissation = value;
       setState(() {
@@ -183,6 +180,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   changeVersePage() {
     setState(() {
       versId = versId + 1;
+
       getVersDetails();
     });
   }
@@ -190,15 +188,15 @@ class _ContinueReadingState extends State<ContinueReading> {
   reverschangeVersePage() {
     setState(() {
       versId = versId - 1;
+
       getVersDetails();
     });
   }
 
   shareVerse() async {
-    await Share.share(
-      lastReadVerse!.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ??
-         ""
-      );
+    await Share.share(lastReadVerse!
+            .gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ??
+        "");
   }
 
   var _isVisible;
@@ -279,388 +277,454 @@ class _ContinueReadingState extends State<ContinueReading> {
       body: GraphQLProvider(
         client: client,
         child: SafeArea(
-          child: Stack(
-            children: [
-              Container(
-                height: height,
-                child: SingleChildScrollView(
-                  controller: _hideButtomController,
-                  child: Query(
-                    options: QueryOptions(document: gql(verseDetailQuery)),
-                    builder: (
-                      QueryResult result, {
-                      Refetch? refetch,
-                      FetchMore? fetchMore,
-                    }) {
-                      if (result.hasException) {
-                        print("ERROR : ${result.exception.toString()}");
-                      }
-                      if (result.data == null) {
-                        return Container(
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: primaryColor,
-                              strokeWidth: 2,
+          child: GestureDetector(
+            onHorizontalDragEnd: (value) {
+              // Swiping in right direction.
+              if (value.velocity.pixelsPerSecond.dx > 1) {
+                if (versId > 1) {
+                  reverschangeVersePage();
+                  _hideButtomController.animateTo(
+                      _hideButtomController.position.minScrollExtent,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 200));
+                }
+              }
+              // Swiping in left direction.
+              if (value.velocity.pixelsPerSecond.dx < 1) {
+                  changeVersePage();
+                   _hideButtomController.animateTo(
+                      _hideButtomController.position.minScrollExtent,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 200));}
+            },
+            child: Stack(
+              children: [
+                Container(
+                  height: height,
+                  child: SingleChildScrollView(
+                    controller: _hideButtomController,
+                    child: Query(
+                      options: QueryOptions(document: gql(verseDetailQuery)),
+                      builder: (
+                        QueryResult result, {
+                        Refetch? refetch,
+                        FetchMore? fetchMore,
+                      }) {
+                        if (result.hasException) {
+                          print("ERROR : ${result.exception.toString()}");
+                        }
+                        if (result.data == null) {
+                          return Container(
+                            height: 200,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: primaryColor,
+                                strokeWidth: 2,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                      print("SSSSSS : ${result.data}");
-                      Map<String, dynamic>? verse = result.data;
-                      VerseDetailData data = VerseDetailData.fromJson(verse!);
-                      if (data.gitaVerseById == null) {
-                        return Container();
-                      }
-                      lastReadVerse = LastReadVerse(
-                          verseID: "$versId",
-                          gitaVerseById: data.gitaVerseById!);
-                      //SharedPref.saveLastRead(lastReadVerse!);
-                      LocalNotification.instance
-                          .setNeedToShowLastRead(lastReadVerse!);
-                      return Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: kDefaultPadding,
-                            ),
-                            Text(
-                                "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        fontFamily: fontFamily,
-                                        fontSize: fontSize + 5,
-                                        color: formatingColor.textColor)),
-                            SizedBox(
-                              height: kDefaultPadding,
-                            ),
-                            Text(
-                              "${data.gitaVerseById!.text}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: fontFamily,
-                                  color: Color(0xffd97706),
-                                  fontSize: fontSize + 2,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(height: kDefaultPadding * 1.5),
-                            showTraliteration
-                                ? Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: 7),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                'transliteration')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                              fontFamily: fontFamily,
-                                              fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                              fontSize + 2 : fontSize - 2,
-                                              color:
-                                              formatingColor.textColor,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                          SizedBox(width: 7),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        "${data.gitaVerseById!.transliteration}",
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                fontSize + 2 : fontSize,
-                                                fontStyle: FontStyle.italic,
-                                                height: lineSpacing,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: 7),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                'word_meanings')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                              fontFamily: fontFamily,
-                                              fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                              fontSize + 2 : fontSize - 2,
-                                              color:
-                                              formatingColor.textColor,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                          SizedBox(width: 7),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        "${data.gitaVerseById!.wordMeanings}",
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                fontSize + 2 : fontSize,
-                                                height: lineSpacing,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                      SizedBox(height: kDefaultPadding * 1.5)
-                                    ],
-                                  )
-                                : Text(''),
-                            showTranslation
-                                ? Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                    'translation')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontFamily: fontFamily,
-                                                  fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                  fontSize + 2 : fontSize - 2,
-                                                  color:
-                                                      formatingColor.textColor,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                          ),
-                                          SizedBox(width: kDefaultPadding),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        data
-                                                    .gitaVerseById!
-                                                    .gitaTranslationsByVerseId!
-                                                    .nodes!
-                                                    .length >
-                                                0
-                                            ? data
-                                                .gitaVerseById!
-                                                .gitaTranslationsByVerseId!
-                                                .nodes![0]
-                                                .description!
-                                            : "---",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                height: lineSpacing,
-                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                fontSize + 2 : fontSize,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                    ],
-                                  )
-                                : Text(''),
-                            showCommentry
-                                ? Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue('commentry')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
+                          );
+                        }
+                        print("SSSSSS : ${result.data}");
+                        Map<String, dynamic>? verse = result.data;
+                        VerseDetailData data = VerseDetailData.fromJson(verse!);
+                        if (data.gitaVerseById == null) {
+                          return Container();
+                        }
+                        lastReadVerse = LastReadVerse(
+                            verseID: "$versId",
+                            gitaVerseById: data.gitaVerseById!);
+                        //SharedPref.saveLastRead(lastReadVerse!);
+                        LocalNotification.instance
+                            .setNeedToShowLastRead(lastReadVerse!);
+                        return Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Text(
+                                  "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          fontFamily: fontFamily,
+                                          fontSize: fontSize + 5,
+                                          color: formatingColor.textColor)),
+                              SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Text(
+                                "${data.gitaVerseById!.text}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: fontFamily,
+                                    color: Color(0xffd97706),
+                                    fontSize: fontSize + 2,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(height: kDefaultPadding * 1.5),
+                              showTraliteration
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'transliteration')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
                                                     fontFamily: fontFamily,
-                                                    fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                    fontSize + 2 : fontSize - 2,
+                                                    fontSize: (Localizations
+                                                                    .localeOf(
+                                                                        context)
+                                                                .languageCode ==
+                                                            'hi')
+                                                        ? fontSize + 2
+                                                        : fontSize - 2,
                                                     color: formatingColor
                                                         .textColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                          SizedBox(width: kDefaultPadding),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Text(
-                                        data
-                                                    .gitaVerseById!
-                                                    .gitaCommentariesByVerseId!
-                                                    .nodes!
-                                                    .length >
-                                                0
-                                            ? data
-                                                .gitaVerseById!
-                                                .gitaCommentariesByVerseId!
-                                                .nodes![0]
-                                                .description!
-                                            : "---",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                height: lineSpacing,
-                                                fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                                fontSize + 2 : fontSize,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            SizedBox(height: kDefaultPadding * 5),
-                          ],
-                        ),
-                      );
-                    },
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          "${data.gitaVerseById!.transliteration}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  fontStyle: FontStyle.italic,
+                                                  height: lineSpacing,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'word_meanings')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                    fontFamily: fontFamily,
+                                                    fontSize: (Localizations
+                                                                    .localeOf(
+                                                                        context)
+                                                                .languageCode ==
+                                                            'hi')
+                                                        ? fontSize + 2
+                                                        : fontSize - 2,
+                                                    color: formatingColor
+                                                        .textColor,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          "${data.gitaVerseById!.wordMeanings}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  height: lineSpacing,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                        SizedBox(height: kDefaultPadding * 1.5)
+                                      ],
+                                    )
+                                  : Text(''),
+                              showTranslation
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'translation')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                    fontFamily: fontFamily,
+                                                    fontSize: (Localizations
+                                                                    .localeOf(
+                                                                        context)
+                                                                .languageCode ==
+                                                            'hi')
+                                                        ? fontSize + 2
+                                                        : fontSize - 2,
+                                                    color: formatingColor
+                                                        .textColor,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          data
+                                                      .gitaVerseById!
+                                                      .gitaTranslationsByVerseId!
+                                                      .nodes!
+                                                      .length >
+                                                  0
+                                              ? data
+                                                  .gitaVerseById!
+                                                  .gitaTranslationsByVerseId!
+                                                  .nodes![0]
+                                                  .description!
+                                              : "---",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                  height: lineSpacing,
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                      ],
+                                    )
+                                  : Text(''),
+                              showCommentry
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'commentry')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                      fontFamily: fontFamily,
+                                                      fontSize: (Localizations
+                                                                      .localeOf(
+                                                                          context)
+                                                                  .languageCode ==
+                                                              'hi')
+                                                          ? fontSize + 2
+                                                          : fontSize - 2,
+                                                      color: formatingColor
+                                                          .textColor,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: kDefaultPadding,
+                                        ),
+                                        Text(
+                                          data
+                                                      .gitaVerseById!
+                                                      .gitaCommentariesByVerseId!
+                                                      .nodes!
+                                                      .length >
+                                                  0
+                                              ? data
+                                                  .gitaVerseById!
+                                                  .gitaCommentariesByVerseId!
+                                                  .nodes![0]
+                                                  .description!
+                                              : "---",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(
+                                                  height: lineSpacing,
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                              SizedBox(height: kDefaultPadding * 5),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              versId == 1
-                  ? Container()
-                  : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
-                      left: kDefaultPadding,
-                      child: _isVisible
-                          ? AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: editBoxBorderColor,
-                                      blurRadius: 10,
-                                    )
-                                  ],
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  shape: CircleBorder(),
-                                  clipBehavior: Clip.hardEdge,
-                                  child: InkWell(
-                                    onTap: () {
-                                      versId == 1
-                                          ? versId = 1
-                                          : reverschangeVersePage();
-                                    },
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/icon_slider_verse.svg",
+                versId == 1
+                    ? Container()
+                    : Positioned(
+                        top: MediaQuery.of(context).size.height / 100 * 71,
+                        left: kDefaultPadding,
+                        child: true//_isVisible
+                            ? AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: editBoxBorderColor,
+                                        blurRadius: 10,
+                                      )
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    shape: CircleBorder(),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: InkWell(
+                                      onTap: () {
+                                        versId == 1
+                                            ? versId = 1
+                                            : reverschangeVersePage();
+                                      },
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          "assets/icons/icon_slider_verse.svg",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Container(),
-                    ),
-              versId == 701
-                  ? Container()
-                  : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
-                      right: kDefaultPadding,
-                      child: _isVisible
-                          ? AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: editBoxBorderColor,
-                                      blurRadius: 10,
-                                    )
-                                  ],
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  shape: CircleBorder(),
-                                  clipBehavior: Clip.hardEdge,
-                                  child: InkWell(
-                                    onTap: () {
-                                      changeVersePage();
-                                    },
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/Icon_slider_verseNext.svg",
+                              )
+                            : Container(),
+                      ),
+                versId == 701
+                    ? Container()
+                    : Positioned(
+                        top: MediaQuery.of(context).size.height / 100 * 71,
+                        right: kDefaultPadding,
+                        child: true//_isVisible
+                            ? AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: editBoxBorderColor,
+                                        blurRadius: 10,
+                                      )
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    shape: CircleBorder(),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: InkWell(
+                                      onTap: () {
+                                        changeVersePage();
+                                      },
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          "assets/icons/Icon_slider_verseNext.svg",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Container(),
-                    )
-            ],
+                              )
+                            : Container(),
+                      )
+              ],
+            ),
           ),
         ),
       ),
       bottomNavigationBar: SafeArea(
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
-          height: _isVisible ? 48.0 : 0.0,
-          child: _isVisible
+          height:48.0,//_isVisible ? 48.0 : 0.0,
+          child:true //_isVisible
               ? BottomAppBar(
                   elevation: 0,
                   child: Container(
