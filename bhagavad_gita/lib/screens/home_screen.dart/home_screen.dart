@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen>
           ),
           SizedBox(
             width: kDefaultPadding,
-          )
+          ),
         ],
       ),
       body: OfflineBuilder(
@@ -142,6 +142,33 @@ class _HomeScreenState extends State<HomeScreen>
                   : SingleChildScrollView(
                       child: Column(
                         children: [
+                          /* Container(
+                            height: kDefaultPadding * 2.2,
+                            width: kDefaultPadding * 16.8,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "",
+                                fillColor: Color(0xFFFFFFFF),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF000000),
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF000000),
+                                    width: 2.0,
+                                  ),
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ), */
                           VerseOfTheDayWidget(),
                           lastReadVerse == null
                               ? Container()
