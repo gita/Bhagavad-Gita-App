@@ -17,7 +17,6 @@ import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';

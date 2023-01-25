@@ -63,11 +63,10 @@ class _HomeScreenState extends State<HomeScreen>
         LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
       }
     });
+      setState(() {
     LocalNotification.instance.needToShowLastRead.addListener(() {
-    /*   if (mounted) {
-      setState(() { */
-        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
-      // });}
+      lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
+      });
     });
  
     print("selected language : $langauge");
