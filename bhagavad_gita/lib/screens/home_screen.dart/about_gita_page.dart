@@ -247,25 +247,17 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
         ),
         floatingActionButton: FloatingActionButton.small(
           onPressed: () async{
-            final avaial =await inAppReview.isAvailable();
-            print("Availabale==> $avaial");
-            if (!Platform.isAndroid) {
+            final avaialable =await inAppReview.isAvailable();
+            debugPrint("Avial==> $avaialable");
                 await inAppReview.openStoreListing(
                   appStoreId: "com.gitainitiative.bhagavadgita"
                 );
-            }else{
-              await inAppReview.requestReview();
-            }
-            /* showDialog(
-              context: context,
-              builder: (context) => _dialog,
-            ); */
           },
           child: Icon(
             Icons.star,
             color: Color(0xFFFFFFFF),
           ),
-          backgroundColor: Color(0xFF000000),
+          backgroundColor: Color(0xFFF57903),
         ),
       ),
     );
