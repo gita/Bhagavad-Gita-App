@@ -1,8 +1,10 @@
+import 'dart:io' show Platform;
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class AboutGitaScreen extends StatefulWidget {
   @override
@@ -11,6 +13,10 @@ class AboutGitaScreen extends StatefulWidget {
 
 class _AboutGitaScreenState extends State<AboutGitaScreen>
     with AutomaticKeepAliveClientMixin {
+      final InAppReview inAppReview = InAppReview.instance;
+  // final Uri _url = Uri.parse(
+  //     'https://bhagavadgita.io/privacy-policy/');
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -239,9 +245,46 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton.small(
+          onPressed: () async{
+            final avaialable =await inAppReview.isAvailable();
+            debugPrint("Avial==> $avaialable");
+                await inAppReview.openStoreListing(
+                  appStoreId: "com.gitainitiative.bhagavadgita"
+                );
+          },
+          child: Icon(
+            Icons.star,
+            color: Color(0xFFFFFFFF),
+          ),
+          backgroundColor: Color(0xFFF57903),
+        ),
       ),
     );
   }
+
+  /* final _dialog = RatingDialog(
+    starSize: 35,
+    title: Text(
+      Platform.isAndroid ? 'Rate Us On Play Store' : 'Rate Us On App Store',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ),
+    message: Text(
+      'Tap a star to set your rating',
+      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+    ),
+    image: Image.asset(
+      "assets/images/splashScreenLogo.JPG",
+      height: 100,
+    ),
+    submitButtonText: "Submit",
+    onSubmitted: (response) {
+      print('rating: ${response.rating}, comment: ${response.comment}');
+        StoreRedirect.redirect(
+            androidAppId: 'com.gitainitiative.bhagavadgita',
+            iOSAppId: 'com.gitainitiative.bhagavadgita');
+    },
+  ); */
 
   @override
   bool get wantKeepAlive => true;
