@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -248,10 +249,12 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
           onPressed: () async{
             final avaial =await inAppReview.isAvailable();
             print("Availabale==> $avaial");
-            if (avaial) {
+            if (!Platform.isAndroid) {
                 await inAppReview.openStoreListing(
                   appStoreId: "com.gitainitiative.bhagavadgita"
                 );
+            }else{
+              await inAppReview.requestReview();
             }
             /* showDialog(
               context: context,
