@@ -53,6 +53,7 @@ class _ContinueReadingState extends State<ContinueReading> {
   double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
   Color audioBottoSheetColor=Colors.white;
+  Color textColor= Colors.black;
   late VerseCustomissation verseCustomissation;
 
   bool showTraliteration = true;
@@ -822,20 +823,26 @@ class _ContinueReadingState extends State<ContinueReading> {
             onTap: (){
                   audioPlayer.pause().then((value) =>audioPlayerBottomSheet(context));
             },
-            child: CircularPercentIndicator(
-              backgroundWidth:3.5,lineWidth:3.5,
-              circularStrokeCap:CircularStrokeCap.round ,
-              animation: true,
-              animateFromLastPercent: true,
-              animationDuration: 10000,
-                radius: 25.0,
-                percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
-                fillColor: formatingColor.bgColor,
-                center: SvgPicture.asset('assets/icons/pause.svg',height: height*0.0214,),
-                // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
-                backgroundColor: Colors.grey.shade300,
-                progressColor: Color(0xffF57903),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: formatingColor.bgColor
               ),
+              child: CircularPercentIndicator(
+                backgroundWidth:3.5,lineWidth:3.5,
+                circularStrokeCap:CircularStrokeCap.round ,
+                animation: true,
+                animateFromLastPercent: true,
+                animationDuration: 10000,
+                  radius: 25.0,
+                  percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
+                  // fillColor: formatingColor.bgColor,
+                  center: SvgPicture.asset('assets/icons/pause.svg',height: height*0.0214,),
+                  // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
+                  backgroundColor: Colors.grey.shade300,
+                  progressColor: Color(0xffF57903),
+                ),
+            ),
           )
           : Container(
             height: height*0.0593,
@@ -874,10 +881,12 @@ class _ContinueReadingState extends State<ContinueReading> {
               if (value.colorId=='3') {
                 builderSetState(() {
                   audioBottoSheetColor=Color(0xff606368);
+                  textColor=Colors.white;
                 });
               }else{
                  builderSetState(() {
                   audioBottoSheetColor=Colors.white;
+                  textColor=Colors.black;
                 });
               }
             });
@@ -944,8 +953,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(convertDuration(audioPlayedDuration)),
-                                    Text(convertDuration(audioDuration))
+                                    Text(convertDuration(audioPlayedDuration),style: TextStyle(color:textColor ),),
+                                    Text(convertDuration(audioDuration),style: TextStyle(color:textColor ),)
                                   ],
                                 ),
                               ),
