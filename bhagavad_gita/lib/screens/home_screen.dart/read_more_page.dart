@@ -220,6 +220,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   changeVersePage() {
     setState(() {
       versId = versId + 1;
+      audioPlayedDuration=Duration.zero;
+      audioDuration=Duration.zero;
       getVersDetails();
     });
   }
@@ -227,6 +229,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   reverschangeVersePage() {
     setState(() {
       versId = versId - 1;
+      audioPlayedDuration=Duration.zero;
+      audioDuration=Duration.zero;
       getVersDetails();
     });
   }
@@ -817,7 +821,7 @@ class _ContinueReadingState extends State<ContinueReading> {
       floatingActionButton:isPlay
           ? GestureDetector(
             onTap: (){
-              audioPlayerBottomSheet(context);
+                  audioPlayer.pause().then((value) =>audioPlayerBottomSheet(context));
             },
             child: CircularPercentIndicator(
               backgroundWidth:3.5,lineWidth:3.5,
@@ -827,8 +831,8 @@ class _ContinueReadingState extends State<ContinueReading> {
               animationDuration: 10000,
                 radius: 25.0,
                 percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
-                fillColor: Colors.white,
-                center: SvgPicture.asset('assets/icons/pause.svg'),
+                fillColor: formatingColor.bgColor,
+                center: SvgPicture.asset('assets/icons/pause.svg',height: height*0.0214,),
                 // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
                 backgroundColor: Colors.grey.shade300,
                 progressColor: Color(0xffF57903),
@@ -846,10 +850,15 @@ class _ContinueReadingState extends State<ContinueReading> {
                 ], shape: BoxShape.circle),
             child: FloatingActionButton(
               elevation: 12,
-                onPressed: () {  
-             audioPlayerBottomSheet(context);
-            },
-            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0284 ,),backgroundColor: Color(0xffF57903)),
+                onPressed: () {
+                      String audioUrl =
+                          "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                      Source source = UrlSource(audioUrl);
+                      audioPlayer
+                          .play(source)
+                          .then((value) => audioPlayerBottomSheet(context));
+                    },
+            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0214 ,),backgroundColor: Color(0xffF57903)),
           )
     );
   }
@@ -963,7 +972,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                     decoration: BoxDecoration(
                                         color: Color(0xffF57903), shape: BoxShape.circle),
                                     child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg',
-                                        color: Colors.white,height:height*0.0284,))))
+                                        color: Colors.white,height:height*0.0214,))))
                       ]),
                       SizedBox(height: 15),
                     ]),
