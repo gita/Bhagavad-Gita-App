@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/http_link_string.dart';
@@ -14,12 +15,11 @@ import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/add_notes_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
 import '../../locator.dart';
 
@@ -52,15 +52,46 @@ class _ContinueReadingState extends State<ContinueReading> {
   String fontFamily = 'Inter';
   double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
+  Color audioBottoSheetColor=Colors.white;
+  Color textColor= Colors.black;
   late VerseCustomissation verseCustomissation;
 
   bool showTraliteration = true;
   bool showTranslation = true;
   bool showCommentry = true;
   late ScrollController _hideButtomController;
+  final audioPlayer =AudioPlayer();
+  int chapterNumber=0;
+  int verseNumber=0;
+  bool isPlay =false;
+  Duration audioDuration=Duration.zero;
+  Duration audioPlayedDuration=Duration.zero;
+  AnimationController? animationController;
   @override
   void initState() {
     super.initState();
+    audioPlayer.onPlayerStateChanged.listen((state){
+      setState(() {
+        isPlay=state==PlayerState.playing;
+      });
+      });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      if (mounted) {
+        setState(() {
+        audioDuration=newDuration;
+      });
+      }
+    });
+
+    audioPlayer.onPositionChanged.listen((event) {
+      if (mounted) {
+        setState(() {
+          audioPlayedDuration=event;
+      });
+      }
+    });
+
     setState(() {
       versId = int.parse(widget.verseID);
       getVersDetails();
@@ -99,6 +130,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           formatingColor = orangeFormatingColor;
         } else if (value.colorId == "3") {
           formatingColor = blackFormatingColor;
+          audioBottoSheetColor=Color(0xff606368);
         }
       });
     });
@@ -106,6 +138,11 @@ class _ContinueReadingState extends State<ContinueReading> {
     getAllToggelValueFormShowingContent();
   }
 
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
   getAllToggelValueFormShowingContent() {
     SharedPref.getSavedBoolValue(PreferenceConstant.verseTransliterationSetting)
         .then((value) {
@@ -183,6 +220,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   changeVersePage() {
     setState(() {
       versId = versId + 1;
+      audioPlayedDuration=Duration.zero;
+      audioDuration=Duration.zero;
       getVersDetails();
     });
   }
@@ -190,6 +229,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   reverschangeVersePage() {
     setState(() {
       versId = versId - 1;
+      audioPlayedDuration=Duration.zero;
+      audioDuration=Duration.zero;
       getVersDetails();
     });
   }
@@ -317,6 +358,8 @@ class _ContinueReadingState extends State<ContinueReading> {
                       //SharedPref.saveLastRead(lastReadVerse!);
                       LocalNotification.instance
                           .setNeedToShowLastRead(lastReadVerse!);
+                          chapterNumber=data.gitaVerseById!.chapterNumber??0;
+                          verseNumber=data.gitaVerseById!.verseNumber??0;
                       return Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -613,7 +656,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               versId == 1
                   ? Container()
                   : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      top: MediaQuery.of(context).size.height / 100 * 69,
                       left: kDefaultPadding,
                       child: _isVisible
                           ? AnimatedContainer(
@@ -640,6 +683,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                       versId == 1
                                           ? versId = 1
                                           : reverschangeVersePage();
+                                          audioPlayer.stop();
                                     },
                                     child: Center(
                                       child: SvgPicture.asset(
@@ -655,7 +699,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               versId == 701
                   ? Container()
                   : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 71,
+                      top: MediaQuery.of(context).size.height / 100 * 69,
                       right: kDefaultPadding,
                       child: _isVisible
                           ? AnimatedContainer(
@@ -680,6 +724,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                   child: InkWell(
                                     onTap: () {
                                       changeVersePage();
+                                      audioPlayer.stop();
                                     },
                                     child: Center(
                                       child: SvgPicture.asset(
@@ -813,7 +858,176 @@ class _ContinueReadingState extends State<ContinueReading> {
               : Container(),
         ),
       ),
+      floatingActionButton:isPlay
+          ? GestureDetector(
+            onTap: (){
+                  audioPlayer.pause().then((value) =>audioPlayerBottomSheet(context));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: formatingColor.bgColor
+              ),
+              child: CircularPercentIndicator(
+                backgroundWidth:3.5,lineWidth:3.5,
+                circularStrokeCap:CircularStrokeCap.round ,
+                animation: true,
+                animateFromLastPercent: true,
+                animationDuration: 10000,
+                  radius: 25.0,
+                  percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
+                  // fillColor: formatingColor.bgColor,
+                  center: SvgPicture.asset('assets/icons/pause.svg',height: height*0.0214,),
+                  // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
+                  backgroundColor: Colors.grey.shade300,
+                  progressColor: Color(0xffF57903),
+                ),
+            ),
+          )
+          : Container(
+            height: height*0.0593,
+            width: width*0.122,
+            decoration: BoxDecoration(
+              boxShadow: [
+                  BoxShadow(
+                      color: Color(0xff162233).withOpacity(0.12),
+                      offset: Offset(0, 0),
+                      spreadRadius: 4,blurRadius:20),
+                ], shape: BoxShape.circle),
+            child: FloatingActionButton(
+              elevation: 12,
+                onPressed: () {
+                      String audioUrl =
+                          "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                      Source source = UrlSource(audioUrl);
+                      audioPlayer
+                          .play(source)
+                          .then((value) => audioPlayerBottomSheet(context));
+                    },
+            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0214 ,),backgroundColor: Color(0xffF57903)),
+          )
     );
+  }
+
+  Future<dynamic> audioPlayerBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context,StateSetter builderSetState) {
+            SharedPref.getSavedVerseListCustomisation().then((value) {
+              if (value.colorId=='3') {
+                builderSetState(() {
+                  audioBottoSheetColor=Color(0xff606368);
+                  textColor=Colors.white;
+                });
+              }else{
+                 builderSetState(() {
+                  audioBottoSheetColor=Colors.white;
+                  textColor=Colors.black;
+                });
+              }
+            });
+             audioPlayer.onPlayerStateChanged.listen((state){
+              try{
+              builderSetState(() {
+                isPlay = state == PlayerState.playing;
+              });}catch(e){}
+            });
+
+            audioPlayer.onDurationChanged.listen((newDuration) {
+              try {
+                builderSetState(() {
+                audioDuration = newDuration;
+              });
+              } catch (e) {}
+            });
+
+            audioPlayer.onPositionChanged.listen((event) {
+              try {
+                 builderSetState(() {
+                audioPlayedDuration = event;
+              });
+              } catch (e) {}
+              });
+              return Container(
+                height: height*0.145,
+                decoration: BoxDecoration(color: audioBottoSheetColor,borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight:Radius.circular(15) )),
+                child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: height*0.0147,),
+                  Container(
+                    height: height*0.005,
+                    width: width*0.163,decoration: BoxDecoration(color: Color(0xffD9DBE9),borderRadius: BorderRadius.circular(5))),
+                      SizedBox(height: 10),
+                      Row(mainAxisSize: MainAxisSize.max, 
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SliderTheme(
+                                data: SliderTheme.of(context).copyWith(trackHeight: height*0.0154,thumbShape: RoundSliderThumbShape(enabledThumbRadius: 13,elevation: 5)),
+                                child: Slider(
+                                  inactiveColor: Color(0xffD9DBE9),
+                                  activeColor: Color(0xffF57903),
+                                  thumbColor: Color(0xffF57903),
+                                  min: 0,
+                                  max: audioDuration.inSeconds.toDouble(),
+                                  value: audioPlayedDuration.inSeconds.toDouble(),
+                                  onChanged: (value) {
+                                    setState(() { 
+                                    audioPlayedDuration=Duration(seconds: value.toInt());
+                                    });
+                                    audioPlayer.seek(audioPlayedDuration);
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(convertDuration(audioPlayedDuration),style: TextStyle(color:textColor ),),
+                                    Text(convertDuration(audioDuration),style: TextStyle(color:textColor ),)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: GestureDetector(
+                                onTap: () async {
+                                  if (isPlay) {
+                                    audioPlayer.pause();
+                                  } else {
+                                    String audioUrl="https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                                    Source source= UrlSource(audioUrl);
+                                    audioPlayer.play(source);
+                                  }
+                                },
+                                child: Container(
+                                  height: height*0.055,
+                                  width: height*0.055,
+                                  alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffF57903), shape: BoxShape.circle),
+                                    child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg',
+                                        color: Colors.white,height:height*0.0214,))))
+                      ]),
+                      SizedBox(height: 15),
+                    ]),
+              );
+            }
+          );        
+        });
   }
 
   _onPressedEditButton(context) {
@@ -876,4 +1090,10 @@ class _ContinueReadingState extends State<ContinueReading> {
       },
     );
   }
+}
+String convertDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "$twoDigitMinutes:$twoDigitSeconds";
 }
