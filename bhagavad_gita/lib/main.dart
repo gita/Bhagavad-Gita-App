@@ -30,8 +30,8 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'android.intent.category.DEFAULT',
   importance: Importance.high,
 );
-
- IOSNotificationDetails _iosNotificationDetails = IOSNotificationDetails(
+// Changed from IOSNotificationDetails to DarwinNotificationDetails
+ DarwinNotificationDetails _iosNotificationDetails = DarwinNotificationDetails(
     presentAlert: false,
     presentBadge: false,
     presentSound: true,
@@ -129,7 +129,8 @@ class _MyAppState extends State<MyApp> {
     //// firebase forground notification
 
 final AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_notification');
-    var iOSSettings = IOSInitializationSettings(
+// Changed from IOSInitializationSettings to DarwinInitializationSettings
+    var iOSSettings = DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -138,7 +139,8 @@ final AndroidInitializationSettings initializationSettingsAndroid = AndroidIniti
     final InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid, iOS: iOSSettings);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (message) async {
+    // Changed from onSelectNotification to onDidReceiveNotificationResponse 
+        onDidReceiveNotificationResponse: (message) async {
           print("message-----$message");
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
