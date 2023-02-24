@@ -3,6 +3,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/screens/setting_screens/bibliography.dart';
 import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
@@ -386,6 +387,127 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
+
+              // Code for Bibliography Page
+
+              Divider(
+                indent: kPadding * 2,
+                endIndent: kPadding * 2,
+              ),
+              Container(
+                height: kPadding * 3,
+                width: double.infinity,
+                color: Colors.orange[50],
+                child: Row(
+                  children: [
+                    SizedBox(width: kDefaultPadding),
+                    Text(
+                      DemoLocalization.of(context)!
+                          .getTranslatedValue('bibliography')
+                          .toString(),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                            color: settingColor,
+                            fontSize: 12,
+                            letterSpacing: 1,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(kDefaultPadding),
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 0.5, color: textLightGreyColor),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BibliographyScreen(),
+                            ),
+                          );
+                          setDefaultVar();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: kPadding * 2, right: kDefaultPadding),
+                          child: Row(
+                            children: [
+                              // Text(langauge.toUpperCase().replaceAll("\"", "")),
+                              Text("SOURCES"),
+                              Spacer(),
+                              SvgPicture.asset(
+                                  'assets/icons/icn_arrow_forward.svg')
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // AnimatedContainer(
+              //   height: isCommentarySource ? 70 : 0,
+              //   duration: Duration(milliseconds: 300),
+              //   child: Padding(
+              //     padding: EdgeInsets.all(kPadding * 1.5),
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         border: Border.all(width: 0.5, color: textLightGreyColor),
+              //       ),
+              //       child: ClipRRect(
+              //         borderRadius: BorderRadius.all(Radius.circular(10)),
+              //         child: Material(
+              //           color: Colors.transparent,
+              //           child: InkWell(
+              //             onTap: () async {
+              //               await Navigator.push(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                   builder: (context) => BibliographyScreen(),
+              //                 ),
+              //               );
+              //               setDefaultVar();
+              //             },
+              //             child: Padding(
+              //               padding: EdgeInsets.only(
+              //                   left: kPadding * 1.5, right: kPadding * 1.5),
+              //               child: Row(
+              //                 children: [
+              //                   Expanded(
+              //                     child: Text(
+              //                       savedVerseCommentary.title!,
+              //                       style: Theme.of(context)
+              //                           .textTheme
+              //                           .subtitle1!
+              //                           .copyWith(fontSize: 13),
+              //                       overflow: TextOverflow.fade,
+              //                       maxLines: 1,
+              //                       softWrap: false,
+              //                     ),
+              //                   ),
+              //                   SizedBox(width: 4),
+              //                   SvgPicture.asset(
+              //                       'assets/icons/icn_arrow_forward.svg')
+              //                 ],
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               /*Container(
                 height: kPadding * 3,
                 width: double.infinity,
