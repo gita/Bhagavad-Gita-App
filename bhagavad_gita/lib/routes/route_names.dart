@@ -12,3 +12,4 @@ const String r_AddNote = 'r_AddNote';
 const String r_VerseTranslation = 'r_VerseTranslation';
 const String r_VerseCommentary = 'r_VerseCommentary';
 const String r_SpalshScreen = 'r_SpalshScreen';
+const String r_Gitachat = 'r_Gitachat';

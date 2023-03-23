@@ -78,6 +78,18 @@ class _HomeScreenState extends State<HomeScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          navigationService.pushNamed(
+            r_Gitachat,
+          );
+        },
+        label: Text(''),
+        icon: Icon(
+          Icons.message,
+          color: Colors.white,
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,

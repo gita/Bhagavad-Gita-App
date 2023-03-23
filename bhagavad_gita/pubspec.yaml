@@ -18,6 +18,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_offline: ^2.0.0
+
+  # Custome packages
+  flutter_client_sse: ^1.0.0
   flutter_svg: ^0.22.0
   get_it: ^7.2.0
   graphql_flutter: ^5.0.0
