@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -18,7 +21,8 @@ class ChatAIScreen extends StatefulWidget {
   State<ChatAIScreen> createState() => _ChatAIScreenState();
 }
 
-class _ChatAIScreenState extends State<ChatAIScreen> {
+class _ChatAIScreenState extends State<ChatAIScreen>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     setState(() {
@@ -39,7 +43,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
 
   http.Client? _client;
   TextEditingController searchText = TextEditingController();
-  String? chatRe;
+
   var chatData = <ChatResponseModel>[];
 
   var currentSSEModel = SSEModel(data: '', id: '', event: '');
@@ -51,6 +55,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
 
   int? selectedIndex;
   String? selectedList;
+  bool isFirstChatAnimated = true;
 
   String note =
       'Note: The answer may not be factually correct. Please do your own research before taking any action.';
@@ -62,6 +67,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     'Please explain Chapter 12 Verse 13.',
     'What is Karma Yoga?'
   ];
+
   addList() {
     chatData.add(ChatResponseModel(
         message: searchText.value.text, messageType: MessageType.sender));
@@ -185,6 +191,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                             .toString()
                             .replaceAll(' ]', '.'),
                         messageType: MessageType.reciver));
+                    print('Data==>${chatData}');
                     currentSSEModel.data = '';
 
                     isLoading = false;
@@ -231,7 +238,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
               .getTranslatedValue('bhagvad_gita_chat')
               .toString(),
           style: TextStyle(
-              color: Colors.orange, fontSize: 30, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
@@ -245,8 +252,11 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                 shrinkWrap: true,
                 itemCount: chatData.length,
                 controller: controller,
+                scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   var data = chatData[index];
+
                   return data.messageType == MessageType.sender
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -267,7 +277,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                                   ),
                                 ),
                                 CircleAvatar(
-                                  radius: 25,
+                                  radius: 20,
                                   backgroundImage: NetworkImage(
                                       'https://bhagavadgita.ai/_next/image?url=%2FAvatars%2Farjuna.png&w=64&q=75'),
                                 ),
@@ -279,9 +289,9 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(15),
-                                      topLeft: Radius.circular(15),
-                                      bottomRight: Radius.circular(15)),
+                                      bottomLeft: Radius.circular(7.5),
+                                      topLeft: Radius.circular(7.5),
+                                      bottomRight: Radius.circular(7.5)),
                                   color: Color.fromRGBO(255, 193, 7, 1),
                                 ),
                                 child: Padding(
@@ -300,7 +310,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CircleAvatar(
-                                  radius: 25,
+                                  radius: 20,
                                   backgroundImage: NetworkImage(
                                       'https://bhagavadgita.ai/_next/image?url=%2FAvatars%2Fkrishna.png&w=64&q=75'),
                                 ),
@@ -321,9 +331,9 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                               child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
-                                        bottomRight: Radius.circular(15)),
+                                        bottomLeft: Radius.circular(7.5),
+                                        topRight: Radius.circular(7.5),
+                                        bottomRight: Radius.circular(7.5)),
                                     color: Color.fromRGBO(255, 237, 194, 1),
                                   ),
                                   child: Padding(
@@ -332,7 +342,20 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(data.message),
+                                          DefaultTextStyle(
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                              child: AnimatedTextKit(
+                                                  isRepeatingAnimation: false,
+                                                  repeatForever: false,
+                                                  displayFullTextOnTap: true,
+                                                  totalRepeatCount: 0,
+                                                  animatedTexts: [
+                                                    // TyperAnimatedText(''),
+                                                    TyperAnimatedText(
+                                                        data.message),
+                                                  ])),
+                                          // Text(data.message),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 12),
@@ -352,12 +375,12 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             suggestionList.isEmpty
                 ? SizedBox()
                 : Container(
-                    height: height / 2.15,
+                    height: height * 0.38,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade300),
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
+                            topLeft: Radius.circular(7.5),
+                            topRight: Radius.circular(7.5)),
                         color: Color.fromRGBO(255, 244, 219, 1)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -378,10 +401,10 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                           Expanded(
                             child: ListView.builder(
                               itemCount: suggestionList.length,
-                              physics: NeverScrollableScrollPhysics(),
+                              // physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(6),
                                   child: UnconstrainedBox(
                                     alignment: Alignment.bottomLeft,
                                     child: GestureDetector(
@@ -427,6 +450,22 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
               },
               style: const TextStyle(fontSize: 16),
               controller: searchText,
+              onSubmitted: (v) {
+                FocusManager.instance.primaryFocus?.unfocus();
+                controller.animateTo(
+                  controller.position.maxScrollExtent,
+                  curve: Curves.easeIn,
+                  duration: const Duration(milliseconds: 100),
+                );
+                addList();
+                suggestionList.clear();
+
+                subscribe();
+
+                Future.delayed(Duration(seconds: 12), () {
+                  searchText.clear();
+                });
+              },
               maxLines: null,
               cursorColor: Colors.orange,
               decoration: InputDecoration(
@@ -466,8 +505,8 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                               color: Colors.orange,
                               backgroundColor: Color.fromRGBO(255, 244, 219, 1),
                             )
-                          : Icon(
-                              Icons.send,
+                          : Image.asset(
+                              'assets/icons/sendIcon.png',
                               color: Colors.orange,
                             )),
                   border: InputBorder.none,
@@ -481,7 +520,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
 }
 
 class ChatResponseModel {
-  String message = '';
+  var message = '';
   MessageType messageType = MessageType.sender;
 
   ChatResponseModel({required this.message, required this.messageType});

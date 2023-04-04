@@ -63,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen>
         LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
       }
     });
-      setState(() {
-    LocalNotification.instance.needToShowLastRead.addListener(() {
-      lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
+    setState(() {
+      LocalNotification.instance.needToShowLastRead.addListener(() {
+        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
       });
     });
- 
+
     print("selected language : $langauge");
   }
 
@@ -78,18 +78,29 @@ class _HomeScreenState extends State<HomeScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           navigationService.pushNamed(
             r_Gitachat,
           );
         },
-        label: Text(''),
-        icon: Icon(
+        child: const Icon(
           Icons.message,
           color: Colors.white,
         ),
       ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      // navigationService.pushNamed(
+      //   r_Gitachat,
+      // );
+      //   },
+      //   label: Text(''),
+      //   icon: Icon(
+      // Icons.message,
+      // color: Colors.white,
+      //   ),
+      // ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
