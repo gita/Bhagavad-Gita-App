@@ -23,10 +23,21 @@ class ChatAIScreen extends StatefulWidget {
 
 class _ChatAIScreenState extends State<ChatAIScreen>
     with SingleTickerProviderStateMixin {
+  StreamController<SSEModel> streamController = StreamController();
+  var chatData = <ChatResponseModel>[];
+
   @override
   void initState() {
+    // streamController = StreamController.broadcast();
+    // streamController.stream.listen((v) {
+    //   setState(() {
+    //     // chatData.add(v.data!.split(''));
+    //   });
+    // });
+
     setState(() {
       chatData.add(ChatResponseModel(
+          isAnimated: true,
           message:
               "Radhey Radhey, I am Gita AI, a repository of knowledge and wisdom. Allow me to assist you by answering any inquiries you may have. Ask me anything.",
           messageType: MessageType.reciver));
@@ -44,19 +55,27 @@ class _ChatAIScreenState extends State<ChatAIScreen>
   http.Client? _client;
   TextEditingController searchText = TextEditingController();
 
-  var chatData = <ChatResponseModel>[];
-  var dataRecivedList = [];
   var currentSSEModel = SSEModel(data: '', id: '', event: '');
   var lineRegex = RegExp(r'^([^:]*)(?::)?(?: )?(.*)?$');
 
-  StreamController<SSEModel> streamController = StreamController();
   ScrollController controller = ScrollController();
+
+  final TextEditingController _textController = TextEditingController();
+  final StreamController<String> _wordStreamController =
+      StreamController<String>();
+
+  void _processInput() {
+    String input = _textController.text.trim();
+    List<String> words = input.split(" ");
+    for (String word in words) {
+      _wordStreamController.add(word);
+    }
+  }
+
   bool isLoading = false;
 
   int? selectedIndex;
   String? selectedList;
-  // bool isFirstChatAnimated = true;
-  bool animationCompleted = false;
 
   String note =
       'Note: The answer may not be factually correct. Please do your own research before taking any action.';
@@ -170,6 +189,8 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                       value +
                       '\n';
 
+                  log('dataFromModel==>${currentSSEModel.data}');
+
                   break;
                 case 'id':
                   currentSSEModel.id = value;
@@ -179,7 +200,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                   break;
               }
 
-              Future.delayed(Duration(seconds: 10), () {
+              Future.delayed(Duration(seconds: 5), () {
                 controller.animateTo(
                   controller.position.maxScrollExtent,
                   curve: Curves.ease,
@@ -187,6 +208,16 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                 );
                 if (currentSSEModel.data != '') {
                   setState(() {
+                    // String input = currentSSEModel.data.toString().trim();
+
+                    // for (String word in input.split('')) {
+                    //   print('before==$word');
+
+                    //   chatData.add(ChatResponseModel(
+                    //       message: word.toString().replaceAll(' ]', '.'),
+                    //       messageType: MessageType.reciver));
+                    // }
+
                     chatData.add(ChatResponseModel(
                         message: currentSSEModel.data
                             .toString()
@@ -207,7 +238,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
       });
     } catch (e) {}
 
-    Future.delayed(Duration(seconds: 1), () {});
+    // Future.delayed(Duration(seconds: 0), () {});
 
     return streamController.stream;
   }
@@ -347,7 +378,13 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                               style: TextStyle(
                                                   color: Colors.black),
                                               child: chatData[index].isAnimated
-                                                  ? Text(data.message)
+                                                  ? Text(
+                                                      data.message,
+                                                      style: TextStyle(
+                                                          fontFamily: 'Inter',
+                                                          color: Color(
+                                                              0xFF111827)),
+                                                    )
                                                   : AnimatedTextKit(
                                                       isRepeatingAnimation:
                                                           false,
@@ -361,7 +398,19 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                                       },
                                                       animatedTexts: [
                                                           TyperAnimatedText(
-                                                              data.message),
+                                                              data.message,
+                                                              textStyle: TextStyle(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          17,
+                                                                          24,
+                                                                          39,
+                                                                          1)),
+                                                              speed: Duration(
+                                                                  milliseconds:
+                                                                      15)),
                                                         ])),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -433,7 +482,12 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                                 horizontal: 16, vertical: 4),
                                             child: Text(
                                               suggestionList[index],
-                                              style: TextStyle(fontSize: 14),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Color.fromRGBO(
+                                                      17, 24, 39, 1)),
                                             ),
                                           )),
                                     ),
@@ -454,34 +508,48 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                   searchText.text;
                 });
               },
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+              ),
               controller: searchText,
-              onSubmitted: (v) {
-                FocusManager.instance.primaryFocus?.unfocus();
-                controller.animateTo(
-                  controller.position.maxScrollExtent,
-                  curve: Curves.easeIn,
-                  duration: const Duration(milliseconds: 100),
-                );
-                addList();
-                suggestionList.clear();
+              onSubmitted: searchText.text.isEmpty
+                  ? null
+                  : (v) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      controller.animateTo(
+                        controller.position.maxScrollExtent,
+                        curve: Curves.easeIn,
+                        duration: const Duration(milliseconds: 100),
+                      );
+                      addList();
+                      suggestionList.clear();
 
-                subscribe();
+                      subscribe();
 
-                Future.delayed(Duration(seconds: 12), () {
-                  searchText.clear();
-                });
-              },
+                      Future.delayed(Duration(seconds: 12), () {
+                        searchText.clear();
+                      });
+                    },
               maxLines: null,
               cursorColor: Colors.orange,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.grey), //<-- SEE HERE
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(7.5),
+                        bottomRight: Radius.circular(7.5)),
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade300), //<-- SEE HERE
                   ),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(color: Colors.orange)),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(0.50),
+                        bottomRight: Radius.circular(7.5)),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
                   contentPadding:
                       EdgeInsets.only(left: 10, bottom: 10, top: 10),
                   suffixIconConstraints:
@@ -520,11 +588,14 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                               )
                             : Image.asset(
                                 'assets/icons/sendIcon.png',
-                                color: Colors.orange,
+                                color: searchText.text.isEmpty
+                                    ? Colors.orange.shade100
+                                    : Colors.orange,
                               )),
                   ),
                   border: InputBorder.none,
-                  hintText: 'Type your message here...'),
+                  hintText: 'Type your message here...',
+                  hintStyle: TextStyle(color: Colors.grey.shade400)),
             ),
           ],
         ),
