@@ -408,7 +408,6 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                           Expanded(
                             child: ListView.builder(
                               itemCount: suggestionList.length,
-                              // physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(6),
