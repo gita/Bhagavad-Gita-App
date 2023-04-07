@@ -486,35 +486,43 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                       EdgeInsets.only(left: 10, bottom: 10, top: 10),
                   suffixIconConstraints:
                       BoxConstraints(minHeight: 20, minWidth: 20),
-                  suffixIcon: IconButton(
-                      onPressed: searchText.text.isEmpty
-                          ? null
-                          : () {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              controller.animateTo(
-                                controller.position.maxScrollExtent,
-                                curve: Curves.easeIn,
-                                duration: const Duration(milliseconds: 100),
-                              );
-                              addList();
-                              suggestionList.clear();
+                  suffixIcon: Container(
+                    child: IconButton(
+                        onPressed: searchText.text.isEmpty
+                            ? null
+                            : () {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                controller.animateTo(
+                                  controller.position.maxScrollExtent,
+                                  curve: Curves.easeIn,
+                                  duration: const Duration(milliseconds: 100),
+                                );
+                                addList();
+                                suggestionList.clear();
 
-                              subscribe();
+                                subscribe();
 
-                              Future.delayed(Duration(seconds: 12), () {
-                                searchText.clear();
-                              });
-                            },
-                      icon: isLoading
-                          ? CircularProgressIndicator(
-                              strokeWidth: 5,
-                              color: Colors.orange,
-                              backgroundColor: Color.fromRGBO(255, 244, 219, 1),
-                            )
-                          : Image.asset(
-                              'assets/icons/sendIcon.png',
-                              color: Colors.orange,
-                            )),
+                                Future.delayed(Duration(seconds: 12), () {
+                                  searchText.clear();
+                                });
+                              },
+                        icon: isLoading
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(255, 244, 219, 1),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 5,
+                                  color: Colors.orange,
+                                  backgroundColor:
+                                      Color.fromRGBO(255, 244, 219, 1),
+                                ),
+                              )
+                            : Image.asset(
+                                'assets/icons/sendIcon.png',
+                                color: Colors.orange,
+                              )),
+                  ),
                   border: InputBorder.none,
                   hintText: 'Type your message here...'),
             ),
