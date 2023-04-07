@@ -45,7 +45,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
   TextEditingController searchText = TextEditingController();
 
   var chatData = <ChatResponseModel>[];
-
+  var dataRecivedList = [];
   var currentSSEModel = SSEModel(data: '', id: '', event: '');
   var lineRegex = RegExp(r'^([^:]*)(?::)?(?: )?(.*)?$');
 
@@ -55,7 +55,8 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 
   int? selectedIndex;
   String? selectedList;
-  bool isFirstChatAnimated = true;
+  // bool isFirstChatAnimated = true;
+  bool animationCompleted = false;
 
   String note =
       'Note: The answer may not be factually correct. Please do your own research before taking any action.';
@@ -191,7 +192,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                             .toString()
                             .replaceAll(' ]', '.'),
                         messageType: MessageType.reciver));
-                    print('Data==>${chatData}');
+
                     currentSSEModel.data = '';
 
                     isLoading = false;
@@ -345,17 +346,23 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                           DefaultTextStyle(
                                               style: TextStyle(
                                                   color: Colors.black),
-                                              child: AnimatedTextKit(
-                                                  isRepeatingAnimation: false,
-                                                  repeatForever: false,
-                                                  displayFullTextOnTap: true,
-                                                  totalRepeatCount: 0,
-                                                  animatedTexts: [
-                                                    // TyperAnimatedText(''),
-                                                    TyperAnimatedText(
-                                                        data.message),
-                                                  ])),
-                                          // Text(data.message),
+                                              child: chatData[index].isAnimated
+                                                  ? Text(data.message)
+                                                  : AnimatedTextKit(
+                                                      isRepeatingAnimation:
+                                                          false,
+                                                      repeatForever: false,
+                                                      displayFullTextOnTap:
+                                                          false,
+                                                      totalRepeatCount: 0,
+                                                      onFinished: () {
+                                                        chatData[index]
+                                                            .isAnimated = true;
+                                                      },
+                                                      animatedTexts: [
+                                                          TyperAnimatedText(
+                                                              data.message),
+                                                        ])),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 12),
@@ -522,8 +529,12 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 class ChatResponseModel {
   var message = '';
   MessageType messageType = MessageType.sender;
+  bool isAnimated;
 
-  ChatResponseModel({required this.message, required this.messageType});
+  ChatResponseModel(
+      {required this.message,
+      required this.messageType,
+      this.isAnimated = false});
 }
 
 enum MessageType { sender, reciver }
