@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -23,21 +20,13 @@ class ChatAIScreen extends StatefulWidget {
 
 class _ChatAIScreenState extends State<ChatAIScreen>
     with SingleTickerProviderStateMixin {
-  StreamController<SSEModel> streamController = StreamController();
   var chatData = <ChatResponseModel>[];
 
   @override
   void initState() {
-    // streamController = StreamController.broadcast();
-    // streamController.stream.listen((v) {
-    //   setState(() {
-    //     // chatData.add(v.data!.split(''));
-    //   });
-    // });
-
     setState(() {
       chatData.add(ChatResponseModel(
-          isAnimated: true,
+          isDone: true,
           message:
               "Radhey Radhey, I am Gita AI, a repository of knowledge and wisdom. Allow me to assist you by answering any inquiries you may have. Ask me anything.",
           messageType: MessageType.reciver));
@@ -54,23 +43,13 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 
   http.Client? _client;
   TextEditingController searchText = TextEditingController();
+  StreamController<String> streamController =
+      StreamController<String>.broadcast();
 
   var currentSSEModel = SSEModel(data: '', id: '', event: '');
   var lineRegex = RegExp(r'^([^:]*)(?::)?(?: )?(.*)?$');
 
-  ScrollController controller = ScrollController();
-
-  final TextEditingController _textController = TextEditingController();
-  final StreamController<String> _wordStreamController =
-      StreamController<String>();
-
-  void _processInput() {
-    String input = _textController.text.trim();
-    List<String> words = input.split(" ");
-    for (String word in words) {
-      _wordStreamController.add(word);
-    }
-  }
+  ScrollController scrollController = ScrollController();
 
   bool isLoading = false;
 
@@ -90,11 +69,12 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 
   addList() {
     chatData.add(ChatResponseModel(
-        message: searchText.value.text, messageType: MessageType.sender));
+        message: searchText.value.text,
+        messageType: MessageType.sender,
+        isDone: true));
   }
 
-  subscribe() async {
-    print("Subscribing..");
+  subscribe() {
     setState(() {
       isLoading = true;
     });
@@ -115,132 +95,152 @@ class _ChatAIScreenState extends State<ChatAIScreen>
       });
 
       Future<http.StreamedResponse> response = _client!.send(request);
-      currentSSEModel.data = '';
-      response.asStream().listen((data) async {
+
+      response.asStream().listen((data) {
         data.stream
           ..transform(Utf8Decoder()).transform(LineSplitter()).listen(
-            (dataLine) {
-              if (dataLine.isEmpty) {
-                streamController.add(currentSSEModel);
+              (dataLine) {
+            if (dataLine.isEmpty) {
+              streamController.sink
+                  .add(currentSSEModel.data.toString().replaceAll(']', ''));
 
-                return;
-              }
+              return;
+            }
 
-              Match match = lineRegex.firstMatch(dataLine)!;
-              var field = match.group(1);
+            Match match = lineRegex.firstMatch(dataLine)!;
+            var field = match.group(1);
 
-              if (field!.isEmpty) {
-                return;
-              }
-              var value = '';
-              if (field == 'data') {
-                value = dataLine.substring(5);
-              } else {
-                value = match.group(2) ?? '';
-              }
+            // if (field!.isEmpty) {
+            //   return;
+            // }
+            var value = '';
+            if (field == 'data') {
+              value = dataLine.substring(5);
+            } else {
+              value = match.group(2) ?? '';
+            }
 
-              switch (field) {
-                case 'event':
-                  currentSSEModel.event = value;
-
-                  break;
-                case 'data':
-                  currentSSEModel.data = (currentSSEModel.data!
-                              .replaceAll("  ", " ")
-                              .replaceAll(" ,", ",")
-                              .replaceAll(" !", "!")
-                              .replaceAll('..', '.')
-                              .replaceAll(" . .", ".")
-                              .replaceAll('.,. ', '')
-                              .replaceAll(" .", ".")
-                              .replaceAll(',,,', '')
-                              .replaceAll('sur rends ers', 'surrendsers')
-                              .replaceAll('VERS ES', 'VERSES')
-                              .replaceAll('K rish na', 'Krishna')
-                              .replaceAll('Y og', 'Yog')
-                              .replaceAll('K unt i', 'Kunti')
-                              .replaceAll('real ization', 'realization')
-                              .replaceAll('Ar j una', 'Arjuna')
-                              .replaceAll('Y ud h ish th ira', 'Yudhishthira')
-                              .replaceAll('K uru ks het ra', 'Kurukshetra')
-                              .replaceAll('Dh rit ar ashtra', 'Dhritarashtra')
-                              .replaceAll('Mah ab har ata', 'Mahabharata')
-                              .replaceAll('Nam aste', 'Namaste')
-                              .replaceAll('Rad hey', 'Radhey'))
-                          .replaceAll('D hy ana', 'Dhyana')
-                          .replaceAll('dh arma', 'dharma')
-                          .replaceAll('K sh atri ya', 'Kshatriya')
-                          .replaceAll('Bh ag av ad', 'Bhagavad')
-                          .replaceAll('G ita', 'Gita')
-                          .replaceAll('Hindu ism', 'Hinduism')
-                          .replaceAll('Bh ima', 'Bhima')
-                          .replaceAll('Y ud h ishth ira', 'Yudhishthira')
-                          .replaceAll('Nak ula', 'Nakula')
-                          .replaceAll('Sah adeva', 'Sahadeva')
-                          .replaceAll('Pand u', 'Pandu')
-                          .replaceAll('Pand av', 'Pandav')
-                          .replaceAll('K aur av as', 'Kauravas')
-                          .replaceAll('Dh rit ashtra', 'Dhritashtra')
-                          .replaceAll('Ved as', 'Vedas')
-                          .replaceAll('D ury od h ana', 'Duryodhana')
-                          .replaceAll('K uru', 'Kuru')
-                          .replaceAll(RegExp('[^A-Za-z,.?!]'), " ")
-                          .trim() +
-                      value +
-                      '\n';
-
-                  log('dataFromModel==>${currentSSEModel.data}');
-
-                  break;
-                case 'id':
-                  currentSSEModel.id = value;
-
-                  break;
-                case 'retry':
-                  break;
-              }
-
-              Future.delayed(Duration(seconds: 5), () {
-                controller.animateTo(
-                  controller.position.maxScrollExtent,
-                  curve: Curves.ease,
-                  duration: const Duration(milliseconds: 100),
-                );
-                if (currentSSEModel.data != '') {
+            switch (field) {
+              case 'event':
+                currentSSEModel.event = value;
+                debugPrint('Event call');
+                if (isLoading) {
                   setState(() {
-                    // String input = currentSSEModel.data.toString().trim();
-
-                    // for (String word in input.split('')) {
-                    //   print('before==$word');
-
-                    //   chatData.add(ChatResponseModel(
-                    //       message: word.toString().replaceAll(' ]', '.'),
-                    //       messageType: MessageType.reciver));
-                    // }
-
-                    chatData.add(ChatResponseModel(
-                        message: currentSSEModel.data
-                            .toString()
-                            .replaceAll(' ]', '.'),
-                        messageType: MessageType.reciver));
-
-                    currentSSEModel.data = '';
-
                     isLoading = false;
                   });
                 }
+                break;
+              case 'data':
+                currentSSEModel.data = (currentSSEModel.data!
+                            .replaceAll("  ", " ")
+                            .replaceAll(" ,", ",")
+                            .replaceAll(" !", "!")
+                            .replaceAll('..', '.')
+                            .replaceAll(" . .", ".")
+                            .replaceAll('.,. ', '')
+                            .replaceAll(" .", ".")
+                            .replaceAll(',,,', '')
+                            .replaceAll('sur rends ers', 'surrendsers')
+                            .replaceAll('VERS ES', 'VERSES')
+                            .replaceAll('K rish na', 'Krishna')
+                            .replaceAll('Y og', 'Yog')
+                            .replaceAll('K unt i', 'Kunti')
+                            .replaceAll('real ization', 'realization')
+                            .replaceAll('Ar j una', 'Arjuna')
+                            .replaceAll('Y ud h ish th ira', 'Yudhishthira')
+                            .replaceAll('K uru ks het ra', 'Kurukshetra')
+                            .replaceAll('Dh rit ar ashtra', 'Dhritarashtra')
+                            .replaceAll('Mah ab har ata', 'Mahabharata')
+                            .replaceAll('Nam aste', 'Namaste')
+                            .replaceAll('Rad hey', 'Radhey'))
+                        .replaceAll('D hy ana', 'Dhyana')
+                        .replaceAll('dh arma', 'dharma')
+                        .replaceAll('K sh atri ya', 'Kshatriya')
+                        .replaceAll('Bh ag av ad', 'Bhagavad')
+                        .replaceAll('G ita', 'Gita')
+                        .replaceAll('Hindu ism', 'Hinduism')
+                        .replaceAll('Bh ima', 'Bhima')
+                        .replaceAll('Y ud h ishth ira', 'Yudhishthira')
+                        .replaceAll('Nak ula', 'Nakula')
+                        .replaceAll('Sah adeva', 'Sahadeva')
+                        .replaceAll('Pand u', 'Pandu')
+                        .replaceAll('Pand av', 'Pandav')
+                        .replaceAll('K aur av as', 'Kauravas')
+                        .replaceAll('Dh rit ashtra', 'Dhritashtra')
+                        .replaceAll('Ved as', 'Vedas')
+                        .replaceAll('D ury od h ana', 'Duryodhana')
+                        .replaceAll('K uru', 'Kuru')
+                        .replaceAll(RegExp('[^A-Za-z,.?!]'), " ")
+                        .trim() +
+                    value +
+                    '\n';
+
+                ChatResponseModel model = chatData.last;
+                if (model.isDone) {
+                  ChatResponseModel temp = ChatResponseModel(
+                      message: currentSSEModel.data
+                          .toString()
+                          .replaceAll(']', '')
+                          .replaceAll('[', '')
+                          .replaceAll('4', ''),
+                      messageType: MessageType.reciver,
+                      isDone: false);
+                  setState(() {
+                    chatData.add(temp);
+                  });
+                } else {
+                  scrollController.animateTo(
+                    scrollController.position.maxScrollExtent,
+                    curve: Curves.ease,
+                    duration: const Duration(milliseconds: 1),
+                  );
+                  ChatResponseModel temp = ChatResponseModel(
+                      message: currentSSEModel.data
+                          .toString()
+                          .replaceAll(']', '')
+                          .replaceAll('[', '')
+                          .replaceAll('4', ''),
+                      messageType: MessageType.reciver,
+                      isDone: false);
+                  setState(() {
+                    chatData.last = temp;
+                  });
+                }
+                break;
+              case 'id':
+                currentSSEModel.id = value;
+
+                break;
+              case 'retry':
+                break;
+            }
+          }, onError: (e, s) {
+            streamController.addError(e, s);
+          }, onDone: () {
+            scrollController.animateTo(
+              scrollController.position.maxScrollExtent,
+              curve: Curves.ease,
+              duration: const Duration(milliseconds: 1),
+            );
+            setState(() {
+              ChatResponseModel temp = ChatResponseModel(
+                  message: currentSSEModel.data
+                      .toString()
+                      .replaceAll(']', '')
+                      .replaceAll('[', '')
+                      .replaceAll('4', ''),
+                  messageType: MessageType.reciver,
+                  isDone: true);
+              setState(() {
+                chatData.last = temp;
               });
-            },
-            onError: (e, s) {
-              streamController.addError(e, s);
-            },
-          );
+            });
+            currentSSEModel.data = '';
+          });
       });
     } catch (e) {}
 
-    // Future.delayed(Duration(seconds: 0), () {});
-
-    return streamController.stream;
+    return streamController.stream.asBroadcastStream();
   }
 
   unsubscribe() {
@@ -283,7 +283,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: chatData.length,
-                controller: controller,
+                controller: scrollController,
                 scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
@@ -374,44 +374,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          DefaultTextStyle(
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                              child: chatData[index].isAnimated
-                                                  ? Text(
-                                                      data.message,
-                                                      style: TextStyle(
-                                                          fontFamily: 'Inter',
-                                                          color: Color(
-                                                              0xFF111827)),
-                                                    )
-                                                  : AnimatedTextKit(
-                                                      isRepeatingAnimation:
-                                                          false,
-                                                      repeatForever: false,
-                                                      displayFullTextOnTap:
-                                                          false,
-                                                      totalRepeatCount: 0,
-                                                      onFinished: () {
-                                                        chatData[index]
-                                                            .isAnimated = true;
-                                                      },
-                                                      animatedTexts: [
-                                                          TyperAnimatedText(
-                                                              data.message,
-                                                              textStyle: TextStyle(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          17,
-                                                                          24,
-                                                                          39,
-                                                                          1)),
-                                                              speed: Duration(
-                                                                  milliseconds:
-                                                                      15)),
-                                                        ])),
+                                          Text(data.message),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 12),
@@ -516,9 +479,9 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                   ? null
                   : (v) {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      controller.animateTo(
-                        controller.position.maxScrollExtent,
-                        curve: Curves.easeIn,
+                      scrollController.animateTo(
+                        scrollController.position.maxScrollExtent,
+                        curve: Curves.ease,
                         duration: const Duration(milliseconds: 100),
                       );
                       addList();
@@ -526,7 +489,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 
                       subscribe();
 
-                      Future.delayed(Duration(seconds: 12), () {
+                      Future.delayed(Duration(seconds: 2), () {
                         searchText.clear();
                       });
                     },
@@ -560,9 +523,9 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                             ? null
                             : () {
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                controller.animateTo(
-                                  controller.position.maxScrollExtent,
-                                  curve: Curves.easeIn,
+                                scrollController.animateTo(
+                                  scrollController.position.maxScrollExtent,
+                                  curve: Curves.ease,
                                   duration: const Duration(milliseconds: 100),
                                 );
                                 addList();
@@ -570,7 +533,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 
                                 subscribe();
 
-                                Future.delayed(Duration(seconds: 12), () {
+                                Future.delayed(Duration(seconds: 2), () {
                                   searchText.clear();
                                 });
                               },
@@ -607,12 +570,10 @@ class _ChatAIScreenState extends State<ChatAIScreen>
 class ChatResponseModel {
   var message = '';
   MessageType messageType = MessageType.sender;
-  bool isAnimated;
+  bool isDone;
 
   ChatResponseModel(
-      {required this.message,
-      required this.messageType,
-      this.isAnimated = false});
+      {required this.message, required this.messageType, this.isDone = false});
 }
 
 enum MessageType { sender, reciver }
