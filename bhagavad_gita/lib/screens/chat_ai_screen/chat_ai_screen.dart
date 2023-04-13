@@ -500,8 +500,8 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(7.5),
-                        bottomRight: Radius.circular(7.5)),
+                        bottomLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5)),
                     borderSide:
                         BorderSide(color: Colors.grey.shade300), //<-- SEE HERE
                   ),
@@ -509,8 +509,8 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(0.50),
-                        bottomRight: Radius.circular(7.5)),
+                        bottomLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5)),
                     borderSide: BorderSide(color: Colors.grey.shade300),
                   ),
                   contentPadding:
