@@ -351,6 +351,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                       horizontal: 10),
                                   child: Text('Gita AI',
                                       style: TextStyle(
+                                          color: Color.fromRGBO(17, 24, 39, 1),
                                           fontSize: 14,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.bold)),
@@ -374,7 +375,14 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(data.message),
+                                          Text(
+                                            data.message,
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    17, 24, 39, 1),
+                                                fontSize: 14,
+                                                fontFamily: 'Inter'),
+                                          ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 12),
@@ -410,9 +418,10 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                           Text(
                             'Suggestion:',
                             style: TextStyle(
+                                color: Color.fromRGBO(17, 24, 39, 1),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
-                                color: Color.fromRGBO(75, 85, 99, 1)),
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 10,
