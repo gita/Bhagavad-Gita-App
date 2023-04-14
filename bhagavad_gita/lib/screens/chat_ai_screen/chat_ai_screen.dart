@@ -328,7 +328,11 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(data.message),
+                                  child: Text(data.message,
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(17, 24, 39, 1),
+                                          fontSize: 16,
+                                          fontFamily: 'Inter')),
                                 ),
                               ),
                             ),
@@ -380,7 +384,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                             style: TextStyle(
                                                 color: Color.fromRGBO(
                                                     17, 24, 39, 1),
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 fontFamily: 'Inter'),
                                           ),
                                           Padding(
@@ -388,7 +392,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                                                 vertical: 12),
                                             child: Text(
                                               note,
-                                              style: TextStyle(fontSize: 10),
+                                              style: TextStyle(fontSize: 12),
                                             ),
                                           )
                                         ],
