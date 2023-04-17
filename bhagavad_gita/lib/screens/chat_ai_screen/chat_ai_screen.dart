@@ -170,7 +170,20 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                         .replaceAll('Ved as', 'Vedas')
                         .replaceAll('D ury od h ana', 'Duryodhana')
                         .replaceAll('K uru', 'Kuru')
-                        .replaceAll(RegExp('[^A-Za-z,.?!]'), " ")
+                        .replaceAll('pious men', 'piousmen')
+                        .replaceAll('inqu is itive', 'inquisitive')
+                        .replaceAll('dev otional', 'devotional')
+                        .replaceAll('. O', 'O')
+                        .replaceAll('ded icating', 'dedicating')
+                        .replaceAll('ren unciation', 'renunciation')
+                        .replaceAll('fru itive', 'fruitive')
+                        .replaceAll('att ains', 'attains')
+                        .replaceAll('ind est ruct ible', 'indestructible')
+                        .replaceAll('equ anim ity', 'equanimity')
+                        .replaceAll('und ist urbed', 'undisturbed')
+                        .replaceAll('dual ities', 'dualities')
+                        .replaceAll('ego ism', 'egoism')
+                        .replaceAll(RegExp("[^A-Za-z,.?!']"), " ")
                         .trim() +
                     value +
                     '\n';
@@ -404,7 +417,9 @@ class _ChatAIScreenState extends State<ChatAIScreen>
               ),
             ),
             suggestionList.isEmpty
-                ? SizedBox()
+                ? SizedBox(
+                    height: 5,
+                  )
                 : Container(
                     height: height * 0.38,
                     decoration: BoxDecoration(
@@ -507,12 +522,16 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                       });
                     },
               maxLines: null,
-              cursorColor: Colors.orange,
+              cursorColor: Color.fromRGBO(255, 193, 7, 1),
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
+                        topLeft: suggestionList.isEmpty
+                            ? Radius.circular(5)
+                            : Radius.circular(0),
+                        topRight: suggestionList.isEmpty
+                            ? Radius.circular(5)
+                            : Radius.circular(0),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5)),
                     borderSide:
@@ -520,11 +539,16 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
+                        topLeft: suggestionList.isEmpty
+                            ? Radius.circular(5)
+                            : Radius.circular(0),
+                        topRight: suggestionList.isEmpty
+                            ? Radius.circular(5)
+                            : Radius.circular(0),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5)),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(255, 193, 7, 1), width: 1.5),
                   ),
                   contentPadding:
                       EdgeInsets.only(left: 10, bottom: 10, top: 10),
