@@ -183,6 +183,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                         .replaceAll('und ist urbed', 'undisturbed')
                         .replaceAll('dual ities', 'dualities')
                         .replaceAll('ego ism', 'egoism')
+                        .replaceAll('del uded', 'deluded')
                         .replaceAll(RegExp("[^A-Za-z,.?!']"), " ")
                         .trim() +
                     value +
