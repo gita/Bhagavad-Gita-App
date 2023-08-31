@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       theme: ThemeData(
-          accentColor: orangeColor,
+          // accentColor: orangeColor,
           fontFamily: 'Inter',
           textTheme: TextTheme(
             headline1: TextStyle(
@@ -204,13 +204,13 @@ class _MyAppState extends State<MyApp> {
             color: Colors.white,
             elevation: 0,
             titleTextStyle: TextStyle(color: appBarTitleColor),
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                  color: appBarTitleColor,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Inter'),
-            ),
+            // textTheme: TextTheme(
+            //   headline1: TextStyle(
+            //       color: appBarTitleColor,
+            //       fontSize: 26,
+            //       fontWeight: FontWeight.w700,
+            //       fontFamily: 'Inter'),
+            // ),
           ),
           primaryColor: primaryColor,
           scaffoldBackgroundColor: Colors.white),

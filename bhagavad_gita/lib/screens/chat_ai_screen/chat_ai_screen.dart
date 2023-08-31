@@ -533,7 +533,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        centerTitle: false,
+        centerTitle: true,
         backgroundColor: formatingColor.bgColor,
         leading: InkWell(
           onTap: () {
@@ -544,6 +544,7 @@ class _ChatAIScreenState extends State<ChatAIScreen>
                 width: 20, color: formatingColor.naviagationIconColor),
           ),
         ),
+        
         title: Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('bhagvad_gita_chat')
