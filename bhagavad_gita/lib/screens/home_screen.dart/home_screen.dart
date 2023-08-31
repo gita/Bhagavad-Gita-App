@@ -63,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen>
         LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
       }
     });
-      setState(() {
-    LocalNotification.instance.needToShowLastRead.addListener(() {
-      lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
+    setState(() {
+      LocalNotification.instance.needToShowLastRead.addListener(() {
+        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
       });
     });
- 
+
     print("selected language : $langauge");
   }
 
@@ -78,6 +78,30 @@ class _HomeScreenState extends State<HomeScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: darkOrangeColor,
+        onPressed: () {
+          navigationService.pushNamed(
+            r_Gitachat,
+          );
+        },
+        child: const Icon(
+          Icons.message,
+          color: Colors.white,
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      // navigationService.pushNamed(
+      //   r_Gitachat,
+      // );
+      //   },
+      //   label: Text(''),
+      //   icon: Icon(
+      // Icons.message,
+      // color: Colors.white,
+      //   ),
+      // ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -88,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen>
               DemoLocalization.of(context)!
                   .getTranslatedValue('bhagvad_gita')
                   .toString(),
-              style: AppBarTheme.of(context).textTheme!.headline1,
+              // style: AppBarTheme.of(context).textTheme!.headline1,
             ),
           ),
           Spacer(),
@@ -133,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ? Center(
                       child: Text(
                         'connect to internet',
-                        style: AppBarTheme.of(context).textTheme!.headline1,
+                        // style: AppBarTheme.of(context).textTheme!.headline1,
                       ),
                     )
                   : SingleChildScrollView(

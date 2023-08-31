@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/chapter_detail/chapter_detail_screen.dart';
 import 'package:bhagavad_gita/screens/chapter_detail/chapter_tableview.dart';
+import 'package:bhagavad_gita/screens/chat_ai_screen/chat_ai_screen.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/about_gita_page.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/home_screen.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/quotes_page.dart';
@@ -92,6 +93,11 @@ class AppRouter {
         return _getPageRoute(
           routeName: settings.name!,
           viewToShow: VerseCommentaryScreen(),
+        );
+      case r_Gitachat:
+        return _getPageRoute(
+          routeName: settings.name!,
+          viewToShow: ChatAIScreen(),
         );
       default:
         print('Route Name : ${settings.name}');
