@@ -22,7 +22,7 @@ dependencies:
   get_it: ^7.2.0
   graphql_flutter: ^5.0.0
   in_app_review: ^2.0.6
-  intl: ^0.17.0
+  intl: ^0.18.1
   list_tile_switch: ^1.0.0
   percent_indicator: ^4.2.2
   share: ^2.0.4
@@ -80,11 +80,11 @@ flutter:
           weight: 500
     - family: Arial
       fonts:
-        - asset: fonts/Arial-Regular.ttf
+        - asset: fonts/Arial-Regular.TTF
           weight: 400
-        - asset: fonts/Arial-Black.ttf
+        - asset: fonts/Arial-Black.TTF
           weight: 700
-        - asset: fonts/Arial-Bold.ttf
+        - asset: fonts/Arial-Bold.TTF
           weight: 600
         - asset: fonts/Arial-Medium.ttf
           weight: 500

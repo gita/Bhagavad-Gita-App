@@ -75,7 +75,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -112,7 +112,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                           children: [
                             Text(
                               listTranslationResponseModel[index].title ?? "",
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
                         ),

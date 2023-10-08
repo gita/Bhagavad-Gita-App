@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 
 import 'package:bhagavad_gita/Constant/app_colors.dart';
@@ -16,13 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+
+// import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 ///// firbase push notification in Background
-Future<void> onBackgroundMessage(RemoteMessage message) async {
-  
-}
+Future<void> onBackgroundMessage(RemoteMessage message) async {}
 
 ///// Android notification channel
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -31,23 +28,20 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
- IOSNotificationDetails _iosNotificationDetails = IOSNotificationDetails(
+IOSNotificationDetails _iosNotificationDetails = IOSNotificationDetails(
     presentAlert: false,
     presentBadge: false,
     presentSound: true,
-    subtitle: "", 
-        threadIdentifier: ""
-  );
-
+    subtitle: "",
+    threadIdentifier: "");
 
 enableIOSNotifications() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
-      badge: true,
-      sound: true,
-    );
-  }
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
+}
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -57,11 +51,10 @@ Future<void> main() async {
 
   //// firebase initialized
   await Firebase.initializeApp();
-  if(Platform.isIOS){
+  if (Platform.isIOS) {
     await enableIOSNotifications();
   }
-  
-  
+
   //// firebase subscribeTopic
   await FirebaseMessaging.instance.subscribeToTopic('Bhagavad-gita-app');
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
@@ -70,7 +63,7 @@ Future<void> main() async {
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-      await flutterLocalNotificationsPlugin
+  await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           IOSFlutterLocalNotificationsPlugin>()
       ?.requestPermissions(
@@ -111,16 +104,16 @@ class _MyAppState extends State<MyApp> {
     });
 
     void requestIOSPermissions(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
-  flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-}
+        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    }
   }
 
   @override
@@ -128,7 +121,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     //// firebase forground notification
 
-final AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_notification');
+    final AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_notification');
     var iOSSettings = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
@@ -136,10 +130,11 @@ final AndroidInitializationSettings initializationSettingsAndroid = AndroidIniti
     );
 
     final InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid, iOS: iOSSettings);
+        InitializationSettings(
+            android: initializationSettingsAndroid, iOS: iOSSettings);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (message) async {
-          print("message-----$message");
+      print("message-----$message");
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -187,32 +182,42 @@ final AndroidInitializationSettings initializationSettingsAndroid = AndroidIniti
         return supportedLocales.first;
       },
       theme: ThemeData(
-          accentColor: orangeColor,
+          hintColor: orangeColor,
           fontFamily: 'Inter',
           textTheme: TextTheme(
-            headline1: TextStyle(
+            displayLarge: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 26,
                 fontWeight: FontWeight.w700),
-            headline2: TextStyle(
+            displayMedium: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
-            subtitle1: TextStyle(
+            titleMedium: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w400),
           ),
+          // appBarTheme: AppBarTheme(
+          //   color: Colors.white,
+          //   elevation: 0,
+          //   titleTextStyle: TextStyle(color: appBarTitleColor),
+          //   textTheme: TextTheme(
+          //     headline1: TextStyle(
+          //         color: appBarTitleColor,
+          //         fontSize: 26,
+          //         fontWeight: FontWeight.w700,
+          //         fontFamily: 'Inter'),
+          //   ),
+          // ),
           appBarTheme: AppBarTheme(
-            color: Colors.white,
             elevation: 0,
-            titleTextStyle: TextStyle(color: appBarTitleColor),
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                  color: appBarTitleColor,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Inter'),
+            backgroundColor: Colors.white,
+            titleTextStyle: TextStyle(
+              color: appBarTitleColor,
+              fontFamily: 'Inter',
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
             ),
           ),
           primaryColor: primaryColor,

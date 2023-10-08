@@ -52,43 +52,43 @@ class _ContinueReadingState extends State<ContinueReading> {
   String fontFamily = 'Inter';
   double fontSize = 18;
   FormatingColor formatingColor = whiteFormatingColor;
-  Color audioBottoSheetColor=Colors.white;
-  Color textColor= Colors.black;
+  Color audioBottoSheetColor = Colors.white;
+  Color textColor = Colors.black;
   late VerseCustomissation verseCustomissation;
 
   bool showTraliteration = true;
   bool showTranslation = true;
   bool showCommentry = true;
   late ScrollController _hideButtomController;
-  final audioPlayer =AudioPlayer();
-  int chapterNumber=0;
-  int verseNumber=0;
-  bool isPlay =false;
-  Duration audioDuration=Duration.zero;
-  Duration audioPlayedDuration=Duration.zero;
+  final audioPlayer = AudioPlayer();
+  int chapterNumber = 0;
+  int verseNumber = 0;
+  bool isPlay = false;
+  Duration audioDuration = Duration.zero;
+  Duration audioPlayedDuration = Duration.zero;
   AnimationController? animationController;
   @override
   void initState() {
     super.initState();
-    audioPlayer.onPlayerStateChanged.listen((state){
+    audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
-        isPlay=state==PlayerState.playing;
+        isPlay = state == PlayerState.playing;
       });
-      });
+    });
 
     audioPlayer.onDurationChanged.listen((newDuration) {
       if (mounted) {
         setState(() {
-        audioDuration=newDuration;
-      });
+          audioDuration = newDuration;
+        });
       }
     });
 
     audioPlayer.onPositionChanged.listen((event) {
       if (mounted) {
         setState(() {
-          audioPlayedDuration=event;
-      });
+          audioPlayedDuration = event;
+        });
       }
     });
 
@@ -99,22 +99,24 @@ class _ContinueReadingState extends State<ContinueReading> {
       _isVisible = true;
       _hideButtomController = new ScrollController();
       _hideButtomController.addListener(() {
-        if (_hideButtomController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
-          if (_isVisible)
-            setState(() {
-              _isVisible = false;
-              print("**** $_isVisible up");
-            });
-        }
-        if (_hideButtomController.position.userScrollDirection ==
-            ScrollDirection.forward) {
-          if (!_isVisible)
-            setState(() {
-              _isVisible = true;
-              print("**** $_isVisible down");
-            });
-        }
+        // if (_hideButtomController.position.userScrollDirection ==ScrollDirection.reverse) {
+        //   if (_isVisible)
+        //     setState(() {
+        //       _isVisible = false;
+        //       print("**** $_isVisible up");
+        //     });
+        // }
+        // if (_hideButtomController.position.userScrollDirection ==ScrollDirection.forward) {
+        //   if (!_isVisible)
+        //     setState(() {
+        //       _isVisible = true;
+        //       print("**** $_isVisible down");
+        //     });
+        // }
+        setState(() {
+          _isVisible = _hideButtomController.position.userScrollDirection == ScrollDirection.forward ||
+              _hideButtomController.position.pixels == _hideButtomController.position.maxScrollExtent;
+        });
       });
     });
 
@@ -130,7 +132,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           formatingColor = orangeFormatingColor;
         } else if (value.colorId == "3") {
           formatingColor = blackFormatingColor;
-          audioBottoSheetColor=Color(0xff606368);
+          audioBottoSheetColor = Color(0xff606368);
         }
       });
     });
@@ -143,6 +145,7 @@ class _ContinueReadingState extends State<ContinueReading> {
     audioPlayer.dispose();
     super.dispose();
   }
+
   getAllToggelValueFormShowingContent() {
     SharedPref.getSavedBoolValue(PreferenceConstant.verseTransliterationSetting)
         .then((value) {
@@ -220,8 +223,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   changeVersePage() {
     setState(() {
       versId = versId + 1;
-      audioPlayedDuration=Duration.zero;
-      audioDuration=Duration.zero;
+      audioPlayedDuration = Duration.zero;
+      audioDuration = Duration.zero;
       getVersDetails();
     });
   }
@@ -229,8 +232,8 @@ class _ContinueReadingState extends State<ContinueReading> {
   reverschangeVersePage() {
     setState(() {
       versId = versId - 1;
-      audioPlayedDuration=Duration.zero;
-      audioDuration=Duration.zero;
+      audioPlayedDuration = Duration.zero;
+      audioDuration = Duration.zero;
       getVersDetails();
     });
   }
@@ -248,351 +251,169 @@ class _ContinueReadingState extends State<ContinueReading> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: false,
-        backgroundColor: formatingColor.bgColor,
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pop(true);
-          },
-          child: Center(
-            child: SvgPicture.asset("assets/icons/icon_back_arrow.svg",
-                width: 20, color: formatingColor.naviagationIconColor),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                print('Bottom Navigation Menu');
-                _onPressedEditButton(context);
-              });
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          backgroundColor: formatingColor.bgColor,
+          leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop(true);
             },
-            child: Text(
-              StringConstant.strAa,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w100,
-                  color: formatingColor.naviagationIconColor),
+            child: Center(
+              child: SvgPicture.asset("assets/icons/icon_back_arrow.svg",
+                  width: 20, color: formatingColor.naviagationIconColor),
             ),
           ),
-          SizedBox(
-            width: kPadding,
-          ),
-          InkWell(
-            onTap: () async {
-              var temp = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingScreen(
-                    refresh: () {
-                      getAllToggelValueFormShowingContent();
-                      setState(() {
-                        getVersDetails();
-                      });
-                    },
-                  ),
-                ),
-              );
-              if (temp) {
-                getAllToggelValueFormShowingContent();
+          actions: [
+            TextButton(
+              onPressed: () {
                 setState(() {
-                  getVersDetails();
+                  print('Bottom Navigation Menu');
+                  _onPressedEditButton(context);
                 });
-              }
-            },
-            child: Container(
-              width: 40,
-              child: Center(
-                child: SvgPicture.asset('assets/icons/icon_setting_nonsele.svg',
+              },
+              child: Text(
+                StringConstant.strAa,
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100,
                     color: formatingColor.naviagationIconColor),
               ),
             ),
-          ),
-          SizedBox(
-            width: kDefaultPadding,
-          )
-        ],
-      ),
-      backgroundColor: formatingColor.bgColor,
-      body: GraphQLProvider(
-        client: client,
-        child: SafeArea(
-          child: Stack(
-            children: [
-              Container(
-                height: height,
-                child: SingleChildScrollView(
-                  controller: _hideButtomController,
-                  child: Query(
-                    options: QueryOptions(document: gql(verseDetailQuery)),
-                    builder: (
-                      QueryResult result, {
-                      Refetch? refetch,
-                      FetchMore? fetchMore,
-                    }) {
-                      if (result.hasException) {
-                        print("ERROR : ${result.exception.toString()}");
-                      }
-                      if (result.data == null) {
-                        return Container(
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: primaryColor,
-                              strokeWidth: 2,
+            SizedBox(
+              width: kPadding,
+            ),
+            InkWell(
+              onTap: () async {
+                var temp = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(
+                      refresh: () {
+                        getAllToggelValueFormShowingContent();
+                        setState(() {
+                          getVersDetails();
+                        });
+                      },
+                    ),
+                  ),
+                );
+                if (temp) {
+                  getAllToggelValueFormShowingContent();
+                  setState(() {
+                    getVersDetails();
+                  });
+                }
+              },
+              child: Container(
+                width: 40,
+                child: Center(
+                  child: SvgPicture.asset(
+                      'assets/icons/icon_setting_nonsele.svg',
+                      color: formatingColor.naviagationIconColor),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: kDefaultPadding,
+            )
+          ],
+        ),
+        backgroundColor: formatingColor.bgColor,
+        body: GraphQLProvider(
+          client: client,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Container(
+                  height: height,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    controller: _hideButtomController,
+                    child: Query(
+                      options: QueryOptions(document: gql(verseDetailQuery)),
+                      builder: (
+                        QueryResult result, {
+                        Refetch? refetch,
+                        FetchMore? fetchMore,
+                      }) {
+                        if (result.hasException) {
+                          print("ERROR : ${result.exception.toString()}");
+                        }
+                        if (result.data == null) {
+                          return Container(
+                            height: 200,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: primaryColor,
+                                strokeWidth: 2,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                      print("SSSSSS : ${result.data}");
-                      Map<String, dynamic>? verse = result.data;
-                      VerseDetailData data = VerseDetailData.fromJson(verse!);
-                      if (data.gitaVerseById == null) {
-                        return Container();
-                      }
-                      lastReadVerse = LastReadVerse(
-                          verseID: "$versId",
-                          gitaVerseById: data.gitaVerseById!);
-                      //SharedPref.saveLastRead(lastReadVerse!);
-                      LocalNotification.instance
-                          .setNeedToShowLastRead(lastReadVerse!);
-                          chapterNumber=data.gitaVerseById!.chapterNumber??0;
-                          verseNumber=data.gitaVerseById!.verseNumber??0;
-                      return Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: kDefaultPadding,
-                            ),
-                            Text(
-                                "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        fontFamily: fontFamily,
-                                        fontSize: fontSize + 5,
-                                        color: formatingColor.textColor)),
-                            SizedBox(
-                              height: kDefaultPadding,
-                            ),
-                            Text(
-                              "${data.gitaVerseById!.text}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: fontFamily,
-                                  color: Color(0xffd97706),
-                                  fontSize: fontSize + 2,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(height: kDefaultPadding * 1.5),
-                            showTraliteration
-                                ? Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: 7),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                    'transliteration')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontFamily: fontFamily,
-                                                  fontSize: (Localizations
-                                                                  .localeOf(
-                                                                      context)
-                                                              .languageCode ==
-                                                          'hi')
-                                                      ? fontSize + 2
-                                                      : fontSize - 2,
-                                                  color:
-                                                      formatingColor.textColor,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                          ),
-                                          SizedBox(width: 7),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        "${data.gitaVerseById!.transliteration}",
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                fontSize:
-                                                    (Localizations.localeOf(
-                                                                    context)
-                                                                .languageCode ==
-                                                            'hi')
-                                                        ? fontSize + 2
-                                                        : fontSize,
-                                                fontStyle: FontStyle.italic,
-                                                height: lineSpacing,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: 7),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                    'word_meanings')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontFamily: fontFamily,
-                                                  fontSize: (Localizations
-                                                                  .localeOf(
-                                                                      context)
-                                                              .languageCode ==
-                                                          'hi')
-                                                      ? fontSize + 2
-                                                      : fontSize - 2,
-                                                  color:
-                                                      formatingColor.textColor,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                          ),
-                                          SizedBox(width: 7),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        "${data.gitaVerseById!.wordMeanings}",
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                fontSize:
-                                                    (Localizations.localeOf(
-                                                                    context)
-                                                                .languageCode ==
-                                                            'hi')
-                                                        ? fontSize + 2
-                                                        : fontSize,
-                                                height: lineSpacing,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                      SizedBox(height: kDefaultPadding * 1.5)
-                                    ],
-                                  )
-                                : Text(''),
-                            showTranslation
-                                ? Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue(
-                                                    'translation')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                  fontFamily: fontFamily,
-                                                  fontSize: (Localizations
-                                                                  .localeOf(
-                                                                      context)
-                                                              .languageCode ==
-                                                          'hi')
-                                                      ? fontSize + 2
-                                                      : fontSize - 2,
-                                                  color:
-                                                      formatingColor.textColor,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                          ),
-                                          SizedBox(width: kDefaultPadding),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(height: kDefaultPadding),
-                                      Text(
-                                        data
-                                                    .gitaVerseById!
-                                                    .gitaTranslationsByVerseId!
-                                                    .nodes!
-                                                    .length >
-                                                0
-                                            ? data
-                                                .gitaVerseById!
-                                                .gitaTranslationsByVerseId!
-                                                .nodes![0]
-                                                .description!
-                                            : "---",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                height: lineSpacing,
-                                                fontSize:
-                                                    (Localizations.localeOf(
-                                                                    context)
-                                                                .languageCode ==
-                                                            'hi')
-                                                        ? fontSize + 2
-                                                        : fontSize,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                    ],
-                                  )
-                                : Text(''),
-                            showCommentry
-                                ? Column(
-                                    children: [
-                                      SizedBox(height: kDefaultPadding * 1.5),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_left_rtansection.svg"),
-                                          SizedBox(width: kDefaultPadding),
-                                          Text(
-                                            DemoLocalization.of(context)!
-                                                .getTranslatedValue('commentry')
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
+                          );
+                        }
+                        print("SSSSSS : ${result.data}");
+                        Map<String, dynamic>? verse = result.data;
+                        VerseDetailData data = VerseDetailData.fromJson(verse!);
+                        if (data.gitaVerseById == null) {
+                          return Container();
+                        }
+                        lastReadVerse = LastReadVerse(
+                            verseID: "$versId",
+                            gitaVerseById: data.gitaVerseById!);
+                        //SharedPref.saveLastRead(lastReadVerse!);
+                        LocalNotification.instance
+                            .setNeedToShowLastRead(lastReadVerse!);
+                        chapterNumber = data.gitaVerseById!.chapterNumber ?? 0;
+                        verseNumber = data.gitaVerseById!.verseNumber ?? 0;
+                        return Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Text(
+                                  "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(
+                                          fontFamily: fontFamily,
+                                          fontSize: fontSize + 5,
+                                          color: formatingColor.textColor)),
+                              SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Text(
+                                "${data.gitaVerseById!.text}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: fontFamily,
+                                    color: Color(0xffd97706),
+                                    fontSize: fontSize + 2,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(height: kDefaultPadding * 1.5),
+                              showTraliteration
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: 7),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'transliteration')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
                                                     fontFamily: fontFamily,
                                                     fontSize: (Localizations
                                                                     .localeOf(
@@ -603,300 +424,496 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                         : fontSize - 2,
                                                     color: formatingColor
                                                         .textColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                          SizedBox(width: kDefaultPadding),
-                                          SvgPicture.asset(
-                                              "assets/icons/icon_right_translation.svg")
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Text(
-                                        data
-                                                    .gitaVerseById!
-                                                    .gitaCommentariesByVerseId!
-                                                    .nodes!
-                                                    .length >
-                                                0
-                                            ? data
-                                                .gitaVerseById!
-                                                .gitaCommentariesByVerseId!
-                                                .nodes![0]
-                                                .description!
-                                            : "---",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .copyWith(
-                                                height: lineSpacing,
-                                                fontSize:
-                                                    (Localizations.localeOf(
-                                                                    context)
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: 7),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          "${data.gitaVerseById!.transliteration}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  fontStyle: FontStyle.italic,
+                                                  height: lineSpacing,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: 7),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'word_meanings')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                    fontFamily: fontFamily,
+                                                    fontSize: (Localizations
+                                                                    .localeOf(
+                                                                        context)
                                                                 .languageCode ==
                                                             'hi')
                                                         ? fontSize + 2
-                                                        : fontSize,
-                                                color: formatingColor.textColor,
-                                                fontFamily: fontFamily),
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            SizedBox(height: kDefaultPadding * 5),
-                          ],
-                        ),
-                      );
-                    },
+                                                        : fontSize - 2,
+                                                    color: formatingColor
+                                                        .textColor,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: 7),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          "${data.gitaVerseById!.wordMeanings}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  height: lineSpacing,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                        SizedBox(height: kDefaultPadding * 1.5)
+                                      ],
+                                    )
+                                  : Text(''),
+                              showTranslation
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'translation')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                    fontFamily: fontFamily,
+                                                    fontSize: (Localizations
+                                                                    .localeOf(
+                                                                        context)
+                                                                .languageCode ==
+                                                            'hi')
+                                                        ? fontSize + 2
+                                                        : fontSize - 2,
+                                                    color: formatingColor
+                                                        .textColor,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(height: kDefaultPadding),
+                                        Text(
+                                          data
+                                                      .gitaVerseById!
+                                                      .gitaTranslationsByVerseId!
+                                                      .nodes!
+                                                      .length >
+                                                  0
+                                              ? data
+                                                  .gitaVerseById!
+                                                  .gitaTranslationsByVerseId!
+                                                  .nodes![0]
+                                                  .description!
+                                              : "---",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                                  height: lineSpacing,
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                      ],
+                                    )
+                                  : Text(''),
+                              showCommentry
+                                  ? Column(
+                                      children: [
+                                        SizedBox(height: kDefaultPadding * 1.5),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_left_rtansection.svg"),
+                                            SizedBox(width: kDefaultPadding),
+                                            Text(
+                                              DemoLocalization.of(context)!
+                                                  .getTranslatedValue(
+                                                      'commentry')
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                      fontFamily: fontFamily,
+                                                      fontSize: (Localizations
+                                                                      .localeOf(
+                                                                          context)
+                                                                  .languageCode ==
+                                                              'hi')
+                                                          ? fontSize + 2
+                                                          : fontSize - 2,
+                                                      color: formatingColor
+                                                          .textColor,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                            ),
+                                            SizedBox(width: kDefaultPadding),
+                                            SvgPicture.asset(
+                                                "assets/icons/icon_right_translation.svg")
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: kDefaultPadding,
+                                        ),
+                                        Text(
+                                          data
+                                                      .gitaVerseById!
+                                                      .gitaCommentariesByVerseId!
+                                                      .nodes!
+                                                      .length >
+                                                  0
+                                              ? data
+                                                  .gitaVerseById!
+                                                  .gitaCommentariesByVerseId!
+                                                  .nodes![0]
+                                                  .description!
+                                              : "---",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                                  height: lineSpacing,
+                                                  fontSize: (Localizations
+                                                                  .localeOf(
+                                                                      context)
+                                                              .languageCode ==
+                                                          'hi')
+                                                      ? fontSize + 2
+                                                      : fontSize,
+                                                  color:
+                                                      formatingColor.textColor,
+                                                  fontFamily: fontFamily),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                              SizedBox(height: kDefaultPadding * 5),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              versId == 1
-                  ? Container()
-                  : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 69,
-                      left: kDefaultPadding,
-                      child: _isVisible
-                          ? AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: editBoxBorderColor,
-                                      blurRadius: 10,
-                                    )
-                                  ],
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  shape: CircleBorder(),
-                                  clipBehavior: Clip.hardEdge,
-                                  child: InkWell(
-                                    onTap: () {
-                                      versId == 1
-                                          ? versId = 1
-                                          : reverschangeVersePage();
-                                          audioPlayer.stop();
-                                    },
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/icon_slider_verse.svg",
+                versId == 1
+                    ? Container()
+                    : Positioned(
+                        top: MediaQuery.of(context).size.height / 100 * 69,
+                        left: kDefaultPadding,
+                        child: _isVisible
+                            ? AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: editBoxBorderColor,
+                                        blurRadius: 10,
+                                      )
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    shape: CircleBorder(),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: InkWell(
+                                      onTap: () {
+                                        versId == 1
+                                            ? versId = 1
+                                            : reverschangeVersePage();
+                                        audioPlayer.stop();
+                                      },
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          "assets/icons/icon_slider_verse.svg",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Container(),
-                    ),
-              versId == 701
-                  ? Container()
-                  : Positioned(
-                      top: MediaQuery.of(context).size.height / 100 * 69,
-                      right: kDefaultPadding,
-                      child: _isVisible
-                          ? AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: editBoxBorderColor,
-                                      blurRadius: 10,
-                                    )
-                                  ],
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  shape: CircleBorder(),
-                                  clipBehavior: Clip.hardEdge,
-                                  child: InkWell(
-                                    onTap: () {
-                                      changeVersePage();
-                                      audioPlayer.stop();
-                                    },
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/Icon_slider_verseNext.svg",
+                              )
+                            : Container(),
+                      ),
+                versId == 701
+                    ? Container()
+                    : Positioned(
+                        top: MediaQuery.of(context).size.height / 100 * 69,
+                        right: kDefaultPadding,
+                        child: _isVisible
+                            ? AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: editBoxBorderColor,
+                                        blurRadius: 10,
+                                      )
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    shape: CircleBorder(),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: InkWell(
+                                      onTap: () {
+                                        changeVersePage();
+                                        audioPlayer.stop();
+                                      },
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          "assets/icons/Icon_slider_verseNext.svg",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Container(),
-                    )
-            ],
+                              )
+                            : Container(),
+                      )
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 200),
-          height: _isVisible ? 48.0 : 0.0,
-          child: _isVisible
-              ? BottomAppBar(
-                  elevation: 0,
-                  child: Container(
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              navigationService.pushNamed(r_ChapterTableView);
-                            },
-                            child: Container(
-                              child: Center(
-                                child: SvgPicture.asset(
-                                    "assets/icons/Icon_menu_bottom.svg"),
+        bottomNavigationBar: SafeArea(
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            height: _isVisible ? 48.0 : 0.0,
+            child: _isVisible
+                ? BottomAppBar(
+                    elevation: 0,
+                    child: Container(
+                      height: 48,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                navigationService.pushNamed(r_ChapterTableView);
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                      "assets/icons/Icon_menu_bottom.svg"),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              shareVerse();
-                            },
-                            child: Container(
-                              child: Center(
-                                child: SvgPicture.asset(
-                                    "assets/icons/Icon_shear_bottom.svg"),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                shareVerse();
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                      "assets/icons/Icon_shear_bottom.svg"),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () async {
-                              if (verseNotes == null) {
-                                VerseNotes temp = VerseNotes(
-                                    verseID: "$versId",
-                                    gitaVerseById: lastReadVerse!.gitaVerseById,
-                                    verseNote: "");
-                                bool saved = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddNotesWidget(verseNotes: temp),
-                                  ),
-                                );
-                                if (saved) {
-                                  getVerseNotes();
-                                }
-                              } else {
-                                bool saved = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddNotesWidget(verseNotes: verseNotes!),
-                                  ),
-                                );
-                                if (saved) {
-                                  getVerseNotes();
-                                }
-                              }
-                            },
-                            child: Container(
-                              child: Center(
-                                child: verseNotes == null
-                                    ? SvgPicture.asset(
-                                        "assets/icons/Icon_write_bottom.svg")
-                                    : SvgPicture.asset(
-                                        'assets/icons/Icon_fill_addNote.svg'),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () async {
-                              if (lastReadVerse != null) {
-                                if (isVerseSaved) {
-                                  await SharedPref.removeVerseFromSaved(
-                                      "$versId");
-                                  setState(() {
-                                    isVerseSaved = !isVerseSaved;
-                                  });
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                if (verseNotes == null) {
+                                  VerseNotes temp = VerseNotes(
+                                      verseID: "$versId",
+                                      gitaVerseById:
+                                          lastReadVerse!.gitaVerseById,
+                                      verseNote: "");
+                                  bool saved = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddNotesWidget(verseNotes: temp),
+                                    ),
+                                  );
+                                  if (saved) {
+                                    getVerseNotes();
+                                  }
                                 } else {
-                                  await SharedPref.saveBookmarkVerse(
-                                      lastReadVerse!);
-                                  setState(() {
-                                    isVerseSaved = !isVerseSaved;
-                                  });
+                                  bool saved = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddNotesWidget(
+                                          verseNotes: verseNotes!),
+                                    ),
+                                  );
+                                  if (saved) {
+                                    getVerseNotes();
+                                  }
                                 }
-                              }
-                            },
-                            child: Container(
-                              child: Center(
-                                child: isVerseSaved
-                                    ? SvgPicture.asset(
-                                        "assets/icons/Icon_saved_bottom.svg")
-                                    : SvgPicture.asset(
-                                        "assets/icons/Icon_save_bottom.svg"),
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: verseNotes == null
+                                      ? SvgPicture.asset(
+                                          "assets/icons/Icon_write_bottom.svg")
+                                      : SvgPicture.asset(
+                                          'assets/icons/Icon_fill_addNote.svg'),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                if (lastReadVerse != null) {
+                                  if (isVerseSaved) {
+                                    await SharedPref.removeVerseFromSaved(
+                                        "$versId");
+                                    setState(() {
+                                      isVerseSaved = !isVerseSaved;
+                                    });
+                                  } else {
+                                    await SharedPref.saveBookmarkVerse(
+                                        lastReadVerse!);
+                                    setState(() {
+                                      isVerseSaved = !isVerseSaved;
+                                    });
+                                  }
+                                }
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: isVerseSaved
+                                      ? SvgPicture.asset(
+                                          "assets/icons/Icon_saved_bottom.svg")
+                                      : SvgPicture.asset(
+                                          "assets/icons/Icon_save_bottom.svg"),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
+                  )
+                : Container(),
+          ),
         ),
-      ),
-      floatingActionButton:isPlay
-          ? GestureDetector(
-            onTap: (){
-                  audioPlayer.pause().then((value) =>audioPlayerBottomSheet(context));
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: formatingColor.bgColor
-              ),
-              child: CircularPercentIndicator(
-                backgroundWidth:3.5,lineWidth:3.5,
-                circularStrokeCap:CircularStrokeCap.round ,
-                animation: true,
-                animateFromLastPercent: true,
-                animationDuration: 10000,
-                  radius: 25.0,
-                  percent: (audioPlayedDuration.inSeconds.toDouble()*100/audioDuration.inSeconds.toDouble())/100,
-                  // fillColor: formatingColor.bgColor,
-                  center: SvgPicture.asset('assets/icons/pause.svg',height: height*0.0214,),
-                  // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
-                  backgroundColor: Colors.grey.shade300,
-                  progressColor: Color(0xffF57903),
+        floatingActionButton: isPlay
+            ? GestureDetector(
+                onTap: () {
+                  audioPlayer
+                      .pause()
+                      .then((value) => audioPlayerBottomSheet(context));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: formatingColor.bgColor),
+                  child: CircularPercentIndicator(
+                    backgroundWidth: 3.5, lineWidth: 3.5,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    animation: true,
+                    animateFromLastPercent: true,
+                    animationDuration: 10000,
+                    radius: 25.0,
+                    percent: (audioPlayedDuration.inSeconds.toDouble() *
+                            100 /
+                            audioDuration.inSeconds.toDouble()) /
+                        100,
+                    // fillColor: formatingColor.bgColor,
+                    center: SvgPicture.asset(
+                      'assets/icons/pause.svg',
+                      height: height * 0.0214,
+                    ),
+                    // Icon(Icons.pause,color: Color(0xffF57903), size: 35),
+                    backgroundColor: Colors.grey.shade300,
+                    progressColor: Color(0xffF57903),
+                  ),
                 ),
-            ),
-          )
-          : Container(
-            height: height*0.0593,
-            width: width*0.122,
-            decoration: BoxDecoration(
-              boxShadow: [
+              )
+            : Container(
+                height: height * 0.0593,
+                width: width * 0.122,
+                decoration: BoxDecoration(boxShadow: [
                   BoxShadow(
                       color: Color(0xff162233).withOpacity(0.12),
                       offset: Offset(0, 0),
-                      spreadRadius: 4,blurRadius:20),
+                      spreadRadius: 4,
+                      blurRadius: 20),
                 ], shape: BoxShape.circle),
-            child: FloatingActionButton(
-              elevation: 12,
-                onPressed: () {
+                child: FloatingActionButton(
+                    elevation: 12,
+                    onPressed: () {
                       String audioUrl =
                           "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
                       Source source = UrlSource(audioUrl);
@@ -904,9 +921,15 @@ class _ContinueReadingState extends State<ContinueReading> {
                           .play(source)
                           .then((value) => audioPlayerBottomSheet(context));
                     },
-            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0214 ,),backgroundColor: Color(0xffF57903)),
-          )
-    );
+                    child: SvgPicture.asset(
+                      isPlay
+                          ? 'assets/icons/pause.svg'
+                          : 'assets/icons/play.svg',
+                      color: Colors.white,
+                      height: height * 0.0214,
+                    ),
+                    backgroundColor: Color(0xffF57903)),
+              ));
   }
 
   Future<dynamic> audioPlayerBottomSheet(BuildContext context) {
@@ -916,117 +939,143 @@ class _ContinueReadingState extends State<ContinueReading> {
             borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
         builder: (BuildContext context) {
           return StatefulBuilder(
-            builder: (context,StateSetter builderSetState) {
+              builder: (context, StateSetter builderSetState) {
             SharedPref.getSavedVerseListCustomisation().then((value) {
-              if (value.colorId=='3') {
+              if (value.colorId == '3') {
                 builderSetState(() {
-                  audioBottoSheetColor=Color(0xff606368);
-                  textColor=Colors.white;
+                  audioBottoSheetColor = Color(0xff606368);
+                  textColor = Colors.white;
                 });
-              }else{
-                 builderSetState(() {
-                  audioBottoSheetColor=Colors.white;
-                  textColor=Colors.black;
+              } else {
+                builderSetState(() {
+                  audioBottoSheetColor = Colors.white;
+                  textColor = Colors.black;
                 });
               }
             });
-             audioPlayer.onPlayerStateChanged.listen((state){
-              try{
-              builderSetState(() {
-                isPlay = state == PlayerState.playing;
-              });}catch(e){}
+            audioPlayer.onPlayerStateChanged.listen((state) {
+              try {
+                builderSetState(() {
+                  isPlay = state == PlayerState.playing;
+                });
+              } catch (e) {}
             });
 
             audioPlayer.onDurationChanged.listen((newDuration) {
               try {
                 builderSetState(() {
-                audioDuration = newDuration;
-              });
+                  audioDuration = newDuration;
+                });
               } catch (e) {}
             });
 
             audioPlayer.onPositionChanged.listen((event) {
               try {
-                 builderSetState(() {
-                audioPlayedDuration = event;
-              });
+                builderSetState(() {
+                  audioPlayedDuration = event;
+                });
               } catch (e) {}
-              });
-              return Container(
-                height: height*0.145,
-                decoration: BoxDecoration(color: audioBottoSheetColor,borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight:Radius.circular(15) )),
-                child: Column(
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: height*0.0147,),
-                  Container(
-                    height: height*0.005,
-                    width: width*0.163,decoration: BoxDecoration(color: Color(0xffD9DBE9),borderRadius: BorderRadius.circular(5))),
-                      SizedBox(height: 10),
-                      Row(mainAxisSize: MainAxisSize.max, 
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SliderTheme(
-                                data: SliderTheme.of(context).copyWith(trackHeight: height*0.0154,thumbShape: RoundSliderThumbShape(enabledThumbRadius: 13,elevation: 5)),
-                                child: Slider(
-                                  inactiveColor: Color(0xffD9DBE9),
-                                  activeColor: Color(0xffF57903),
-                                  thumbColor: Color(0xffF57903),
-                                  min: 0,
-                                  max: audioDuration.inSeconds.toDouble(),
-                                  value: audioPlayedDuration.inSeconds.toDouble(),
-                                  onChanged: (value) {
-                                    setState(() { 
-                                    audioPlayedDuration=Duration(seconds: value.toInt());
-                                    });
-                                    audioPlayer.seek(audioPlayedDuration);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(convertDuration(audioPlayedDuration),style: TextStyle(color:textColor ),),
-                                    Text(convertDuration(audioDuration),style: TextStyle(color:textColor ),)
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: GestureDetector(
-                                onTap: () async {
-                                  if (isPlay) {
-                                    audioPlayer.pause();
-                                  } else {
-                                    String audioUrl="https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
-                                    Source source= UrlSource(audioUrl);
-                                    audioPlayer.play(source);
-                                  }
+            });
+            return Container(
+              height: height * 0.145,
+              decoration: BoxDecoration(
+                  color: audioBottoSheetColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15))),
+              child: Column(
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: height * 0.0147,
+                    ),
+                    Container(
+                        height: height * 0.005,
+                        width: width * 0.163,
+                        decoration: BoxDecoration(
+                            color: Color(0xffD9DBE9),
+                            borderRadius: BorderRadius.circular(5))),
+                    SizedBox(height: 10),
+                    Row(mainAxisSize: MainAxisSize.max, children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                  trackHeight: height * 0.0154,
+                                  thumbShape: RoundSliderThumbShape(
+                                      enabledThumbRadius: 13, elevation: 5)),
+                              child: Slider(
+                                inactiveColor: Color(0xffD9DBE9),
+                                activeColor: Color(0xffF57903),
+                                thumbColor: Color(0xffF57903),
+                                min: 0,
+                                max: audioDuration.inSeconds.toDouble(),
+                                value: audioPlayedDuration.inSeconds.toDouble(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    audioPlayedDuration =
+                                        Duration(seconds: value.toInt());
+                                  });
+                                  audioPlayer.seek(audioPlayedDuration);
                                 },
-                                child: Container(
-                                  height: height*0.055,
-                                  width: height*0.055,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    convertDuration(audioPlayedDuration),
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                  Text(
+                                    convertDuration(audioDuration),
+                                    style: TextStyle(color: textColor),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: GestureDetector(
+                              onTap: () async {
+                                if (isPlay) {
+                                  audioPlayer.pause();
+                                } else {
+                                  String audioUrl =
+                                      "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                                  Source source = UrlSource(audioUrl);
+                                  audioPlayer.play(source);
+                                }
+                              },
+                              child: Container(
+                                  height: height * 0.055,
+                                  width: height * 0.055,
                                   alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffF57903), shape: BoxShape.circle),
-                                    child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg',
-                                        color: Colors.white,height:height*0.0214,))))
-                      ]),
-                      SizedBox(height: 15),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffF57903),
+                                      shape: BoxShape.circle),
+                                  child: SvgPicture.asset(
+                                    isPlay
+                                        ? 'assets/icons/pause.svg'
+                                        : 'assets/icons/play.svg',
+                                    color: Colors.white,
+                                    height: height * 0.0214,
+                                  ))))
                     ]),
-              );
-            }
-          );        
+                    SizedBox(height: 15),
+                  ]),
+            );
+          });
         });
   }
 
@@ -1091,6 +1140,7 @@ class _ContinueReadingState extends State<ContinueReading> {
     );
   }
 }
+
 String convertDuration(Duration duration) {
   String twoDigits(int n) => n.toString().padLeft(2, "0");
   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));

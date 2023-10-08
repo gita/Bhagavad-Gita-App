@@ -5,7 +5,7 @@ import 'package:bhagavad_gita/models/chapter_detail_model.dart';
 import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -18,7 +18,8 @@ class VerseDetailWidget extends StatefulWidget {
     required this.formatingColor,
     required this.lineSpacing,
     required this.fontSize,
-    required this.fontFamily, required this.refreshEditing,
+    required this.fontFamily,
+    required this.refreshEditing,
   }) : super(key: key);
 
   final GitaVersesByChapterIdNode verse;
@@ -65,7 +66,7 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
               SizedBox(width: kPadding),
               Text(
                 "${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${widget.verse.verseNumber}",
-                style: Theme.of(context).textTheme.headline2!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontFamily: widget.fontFamily,
                       fontSize: widget.fontSize,
                       height: widget.lineSpacing,
@@ -85,7 +86,7 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
                 ? widget.verse.gitaTranslationsByVerseId!.nodes![0].description!
                     .replaceAll("\n", "")
                 : "---".replaceAll("\n", ""),
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   fontFamily: widget.fontFamily,
                   fontSize: widget.fontSize,
                   height: widget.lineSpacing,
