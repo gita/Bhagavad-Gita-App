@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -13,7 +13,7 @@ class AboutGitaScreen extends StatefulWidget {
 
 class _AboutGitaScreenState extends State<AboutGitaScreen>
     with AutomaticKeepAliveClientMixin {
-      final InAppReview inAppReview = InAppReview.instance;
+  final InAppReview inAppReview = InAppReview.instance;
   // final Uri _url = Uri.parse(
   //     'https://bhagavadgita.io/privacy-policy/');
 
@@ -64,7 +64,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(fontSize: 30, color: whiteColor),
                           ),
                           // Text(
@@ -114,7 +114,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(
                                     fontSize: (Localizations.localeOf(context)
                                                 .languageCode ==
@@ -146,7 +146,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle1!
+                                .titleMedium!
                                 .copyWith(
                                     fontSize: (Localizations.localeOf(context)
                                                 .languageCode ==
@@ -171,7 +171,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                                   fontSize: (Localizations.localeOf(context)
                                               .languageCode ==
@@ -190,19 +190,24 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                         DemoLocalization.of(context)!
                             .getTranslatedValue('gitaStoryDetail')
                             .toString(),
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize:
-                                (Localizations.localeOf(context).languageCode ==
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                fontSize: (Localizations.localeOf(context)
+                                            .languageCode ==
                                         'hi')
                                     ? 20
                                     : 18,
-                            color: blackColor)),
+                                color: blackColor)),
                     SizedBox(height: kDefaultPadding * 1.5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                            "assets/icons/icon_left_rtansection.svg",height: height*0.020,),
+                          "assets/icons/icon_left_rtansection.svg",
+                          height: height * 0.020,
+                        ),
                         SizedBox(width: kDefaultPadding),
                         Text(
                           DemoLocalization.of(context)!
@@ -210,7 +215,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                                   fontSize: (Localizations.localeOf(context)
                                               .languageCode ==
@@ -221,7 +226,9 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                         ),
                         SizedBox(width: kDefaultPadding),
                         SvgPicture.asset(
-                            "assets/icons/icon_right_translation.svg",height: height*0.020,)
+                          "assets/icons/icon_right_translation.svg",
+                          height: height * 0.020,
+                        )
                       ],
                     ),
                     SizedBox(height: kDefaultPadding),
@@ -229,7 +236,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       DemoLocalization.of(context)!
                           .getTranslatedValue('conclusionDetail')
                           .toString(),
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize:
                               (Localizations.localeOf(context).languageCode ==
                                       'hi')
@@ -246,12 +253,11 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
           ),
         ),
         floatingActionButton: FloatingActionButton.small(
-          onPressed: () async{
-            final avaialable =await inAppReview.isAvailable();
+          onPressed: () async {
+            final avaialable = await inAppReview.isAvailable();
             debugPrint("Avial==> $avaialable");
-                await inAppReview.openStoreListing(
-                  appStoreId: "com.gitainitiative.bhagavadgita"
-                );
+            await inAppReview.openStoreListing(
+                appStoreId: "com.gitainitiative.bhagavadgita");
           },
           child: Icon(
             Icons.star,

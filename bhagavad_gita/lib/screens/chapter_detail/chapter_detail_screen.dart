@@ -150,7 +150,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               },
               child: Text(
                 StringConstant.strAa,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 18,
                       color: formatingColor.naviagationIconColor,
                       fontWeight: FontWeight.w100,
@@ -222,28 +222,40 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(
                                         height: lineSpacing,
                                         color: Color(0xffd97706),
-                                        fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                        fontSize + 2 : fontSize,
+                                        fontSize:
+                                            (Localizations.localeOf(context)
+                                                        .languageCode ==
+                                                    'hi')
+                                                ? fontSize + 2
+                                                : fontSize,
                                         fontFamily: fontFamily,
                                       ),
                                 ),
                               ),
                               SizedBox(height: kPadding),
                               Text(
-                                (Localizations.localeOf(context).languageCode == 'hi') ? (chapterDetailData
-                                    .gitaChapterById!.name ?? "") : chapterDetailData
-                                    .gitaChapterById!.nameTranslated ?? "",
+                                (Localizations.localeOf(context).languageCode ==
+                                        'hi')
+                                    ? (chapterDetailData
+                                            .gitaChapterById!.name ??
+                                        "")
+                                    : chapterDetailData
+                                            .gitaChapterById!.nameTranslated ??
+                                        "",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                       height: lineSpacing,
-                                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                      fontSize + 4 : fontSize + 2,
+                                      fontSize: (Localizations.localeOf(context)
+                                                  .languageCode ==
+                                              'hi')
+                                          ? fontSize + 4
+                                          : fontSize + 2,
                                       fontFamily: fontFamily,
                                       color:
                                           formatingColor.naviagationIconColor,
@@ -251,17 +263,25 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                               ),
                               SizedBox(height: kDefaultPadding * 2),
                               Text(
-                                (Localizations.localeOf(context).languageCode == 'hi') ? (chapterDetailData
-                                    .gitaChapterById!.chapterSummaryHindi ?? "") : chapterDetailData
-                                    .gitaChapterById!.chapterSummary ?? "",
+                                (Localizations.localeOf(context).languageCode ==
+                                        'hi')
+                                    ? (chapterDetailData.gitaChapterById!
+                                            .chapterSummaryHindi ??
+                                        "")
+                                    : chapterDetailData
+                                            .gitaChapterById!.chapterSummary ??
+                                        "",
                                 maxLines: isShowMoreChapterDetail ? 500 : 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
-                                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                      fontSize + 2 : fontSize,
+                                      fontSize: (Localizations.localeOf(context)
+                                                  .languageCode ==
+                                              'hi')
+                                          ? fontSize + 2
+                                          : fontSize,
                                       height: lineSpacing,
                                       fontFamily: fontFamily,
                                       color:
@@ -287,7 +307,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline2!
+                                          .displayMedium!
                                           .copyWith(
                                             fontSize: fontSize - 2,
                                             height: lineSpacing,
@@ -310,8 +330,11 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                         .gitaVersesByChapterId!.nodes![index],
                                     formatingColor: formatingColor,
                                     lineSpacing: lineSpacing,
-                                    fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                                    fontSize + 2 : fontSize,
+                                    fontSize: (Localizations.localeOf(context)
+                                                .languageCode ==
+                                            'hi')
+                                        ? fontSize + 2
+                                        : fontSize,
                                     fontFamily: fontFamily,
                                     refreshEditing: () {
                                       refreshChapterDetailPage();

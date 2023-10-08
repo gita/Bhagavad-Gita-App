@@ -3,7 +3,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../locator.dart';
@@ -73,7 +73,7 @@ class _InterClickState extends State<InterClick> {
                   DemoLocalization.of(context)!
                       .getTranslatedValue('fontFamily')
                       .toString(),
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       color: Colors.black,
                       fontSize: 14,
                       height: 1.5,

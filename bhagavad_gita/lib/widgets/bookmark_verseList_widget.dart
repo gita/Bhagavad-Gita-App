@@ -5,9 +5,9 @@ import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import '../locator.dart';
 
@@ -59,7 +59,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             SizedBox(width: kPadding),
                             Text(
                               '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${listLastReadVerse[indexVerse].gitaVerseById!.chapterNumber}.${listLastReadVerse[indexVerse].gitaVerseById!.verseNumber}',
-                              style: Theme.of(context).textTheme.headline2,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Spacer(),
                             PopupMenuButton(
@@ -80,7 +80,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: Colors.red,
                                                     fontSize: 16),
@@ -109,7 +109,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: blackColor,
                                                     fontSize: 16),
@@ -155,7 +155,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                   .nodes![0]
                                   .description ??
                               ''.replaceAll("\n", ""),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Divider()
                       ],

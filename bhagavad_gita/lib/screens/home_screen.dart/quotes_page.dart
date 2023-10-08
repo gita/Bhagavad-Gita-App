@@ -14,18 +14,18 @@ class _QuotesScreenState extends State<QuotesScreen>
     with AutomaticKeepAliveClientMixin {
   String quote = "";
   final PageController controller = PageController();
-  int index=0;
+  int index = 0;
   @override
   void initState() {
     super.initState();
-      quotesListHindi.shuffle();
-      quotesList.shuffle();
-      Future.delayed(Duration.zero,(){
+    quotesListHindi.shuffle();
+    quotesList.shuffle();
+    Future.delayed(Duration.zero, () {
       getFirstQuote();
-      });
+    });
   }
 
- /*  @override
+  /*  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -42,10 +42,10 @@ class _QuotesScreenState extends State<QuotesScreen>
     });
   } */
 
-  getFirstQuote(){
-     var result = (Localizations.localeOf(context).languageCode == 'hi') ?
-        quotesListHindi[index] :
-        quotesList[index];
+  getFirstQuote() {
+    var result = (Localizations.localeOf(context).languageCode == 'hi')
+        ? quotesListHindi[index]
+        : quotesList[index];
     setState(() {
       quote = result;
     });
@@ -53,19 +53,19 @@ class _QuotesScreenState extends State<QuotesScreen>
 
   getQuote() {
     index++;
-    var result = (Localizations.localeOf(context).languageCode == 'hi') ?
-        quotesListHindi[index] :
-        quotesList[index];
+    var result = (Localizations.localeOf(context).languageCode == 'hi')
+        ? quotesListHindi[index]
+        : quotesList[index];
     setState(() {
       quote = result;
     });
   }
 
-   reverseQuote() {
+  reverseQuote() {
     index--;
-    var result = (Localizations.localeOf(context).languageCode == 'hi') ?
-        quotesListHindi[index] :
-        quotesList[index];
+    var result = (Localizations.localeOf(context).languageCode == 'hi')
+        ? quotesListHindi[index]
+        : quotesList[index];
     setState(() {
       quote = result;
     });
@@ -134,10 +134,12 @@ class _QuotesScreenState extends State<QuotesScreen>
                 child: Text(
                   quote,
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: whiteColor,
-                      fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
-                      21 : 18,
+                      fontSize:
+                          (Localizations.localeOf(context).languageCode == 'hi')
+                              ? 21
+                              : 18,
                       fontWeight: FontWeight.w500,
                       height: 1.7),
                 ),
@@ -147,7 +149,7 @@ class _QuotesScreenState extends State<QuotesScreen>
               bottom: kDefaultPadding,
               left: kDefaultPadding,
               child: Visibility(
-                visible: index>0,
+                visible: index > 0,
                 child: Container(
                   height: 48,
                   width: 48,
@@ -167,8 +169,8 @@ class _QuotesScreenState extends State<QuotesScreen>
                     clipBehavior: Clip.hardEdge,
                     child: InkWell(
                       onTap: () {
-                        if (index>0) { 
-                        reverseQuote();
+                        if (index > 0) {
+                          reverseQuote();
                         }
                       },
                       child: Center(

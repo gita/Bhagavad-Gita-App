@@ -11,7 +11,7 @@ import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import '../locator.dart';
 
 class VerseOfTheDayWidget extends StatefulWidget {
@@ -90,8 +90,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
               height: (width - kDefaultPadding) * 0.52,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/gyan-vigyana-yoga.jpg'),
+                      image: AssetImage('assets/images/gyan-vigyana-yoga.jpg'),
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(kDefaultCornerRadius)),
               child: Stack(
@@ -106,9 +105,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: kDefaultPadding,
-                        top: kDefaultPadding,
-                        bottom: 0),
+                        left: kDefaultPadding, top: kDefaultPadding, bottom: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -118,9 +115,11 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
-                                  color: Colors.orangeAccent, fontSize: width * 0.04, fontWeight: FontWeight.w700),
+                                  color: Colors.orangeAccent,
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.w700),
                         ),
                         Spacer(),
                         VerseOfTheDayTextWidget(
@@ -146,9 +145,10 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(
-                                    color: Colors.white, fontSize: width * 0.035),
+                                    color: Colors.white,
+                                    fontSize: width * 0.035),
                           ),
                         )
                       ],
@@ -257,7 +257,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
               padding: EdgeInsets.only(
                 right: 18.0,
               ),
-              child:  RichText(
+              child: RichText(
                 maxLines: 4,
                 text: TextSpan(
                   // text:
@@ -273,16 +273,16 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                               0
                           ? '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? ''}'
                           : '',
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color: whiteColor,
-                            fontSize: height*0.020,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.displayMedium!.copyWith(
+                                overflow: TextOverflow.ellipsis,
+                                color: whiteColor,
+                                fontSize: height * 0.020,
+                              ),
                     ),
                   ],
                 ),
-              )
-          );
+              ));
         },
       ),
     );

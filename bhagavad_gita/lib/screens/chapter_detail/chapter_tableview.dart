@@ -9,7 +9,7 @@ import 'package:bhagavad_gita/models/chapter_model.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/tableof_content_Chapter_widget.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -76,7 +76,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(fontSize: 18),
               ),
             ],
@@ -292,7 +292,7 @@ class _TableOfContectVerseGridWidgetState
                 child: Center(
                   child: Text(
                     '${verse[index].verseNumber ?? 0}',
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontSize: 16,
                         color: selectedIndex == index
                             ? orangeColor

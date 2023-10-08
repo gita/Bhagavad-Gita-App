@@ -30,7 +30,7 @@ class LastReadWidget extends StatelessWidget {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(color: greyScalBodyColor, fontSize: 20),
               ),
               Spacer(),
@@ -38,7 +38,7 @@ class LastReadWidget extends StatelessWidget {
                 "${DemoLocalization.of(context)!.getTranslatedValue('VERSE').toString()}  ${lastReadVerse.gitaVerseById!.chapterNumber ?? 0}.${lastReadVerse.gitaVerseById!.verseNumber}",
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(color: greyScalLableColor, fontSize: 14),
               ),
             ],
@@ -54,10 +54,11 @@ class LastReadWidget extends StatelessWidget {
                     .nodes![0].description!
                 : "---",
             maxLines: 4,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1!
-                .copyWith(color: greyScalLableColor, fontSize: (Localizations.localeOf(context).languageCode == 'hi') ? 18 : 16),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: greyScalLableColor,
+                fontSize: (Localizations.localeOf(context).languageCode == 'hi')
+                    ? 18
+                    : 16),
           ),
           InkWell(
             onTap: () {
@@ -71,7 +72,7 @@ class LastReadWidget extends StatelessWidget {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(color: primaryColor, fontSize: width * 0.037),
               ),
             ),

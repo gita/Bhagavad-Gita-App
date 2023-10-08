@@ -55,7 +55,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                             SizedBox(width: kPadding),
                             Text(
                               '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${writeNotes[index].gitaVerseById!.chapterNumber}.${writeNotes[index].gitaVerseById!.verseNumber}',
-                              style: Theme.of(context).textTheme.headline2,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Spacer(),
                             PopupMenuButton(
@@ -76,7 +76,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: Colors.red,
                                                     fontSize: 16),
@@ -105,7 +105,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: blackColor,
                                                     fontSize: 16),
@@ -146,7 +146,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: blackColor,
                                                     fontSize: 16),
@@ -194,7 +194,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                           maxLines: 2,
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   fontWeight: FontWeight.w400,
                                   color: textLightGreyColor),
@@ -213,7 +213,7 @@ class _NotesVerseKistWidgetState extends State<NotesVerseKistWidget> {
                               child: Text(
                                 '${writeNotes[index].verseNote}',
                                 maxLines: 5,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             )
                           ],

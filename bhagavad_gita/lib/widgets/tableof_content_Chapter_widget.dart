@@ -2,7 +2,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -32,7 +32,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
                 "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()} ${chapter.chapterNumber ?? 0}",
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(fontSize: 14),
               ),
               Spacer(),
@@ -49,7 +49,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
           ),
           Text(
               "${(Localizations.localeOf(context).languageCode == 'hi') ? (chapter.name ?? "") : chapter.nameTranslated ?? ""}",
-              style: Theme.of(context).textTheme.subtitle1),
+              style: Theme.of(context).textTheme.titleMedium),
           SizedBox(height: kDefaultPadding),
           !chapter.isExpanded!
               ? Row(
@@ -66,7 +66,7 @@ class TableOfContentChapterWidget extends StatelessWidget {
                       "${chapter.versesCount ?? 0} ${DemoLocalization.of(context)!.getTranslatedValue('verses').toString()}",
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(fontSize: 14, color: textLightGreyColor),
                     ),
                   ],

@@ -9,7 +9,7 @@ import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
 import 'package:bhagavad_gita/widgets/indicatorWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OnbordingScreen extends StatefulWidget {
@@ -137,7 +137,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(color: textLightGreyColor),
                           ),
                         ),
@@ -154,7 +154,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                     .toString(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: orangeColor),
                               ),
                               SizedBox(width: 5),
@@ -197,11 +197,11 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
-                        height: height*0.030,
+                        height: height * 0.030,
                       ),
                       SvgPicture.asset("assets/icons/abc_language.svg"),
                       SizedBox(
-                        height: height *0.02,
+                        height: height * 0.02,
                       ),
                       Text(
                         DemoLocalization.of(context)!
@@ -210,7 +210,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(fontSize: 18, color: blackColor),
                       ),
                       SizedBox(
@@ -222,7 +222,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             .toString(),
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle1!
+                            .titleMedium!
                             .copyWith(fontSize: 14, color: textLightGreyColor),
                       ),
                       SizedBox(
@@ -236,7 +236,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                               ListTile(
                                 title: Text(listLang[i]),
                                 onTap: () {
-                                  print("Valye : $i");
+                                  print("Value : $i");
                                   setState(() {
                                     val = i;
                                   });
@@ -246,7 +246,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                   value: i,
                                   groupValue: val,
                                   onChanged: (int? value) {
-                                    print("Valye : $value");
+                                    print("Value : $value");
                                     setState(() {
                                       val = value ?? 0;
                                     });
@@ -259,7 +259,8 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         ),
                       )),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal:30,vertical: height*0.030),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30, vertical: height * 0.030),
                         child: Container(
                           height: kPadding * 5,
                           width: kPadding * 19,
@@ -325,20 +326,24 @@ class SimplifiedPageOne extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: height * 0.089),
-        SvgPicture.asset('assets/icons/img_simplified_one.svg',height: height*0.39,),
-        SizedBox(height: height *0.052),
+        SvgPicture.asset(
+          'assets/icons/img_simplified_one.svg',
+          height: height * 0.39,
+        ),
+        SizedBox(height: height * 0.052),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('bhagvadGitaSimplified')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style:
+              Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: height * 0.02),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('readTheGita')
               .toString(),
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: textLightGreyColor,
               ),
         ),
@@ -354,13 +359,17 @@ class BeautifulDesignPageTwo extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SvgPicture.asset('assets/icons/img_beautiful_two.svg',height: height*0.45,),
+        SvgPicture.asset(
+          'assets/icons/img_beautiful_two.svg',
+          height: height * 0.45,
+        ),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('beautifulDesign')
               .toString(),
           textAlign: TextAlign.justify,
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style:
+              Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
@@ -368,7 +377,7 @@ class BeautifulDesignPageTwo extends StatelessWidget {
               .getTranslatedValue('modernAndInteractive')
               .toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: textLightGreyColor,
               ),
         ),
@@ -385,23 +394,28 @@ class ExploreEachVerePageThree extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: height * 0.07),
-        SvgPicture.asset('assets/icons/img_exploreverse_three.svg',height: height*0.35,),
+        SvgPicture.asset(
+          'assets/icons/img_exploreverse_three.svg',
+          height: height * 0.35,
+        ),
         SizedBox(height: height * 0.03),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('exploreEachVerse')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style:
+              Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
-        SizedBox(height: kPadding-4),
+        SizedBox(height: kPadding - 4),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('divedeepEachVerse')
               .toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                color: textLightGreyColor,fontSize:height* 0.022
-              ),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: textLightGreyColor, fontSize: height * 0.022),
         ),
         // SizedBox(height: kPadding),
       ],
@@ -421,13 +435,17 @@ class MakeItOwnPageFour extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: kPadding * 7),
-        SvgPicture.asset('assets/icons/img_makeitowe_forth.svg',height: height*0.32,),
+        SvgPicture.asset(
+          'assets/icons/img_makeitowe_forth.svg',
+          height: height * 0.32,
+        ),
         SizedBox(height: kPadding * 3),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('makeItYourOwn')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style:
+              Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
@@ -437,7 +455,7 @@ class MakeItOwnPageFour extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .subtitle1!
+              .titleMedium!
               .copyWith(color: textLightGreyColor),
         ),
       ],

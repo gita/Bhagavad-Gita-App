@@ -8,7 +8,7 @@ import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.da
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -91,7 +91,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(color: blackColor, fontSize: 18),
               ),
             ),
@@ -121,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       DemoLocalization.of(context)!
                           .getTranslatedValue('Language')
                           .toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: settingColor,
                             fontSize: 12,
                             letterSpacing: 1,
@@ -181,7 +181,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       DemoLocalization.of(context)!
                           .getTranslatedValue('author')
                           .toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           color: settingColor, fontSize: 12, letterSpacing: 1),
                     ),
                   ],
@@ -198,7 +198,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           .toString(),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(color: textLightGreyColor, fontSize: 12),
                     ),
                   ],
@@ -222,7 +222,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       .toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle2!
+                      .titleSmall!
                       .copyWith(color: greyScalBodyColor),
                 ),
               ),
@@ -249,7 +249,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       .toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle2!
+                      .titleSmall!
                       .copyWith(color: greyScalBodyColor),
                 ),
               ),
@@ -287,7 +287,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     savedVerseTranslation.title!,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(fontSize: 13),
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
@@ -329,7 +329,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       .toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle2!
+                      .titleSmall!
                       .copyWith(color: greyScalBodyColor),
                 ),
               ),
@@ -367,7 +367,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     savedVerseCommentary.title!,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1!
+                                        .titleMedium!
                                         .copyWith(fontSize: 13),
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,

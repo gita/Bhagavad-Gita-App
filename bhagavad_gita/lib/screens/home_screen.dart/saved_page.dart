@@ -52,13 +52,15 @@ class _SavedPageState extends State<SavedPage>
                             DemoLocalization.of(context)!
                                 .getTranslatedValue('bookMark')
                                 .toString(),
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontSize: 16,
-                                      color: isPageIndex == 0
-                                          ? orangeColor
-                                          : textLightGreyColor,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  fontSize: 16,
+                                  color: isPageIndex == 0
+                                      ? orangeColor
+                                      : textLightGreyColor,
+                                ),
                           ),
                         ),
                       ),
@@ -88,13 +90,15 @@ class _SavedPageState extends State<SavedPage>
                             DemoLocalization.of(context)!
                                 .getTranslatedValue('notes')
                                 .toString(),
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontSize: 16,
-                                      color: isPageIndex == 1
-                                          ? orangeColor
-                                          : textLightGreyColor,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  fontSize: 16,
+                                  color: isPageIndex == 1
+                                      ? orangeColor
+                                      : textLightGreyColor,
+                                ),
                           ),
                         ),
                       ),

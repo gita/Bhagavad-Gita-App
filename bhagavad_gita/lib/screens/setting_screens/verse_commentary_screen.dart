@@ -75,7 +75,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -114,7 +114,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                               child: Text(
                                 listTranslationResponseModel[index].title ?? "",
                                 textAlign: TextAlign.left,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                           ],

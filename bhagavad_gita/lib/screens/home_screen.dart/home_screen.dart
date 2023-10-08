@@ -63,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen>
         LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
       }
     });
-      setState(() {
-    LocalNotification.instance.needToShowLastRead.addListener(() {
-      lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
+    setState(() {
+      LocalNotification.instance.needToShowLastRead.addListener(() {
+        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
       });
     });
- 
+
     print("selected language : $langauge");
   }
 
@@ -88,7 +88,11 @@ class _HomeScreenState extends State<HomeScreen>
               DemoLocalization.of(context)!
                   .getTranslatedValue('bhagvad_gita')
                   .toString(),
-              style: AppBarTheme.of(context).textTheme!.headline1,
+              style: TextStyle(
+                  color: appBarTitleColor,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Inter'),
             ),
           ),
           Spacer(),
@@ -133,10 +137,11 @@ class _HomeScreenState extends State<HomeScreen>
                   ? Center(
                       child: Text(
                         'connect to internet',
-                        style: AppBarTheme.of(context).textTheme!.headline1,
+                        // style: AppBarTheme.of(context).textTheme!.headline1,
                       ),
                     )
                   : SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                       child: Column(
                         children: [
                           /* Container(
