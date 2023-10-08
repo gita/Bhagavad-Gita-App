@@ -114,8 +114,7 @@ class _ContinueReadingState extends State<ContinueReading> {
         //     });
         // }
         setState(() {
-          _isVisible = _hideButtomController.position.userScrollDirection == ScrollDirection.forward ||
-              _hideButtomController.position.pixels == _hideButtomController.position.maxScrollExtent;
+          _isVisible = _hideButtomController.position.userScrollDirection == ScrollDirection.forward || _hideButtomController.position.pixels == _hideButtomController.position.maxScrollExtent;
         });
       });
     });
