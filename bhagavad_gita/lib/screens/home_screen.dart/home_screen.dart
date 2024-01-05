@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
               DemoLocalization.of(context)!
                   .getTranslatedValue('bhagvad_gita')
                   .toString(),
-              style: AppBarTheme.of(context).textTheme!.headline1,
+              //style: AppBarTheme.of(context).textTheme!.headline1,
             ),
           ),
           Spacer(),
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ? Center(
                       child: Text(
                         'connect to internet',
-                        style: AppBarTheme.of(context).textTheme!.headline1,
+                        //style: AppBarTheme.of(context).textTheme!.headline1,
                       ),
                     )
                   : SingleChildScrollView(
