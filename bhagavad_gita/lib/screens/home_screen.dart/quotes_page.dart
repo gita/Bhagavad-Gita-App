@@ -134,7 +134,7 @@ class _QuotesScreenState extends State<QuotesScreen>
                 child: Text(
                   quote,
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: whiteColor,
                       fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
                       21 : 18,

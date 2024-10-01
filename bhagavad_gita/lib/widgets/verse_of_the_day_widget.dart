@@ -11,7 +11,6 @@ import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:intl/intl.dart';
 import '../locator.dart';
 
 class VerseOfTheDayWidget extends StatefulWidget {
@@ -118,7 +117,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   color: Colors.orangeAccent, fontSize: width * 0.04, fontWeight: FontWeight.w700),
                         ),
@@ -146,7 +145,7 @@ class _VerseOfTheDayWidgetState extends State<VerseOfTheDayWidget> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(
                                     color: Colors.white, fontSize: width * 0.035),
                           ),
@@ -262,7 +261,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                 text: TextSpan(
                   // text:
                   //     '${verseOTheDayDetailResponseModel.gitaVerseById!.chapterNumber ?? 0}.${verseOTheDayDetailResponseModel.gitaVerseById!.verseNumber ?? 0} | ',
-                  // style: Theme.of(context).textTheme.headline2!.copyWith(
+                  // style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   //       color: orangeColor,
                   //       fontSize: width * 0.037,
                   //     ),
@@ -273,7 +272,7 @@ class _VerseOfTheDayTextWidgetState extends State<VerseOfTheDayTextWidget> {
                               0
                           ? '${verseOTheDayDetailResponseModel.gitaVerseById!.gitaTranslationsByVerseId!.nodes![0].description ?? ''}'
                           : '',
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
                             overflow: TextOverflow.ellipsis,
                             color: whiteColor,
                             fontSize: height*0.020,

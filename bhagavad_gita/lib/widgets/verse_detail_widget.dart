@@ -65,7 +65,7 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
               SizedBox(width: kPadding),
               Text(
                 "${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${widget.verse.verseNumber}",
-                style: Theme.of(context).textTheme.headline2!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontFamily: widget.fontFamily,
                       fontSize: widget.fontSize,
                       height: widget.lineSpacing,
@@ -85,7 +85,7 @@ class _VerseDetailWidgetState extends State<VerseDetailWidget> {
                 ? widget.verse.gitaTranslationsByVerseId!.nodes![0].description!
                     .replaceAll("\n", "")
                 : "---".replaceAll("\n", ""),
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   fontFamily: widget.fontFamily,
                   fontSize: widget.fontSize,
                   height: widget.lineSpacing,

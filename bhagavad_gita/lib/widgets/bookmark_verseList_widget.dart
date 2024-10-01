@@ -59,7 +59,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                             SizedBox(width: kPadding),
                             Text(
                               '${DemoLocalization.of(context)!.getTranslatedValue('verse').toString()} ${listLastReadVerse[indexVerse].gitaVerseById!.chapterNumber}.${listLastReadVerse[indexVerse].gitaVerseById!.verseNumber}',
-                              style: Theme.of(context).textTheme.headline2,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Spacer(),
                             PopupMenuButton(
@@ -80,7 +80,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: Colors.red,
                                                     fontSize: 16),
@@ -109,7 +109,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
+                                                .displayMedium!
                                                 .copyWith(
                                                     color: blackColor,
                                                     fontSize: 16),
@@ -155,7 +155,7 @@ class _BookmarkVersListWidgetState extends State<BookmarkVersListWidget> {
                                   .nodes![0]
                                   .description ??
                               ''.replaceAll("\n", ""),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Divider()
                       ],

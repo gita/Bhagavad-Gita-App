@@ -271,7 +271,7 @@ class _ContinueReadingState extends State<ContinueReading> {
             },
             child: Text(
               StringConstant.strAa,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.w100,
                   color: formatingColor.naviagationIconColor),
@@ -372,7 +372,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                         fontFamily: fontFamily,
                                         fontSize: fontSize + 5,
@@ -407,7 +407,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -433,7 +433,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 fontSize:
                                                     (Localizations.localeOf(
@@ -462,7 +462,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -488,7 +488,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 fontSize:
                                                     (Localizations.localeOf(
@@ -522,7 +522,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -558,7 +558,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             : "---",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize:
@@ -591,7 +591,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                     fontFamily: fontFamily,
                                                     fontSize: (Localizations
@@ -629,7 +629,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             : "---",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize:

@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// // ignore_for_file: deprecated_member_use
 
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
               DemoLocalization.of(context)!
                   .getTranslatedValue('bhagvad_gita')
                   .toString(),
-              //style: AppBarTheme.of(context).textTheme!.headline1,
+              //style: AppBarTheme.of(context).textTheme!.displayLarge,
             ),
           ),
           Spacer(),
@@ -109,8 +109,7 @@ class _HomeScreenState extends State<HomeScreen>
         ],
       ),
       body: OfflineBuilder(
-        connectivityBuilder: (BuildContext context,
-            ConnectivityResult connectivity, Widget child) {
+        connectivityBuilder: (BuildContext context, List<ConnectivityResult> connectivity, Widget child) {
           final bool connected = connectivity != ConnectivityResult.none;
           return new Stack(
             fit: StackFit.expand,
@@ -133,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ? Center(
                       child: Text(
                         'connect to internet',
-                        //style: AppBarTheme.of(context).textTheme!.headline1,
+                        //style: AppBarTheme.of(context).textTheme!.displayLarge,
                       ),
                     )
                   : SingleChildScrollView(
@@ -198,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           .toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline1!
+                                          .displayLarge!
                                           .copyWith(
                                               color: greyScalBodyColor,
                                               fontSize: 20),
@@ -288,3 +287,245 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   bool get wantKeepAlive => true;
 }
+
+
+
+/* class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+  final NavigationService navigationService = locator<NavigationService>();
+  LastReadVerse? lastReadVerse;
+  bool isSortChapterNum = true;
+
+  String fontFamily = 'Inter';
+  bool isReverse = false;
+
+  final tempQuery = gql("""
+    query {
+    allGitaChapters {
+      nodes {
+        chapterNumber
+        name
+        nameTranslated
+        versesCount
+      }
+    }
+  }
+  """);
+
+  @override
+  void initState() {
+    super.initState();
+
+    print('-->> Init State');
+    Future.delayed(Duration(milliseconds: 200), () async {
+      var tempLastRead = await SharedPref.getLastRead();
+      setState(() {
+        lastReadVerse = tempLastRead;
+      });
+      if (tempLastRead != null) {
+        LocalNotification.instance.setNeedToShowLastRead(tempLastRead);
+      }
+    });
+
+    setState(() {
+      LocalNotification.instance.needToShowLastRead.addListener(() {
+        lastReadVerse = LocalNotification.instance.needToShowLastRead.value;
+      });
+    });
+
+    print("selected language : $langauge");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        actions: [
+          SizedBox(width: kDefaultPadding),
+          Center(
+            child: Text(
+              DemoLocalization.of(context)!
+                  .getTranslatedValue('bhagvad_gita')
+                  .toString(),
+            ),
+          ),
+          Spacer(),
+          InkWell(
+            onTap: () {
+              navigationService.pushNamed(r_Setting);
+            },
+            child: Container(
+              width: kPadding * 4,
+              child: Center(
+                child: SvgPicture.asset('assets/icons/icn_settings.svg'),
+              ),
+            ),
+          ),
+          SizedBox(width: kDefaultPadding),
+        ],
+      ),
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          List<ConnectivityResult> connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                height: 24.0,
+                left: 0.0,
+                right: 0.0,
+                child: Container(
+                  color: connected ? Color(0xFF00EE44) : Color(0xFFEE4400),
+                  child: Center(
+                    child: Text("${connected ? 'ONLINE' : 'OFFLINE'}"),
+                  ),
+                ),
+              ),
+              !connected
+                  ? Center(
+                      child: Text(
+                        'Connect to the internet',
+                      ),
+                    )
+                  : buildOnlineContent(context),
+            ],
+          );
+        },
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+
+  Widget buildOnlineContent(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          VerseOfTheDayWidget(),
+          lastReadVerse == null
+              ? Container()
+              : LastReadWidget(
+                  lastReadVerse: lastReadVerse!,
+                  onButtonTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ContinueReading(
+                          verseID: "${lastReadVerse!.verseID ?? 0}",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: kDefaultPadding,
+              right: kDefaultPadding,
+              bottom: kDefaultPadding,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      DemoLocalization.of(context)!
+                          .getTranslatedValue('chapters')
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(
+                            color: greyScalBodyColor,
+                            fontSize: 20,
+                          ),
+                    ),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isReverse = !isReverse;
+                        });
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        child: Center(
+                          child: SvgPicture.asset('assets/icons/icn_sort.svg'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Query(
+            options: QueryOptions(document: tempQuery),
+            builder: (QueryResult result, {Refetch? refetch, FetchMore? fetchMore}) {
+              if (result.hasException) {
+                print("ERROR : ${result.exception.toString()}");
+              }
+              if (result.data == null) {
+                return Container(
+                  height: 200,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: primaryColor,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                );
+              }
+              Map<String, dynamic> node = result.data!;
+              Map<String, dynamic> allGitaChapters = node["allGitaChapters"];
+              List chapters = allGitaChapters["nodes"];
+              return ListView.builder(
+                reverse: isReverse,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: chapters.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> chapterTemp = chapters[index];
+                  Chapter chapter = Chapter.fromJson(chapterTemp);
+                  return ChapterListTileWidget(
+                    index: index,
+                    onTap: () {
+                      navigationService.pushNamed(
+                        r_ChapterDetail,
+                        arguments: chapter.chapterNumber ?? 1,
+                      );
+                    },
+                    chapter: chapter,
+                  );
+                },
+              );
+            },
+          ),
+          SizedBox(height: kDefaultPadding * 2),
+        ],
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+ */

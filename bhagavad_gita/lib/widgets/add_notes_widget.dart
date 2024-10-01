@@ -67,7 +67,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
               : DemoLocalization.of(context)!
                   .getTranslatedValue('editNote')
                   .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         actions: [
           verseNotes.verseNote.length > 0
@@ -91,7 +91,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                       .toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline2!
+                                      .displayMedium!
                                       .copyWith(
                                           color: Colors.red, fontSize: 16),
                                 )
@@ -118,7 +118,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                       .toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline2!
+                                      .displayMedium!
                                       .copyWith(
                                           color: blackColor, fontSize: 16),
                                 ),
@@ -166,7 +166,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(fontSize: 14, color: whiteColor),
                           ),
                         ),

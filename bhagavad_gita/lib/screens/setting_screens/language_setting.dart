@@ -66,7 +66,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -98,7 +98,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                           children: [
                             Text(
                               listLang[index],
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
                         ),

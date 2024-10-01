@@ -76,7 +76,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(fontSize: 18),
               ),
             ],
@@ -292,7 +292,7 @@ class _TableOfContectVerseGridWidgetState
                 child: Center(
                   child: Text(
                     '${verse[index].verseNumber ?? 0}',
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontSize: 16,
                         color: selectedIndex == index
                             ? orangeColor

@@ -46,7 +46,7 @@ class ChapterListTileWidget extends StatelessWidget {
                         "${chapter.chapterNumber ?? index}",
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(color: primaryColor),
                       ),
                     ),
@@ -63,7 +63,7 @@ class ChapterListTileWidget extends StatelessWidget {
                           (Localizations.localeOf(context).languageCode == 'hi') ? (chapter.name ?? "") : chapter.nameTranslated ?? "",
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
                           18 : 16, color: titleLableColor),
                         ),
@@ -80,7 +80,7 @@ class ChapterListTileWidget extends StatelessWidget {
                               '${chapter.versesCount ?? ""} ${DemoLocalization.of(context)!.getTranslatedValue('verses').toString()}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(
                                       fontSize: 14, color: greyScalLableColor),
                             ),

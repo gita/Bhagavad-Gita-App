@@ -150,7 +150,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               },
               child: Text(
                 StringConstant.strAa,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 18,
                       color: formatingColor.naviagationIconColor,
                       fontWeight: FontWeight.w100,
@@ -222,7 +222,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                   "${DemoLocalization.of(context)!.getTranslatedValue('chapter').toString()}  ${chapterDetailData.gitaChapterById!.chapterNumber ?? 1}",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(
                                         height: lineSpacing,
                                         color: Color(0xffd97706),
@@ -239,7 +239,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                     .gitaChapterById!.nameTranslated ?? "",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                       height: lineSpacing,
                                       fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
@@ -258,7 +258,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                       fontSize: (Localizations.localeOf(context).languageCode == 'hi') ?
                                       fontSize + 2 : fontSize,
@@ -287,7 +287,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline2!
+                                          .displayMedium!
                                           .copyWith(
                                             fontSize: fontSize - 2,
                                             height: lineSpacing,
