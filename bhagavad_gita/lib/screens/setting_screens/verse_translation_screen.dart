@@ -105,7 +105,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                         });
                       },
                       child: Container(
-                        height: 40,
+                        height: 50,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -191,10 +191,10 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             .toString(),
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontSize:
-                                (Localizations.localeOf(context).languageCode ==
+                                /* (Localizations.localeOf(context).languageCode ==
                                         'hi')
                                     ? 20
-                                    : 18,
+                                    : */ 16,
                             color: blackColor)),
                     SizedBox(height: kDefaultPadding * 1.5),
                     Row(
@@ -230,10 +230,10 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                           .toString(),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize:
-                              (Localizations.localeOf(context).languageCode ==
+                              /* (Localizations.localeOf(context).languageCode ==
                                       'hi')
                                   ? 20
-                                  : 18,
+                                  :  */16,
                           color: blackColor),
                     ),
                     SizedBox(height: kDefaultPadding),

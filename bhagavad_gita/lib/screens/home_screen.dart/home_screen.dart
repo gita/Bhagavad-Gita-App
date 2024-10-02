@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
               DemoLocalization.of(context)!
                   .getTranslatedValue('bhagvad_gita')
                   .toString(),
-              //style: AppBarTheme.of(context).textTheme!.displayLarge,
+              style: AppBarTheme.of(context).titleTextStyle,
             ),
           ),
           Spacer(),
