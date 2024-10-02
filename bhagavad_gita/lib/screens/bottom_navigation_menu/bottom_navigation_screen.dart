@@ -103,6 +103,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                       height: 40,
                       width: 76,
                       decoration: BoxDecoration(
+                        color: whiteFormatingColor.bgColor,
                         border: Border.all(
                           color: editBoxBorderColor,
                           style: BorderStyle.solid,
@@ -128,6 +129,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                       height: 40,
                       width: 76,
                       decoration: BoxDecoration(
+                        color: whiteFormatingColor.bgColor,
                         border: Border.all(
                             color: editBoxBorderColor,
                             style: BorderStyle.solid),
@@ -163,6 +165,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                           height: 40,
                           width: 180,
                           decoration: BoxDecoration(
+                            color: whiteFormatingColor.bgColor,
                             border: Border.all(
                                 color: editBoxBorderColor,
                                 style: BorderStyle.solid),
@@ -320,7 +323,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
       context: context,
       builder: (context) {
         return Container(
-          color: Color(0X80000000).withOpacity(0.80),
+          color: Colors.transparent,
           height: 350,
           child: Container(
             child: InterClick(
@@ -329,7 +332,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               },
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
+              color: whiteFormatingColor.bgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

@@ -6,6 +6,7 @@ import 'package:bhagavad_gita/Constant/http_link_string.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/models/all_chapter_verse_model.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/widgets/tableof_content_Chapter_widget.dart';
@@ -56,6 +57,7 @@ class _ChapterTableViewScreenState extends State<ChapterTableViewScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        surfaceTintColor: whiteFormatingColor.bgColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();

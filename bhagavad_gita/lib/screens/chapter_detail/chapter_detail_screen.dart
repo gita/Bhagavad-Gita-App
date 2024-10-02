@@ -129,6 +129,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: formatingColor.bgColor,
+          surfaceTintColor: formatingColor.bgColor,
           automaticallyImplyLeading: false,
           centerTitle: false,
           leading: InkWell(
@@ -456,7 +457,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
+              color: formatingColor.bgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

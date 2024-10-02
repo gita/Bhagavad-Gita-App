@@ -3,6 +3,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/screens/setting_screens/language_setting.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_commentary_screen.dart';
 import 'package:bhagavad_gita/screens/setting_screens/verse_translation_screen.dart';
@@ -70,6 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
       onWillPop: _willPopCallback,
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: whiteFormatingColor.bgColor,
           automaticallyImplyLeading: false,
           actions: [
             InkWell(

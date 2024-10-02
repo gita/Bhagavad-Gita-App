@@ -6,6 +6,7 @@ import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
 import 'package:bhagavad_gita/models/chapter_model.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/verse_detail_model.dart';
 import 'package:bhagavad_gita/routes/route_names.dart';
 import 'package:bhagavad_gita/screens/home_screen.dart/read_more_page.dart';
@@ -80,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        surfaceTintColor: whiteFormatingColor.bgColor,
         centerTitle: false,
         actions: [
           SizedBox(width: kDefaultPadding),
