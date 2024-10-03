@@ -137,7 +137,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(color: textLightGreyColor),
                           ),
                         ),
@@ -154,7 +154,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                                     .toString(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: orangeColor),
                               ),
                               SizedBox(width: 5),
@@ -210,7 +210,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(fontSize: 18, color: blackColor),
                       ),
                       SizedBox(
@@ -222,7 +222,7 @@ class _SimplifiedScreenState extends State<OnbordingScreen> {
                             .toString(),
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle1!
+                            .titleMedium!
                             .copyWith(fontSize: 14, color: textLightGreyColor),
                       ),
                       SizedBox(
@@ -331,14 +331,14 @@ class SimplifiedPageOne extends StatelessWidget {
           DemoLocalization.of(context)!
               .getTranslatedValue('bhagvadGitaSimplified')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: height * 0.02),
         Text(
           DemoLocalization.of(context)!
               .getTranslatedValue('readTheGita')
               .toString(),
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: textLightGreyColor,
               ),
         ),
@@ -360,7 +360,7 @@ class BeautifulDesignPageTwo extends StatelessWidget {
               .getTranslatedValue('beautifulDesign')
               .toString(),
           textAlign: TextAlign.justify,
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
@@ -368,7 +368,7 @@ class BeautifulDesignPageTwo extends StatelessWidget {
               .getTranslatedValue('modernAndInteractive')
               .toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: textLightGreyColor,
               ),
         ),
@@ -391,7 +391,7 @@ class ExploreEachVerePageThree extends StatelessWidget {
           DemoLocalization.of(context)!
               .getTranslatedValue('exploreEachVerse')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding-4),
         Text(
@@ -399,7 +399,7 @@ class ExploreEachVerePageThree extends StatelessWidget {
               .getTranslatedValue('divedeepEachVerse')
               .toString(),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: textLightGreyColor,fontSize:height* 0.022
               ),
         ),
@@ -427,7 +427,7 @@ class MakeItOwnPageFour extends StatelessWidget {
           DemoLocalization.of(context)!
               .getTranslatedValue('makeItYourOwn')
               .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         SizedBox(height: kPadding),
         Text(
@@ -437,7 +437,7 @@ class MakeItOwnPageFour extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .subtitle1!
+              .titleMedium!
               .copyWith(color: textLightGreyColor),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
@@ -52,6 +53,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: whiteFormatingColor.bgColor,
         automaticallyImplyLeading: false,
         actions: [
           InkWell(
@@ -75,7 +77,7 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -105,14 +107,14 @@ class _VerseTranslationScreenState extends State<VerseTranslationScreen> {
                         });
                       },
                       child: Container(
-                        height: 40,
+                        height: 50,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               listTranslationResponseModel[index].title ?? "",
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
                         ),

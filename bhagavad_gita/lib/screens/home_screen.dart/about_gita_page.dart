@@ -1,4 +1,3 @@
-import 'dart:io' show Platform;
 import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
@@ -64,7 +63,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(fontSize: 30, color: whiteColor),
                           ),
                           // Text(
@@ -74,7 +73,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                           //   textAlign: TextAlign.justify,
                           //   style: Theme.of(context)
                           //       .textTheme
-                          //       .headline1!
+                          //       .displayLarge!
                           //       .copyWith(fontSize: 28, color: orangeColor),
                           // ),
                         ],
@@ -114,7 +113,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(
                                     fontSize: (Localizations.localeOf(context)
                                                 .languageCode ==
@@ -146,7 +145,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle1!
+                                .titleMedium!
                                 .copyWith(
                                     fontSize: (Localizations.localeOf(context)
                                                 .languageCode ==
@@ -171,7 +170,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                                   fontSize: (Localizations.localeOf(context)
                                               .languageCode ==
@@ -190,12 +189,12 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                         DemoLocalization.of(context)!
                             .getTranslatedValue('gitaStoryDetail')
                             .toString(),
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontSize:
-                                (Localizations.localeOf(context).languageCode ==
+                                /* (Localizations.localeOf(context).languageCode ==
                                         'hi')
                                     ? 20
-                                    : 18,
+                                    : */ 16,
                             color: blackColor)),
                     SizedBox(height: kDefaultPadding * 1.5),
                     Row(
@@ -210,7 +209,7 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                               .toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(
                                   fontSize: (Localizations.localeOf(context)
                                               .languageCode ==
@@ -229,12 +228,12 @@ class _AboutGitaScreenState extends State<AboutGitaScreen>
                       DemoLocalization.of(context)!
                           .getTranslatedValue('conclusionDetail')
                           .toString(),
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize:
-                              (Localizations.localeOf(context).languageCode ==
+                              /* (Localizations.localeOf(context).languageCode ==
                                       'hi')
                                   ? 20
-                                  : 18,
+                                  :  */16,
                           color: blackColor),
                     ),
                     SizedBox(height: kDefaultPadding),

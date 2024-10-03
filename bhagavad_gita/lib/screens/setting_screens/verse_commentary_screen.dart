@@ -3,6 +3,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
@@ -52,6 +53,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: whiteFormatingColor.bgColor,
         automaticallyImplyLeading: false,
         actions: [
           InkWell(
@@ -75,7 +77,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -114,7 +116,7 @@ class _VerseCommentaryScreenState extends State<VerseCommentaryScreen> {
                               child: Text(
                                 listTranslationResponseModel[index].title ?? "",
                                 textAlign: TextAlign.left,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                           ],

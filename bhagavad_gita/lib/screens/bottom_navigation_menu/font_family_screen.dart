@@ -73,7 +73,7 @@ class _InterClickState extends State<InterClick> {
                   DemoLocalization.of(context)!
                       .getTranslatedValue('fontFamily')
                       .toString(),
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       color: Colors.black,
                       fontSize: 14,
                       height: 1.5,

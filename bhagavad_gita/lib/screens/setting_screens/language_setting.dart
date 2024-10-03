@@ -4,6 +4,7 @@ import 'package:bhagavad_gita/Constant/static_model.dart';
 import 'package:bhagavad_gita/Constant/string_constant.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/main.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/tanslation_response_model.dart';
 import 'package:bhagavad_gita/services/last_read_services.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
@@ -43,6 +44,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: whiteFormatingColor.bgColor,
         automaticallyImplyLeading: false,
         actions: [
           InkWell(
@@ -66,7 +68,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                   .toString(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: blackColor, fontSize: 18),
             ),
           ),
@@ -98,7 +100,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
                           children: [
                             Text(
                               listLang[index],
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
                         ),

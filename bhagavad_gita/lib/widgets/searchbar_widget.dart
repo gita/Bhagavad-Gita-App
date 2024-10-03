@@ -37,7 +37,7 @@ class SearchBarWidget extends StatelessWidget {
                   .toString(),
               hintStyle: Theme.of(context)
                   .textTheme
-                  .subtitle1!
+                  .titleMedium!
                   .copyWith(color: textLightGreyColor),
               border: InputBorder.none,
             ),

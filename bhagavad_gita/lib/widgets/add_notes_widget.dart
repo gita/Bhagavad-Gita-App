@@ -2,6 +2,7 @@ import 'package:bhagavad_gita/Constant/app_colors.dart';
 import 'package:bhagavad_gita/Constant/app_size_config.dart';
 import 'package:bhagavad_gita/localization/demo_localization.dart';
 import 'package:bhagavad_gita/locator.dart';
+import 'package:bhagavad_gita/models/color_selection_model.dart';
 import 'package:bhagavad_gita/models/notes_model.dart';
 import 'package:bhagavad_gita/services/navigator_service.dart';
 import 'package:bhagavad_gita/services/shared_preferences.dart';
@@ -45,6 +46,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
     MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: whiteFormatingColor.bgColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
         leading: InkWell(
@@ -67,7 +69,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
               : DemoLocalization.of(context)!
                   .getTranslatedValue('editNote')
                   .toString(),
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 18),
         ),
         actions: [
           verseNotes.verseNote.length > 0
@@ -91,7 +93,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                       .toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline2!
+                                      .displayMedium!
                                       .copyWith(
                                           color: Colors.red, fontSize: 16),
                                 )
@@ -118,7 +120,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                       .toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline2!
+                                      .displayMedium!
                                       .copyWith(
                                           color: blackColor, fontSize: 16),
                                 ),
@@ -166,7 +168,7 @@ class _AddNotesWidgetState extends State<AddNotesWidget> {
                                 .toString(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(fontSize: 14, color: whiteColor),
                           ),
                         ),

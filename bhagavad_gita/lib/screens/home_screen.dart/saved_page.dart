@@ -53,7 +53,7 @@ class _SavedPageState extends State<SavedPage>
                                 .getTranslatedValue('bookMark')
                                 .toString(),
                             style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
+                                Theme.of(context).textTheme.displayLarge!.copyWith(
                                       fontSize: 16,
                                       color: isPageIndex == 0
                                           ? orangeColor
@@ -89,7 +89,7 @@ class _SavedPageState extends State<SavedPage>
                                 .getTranslatedValue('notes')
                                 .toString(),
                             style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
+                                Theme.of(context).textTheme.displayLarge!.copyWith(
                                       fontSize: 16,
                                       color: isPageIndex == 1
                                           ? orangeColor

@@ -252,6 +252,7 @@ class _ContinueReadingState extends State<ContinueReading> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: formatingColor.bgColor,
+        surfaceTintColor: formatingColor.bgColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop(true);
@@ -271,7 +272,7 @@ class _ContinueReadingState extends State<ContinueReading> {
             },
             child: Text(
               StringConstant.strAa,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.w100,
                   color: formatingColor.naviagationIconColor),
@@ -372,7 +373,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                 "${data.gitaVerseById!.chapterNumber ?? 0}.${data.gitaVerseById!.verseNumber}",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                         fontFamily: fontFamily,
                                         fontSize: fontSize + 5,
@@ -407,7 +408,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -433,7 +434,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 fontSize:
                                                     (Localizations.localeOf(
@@ -462,7 +463,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -488,7 +489,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 fontSize:
                                                     (Localizations.localeOf(
@@ -522,7 +523,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                   fontFamily: fontFamily,
                                                   fontSize: (Localizations
@@ -558,7 +559,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             : "---",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize:
@@ -591,7 +592,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                                 .toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1!
+                                                .titleMedium!
                                                 .copyWith(
                                                     fontFamily: fontFamily,
                                                     fontSize: (Localizations
@@ -629,7 +630,7 @@ class _ContinueReadingState extends State<ContinueReading> {
                                             : "---",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle1!
+                                            .titleMedium!
                                             .copyWith(
                                                 height: lineSpacing,
                                                 fontSize:
@@ -748,6 +749,7 @@ class _ContinueReadingState extends State<ContinueReading> {
           child: _isVisible
               ? BottomAppBar(
                   elevation: 0,
+                  color: formatingColor.bgColor,
                   child: Container(
                     height: 48,
                     child: Row(
@@ -888,23 +890,27 @@ class _ContinueReadingState extends State<ContinueReading> {
             height: height*0.0593,
             width: width*0.122,
             decoration: BoxDecoration(
+              
               boxShadow: [
                   BoxShadow(
                       color: Color(0xff162233).withOpacity(0.12),
                       offset: Offset(0, 0),
                       spreadRadius: 4,blurRadius:20),
                 ], shape: BoxShape.circle),
-            child: FloatingActionButton(
-              elevation: 12,
-                onPressed: () {
-                      String audioUrl =
-                          "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
-                      Source source = UrlSource(audioUrl);
-                      audioPlayer
-                          .play(source)
-                          .then((value) => audioPlayerBottomSheet(context));
-                    },
-            child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0214 ,),backgroundColor: Color(0xffF57903)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: FloatingActionButton(
+                elevation: 12,
+                  onPressed: () {
+                        String audioUrl =
+                            "https://gita.github.io/gita/data/verse_recitation/$chapterNumber/$verseNumber.mp3";
+                        Source source = UrlSource(audioUrl);
+                        audioPlayer
+                            .play(source)
+                            .then((value) => audioPlayerBottomSheet(context));
+                      },
+              child: SvgPicture.asset(isPlay?'assets/icons/pause.svg':'assets/icons/play.svg', color: Colors.white,height:height*0.0214 ,),backgroundColor: Color(0xffF57903)),
+            ),
           )
     );
   }
@@ -1079,7 +1085,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
+              color: formatingColor.bgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

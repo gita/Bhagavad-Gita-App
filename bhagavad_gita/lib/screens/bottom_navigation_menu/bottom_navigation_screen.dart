@@ -75,7 +75,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(height: 1.5, color: greyScalBodyColor),
               ),
               SizedBox(width: 175),
@@ -85,7 +85,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(height: 1.5, color: greyScalBodyColor),
               ),
             ],
@@ -103,6 +103,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                       height: 40,
                       width: 76,
                       decoration: BoxDecoration(
+                        color: whiteFormatingColor.bgColor,
                         border: Border.all(
                           color: editBoxBorderColor,
                           style: BorderStyle.solid,
@@ -128,6 +129,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                       height: 40,
                       width: 76,
                       decoration: BoxDecoration(
+                        color: whiteFormatingColor.bgColor,
                         border: Border.all(
                             color: editBoxBorderColor,
                             style: BorderStyle.solid),
@@ -163,6 +165,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                           height: 40,
                           width: 180,
                           decoration: BoxDecoration(
+                            color: whiteFormatingColor.bgColor,
                             border: Border.all(
                                 color: editBoxBorderColor,
                                 style: BorderStyle.solid),
@@ -173,7 +176,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                               fontFamilyName,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(
                                       fontSize: 18, color: titleLableColor),
                             ),
@@ -196,7 +199,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                     .toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(height: 1.5, color: greyScalBodyColor),
               ),
               SizedBox(height: 10),
@@ -262,7 +265,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
                 DemoLocalization.of(context)!
                     .getTranslatedValue('colorMode')
                     .toString(),
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               SizedBox(height: 10),
               Row(
@@ -320,7 +323,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
       context: context,
       builder: (context) {
         return Container(
-          color: Color(0X80000000).withOpacity(0.80),
+          color: Colors.transparent,
           height: 350,
           child: Container(
             child: InterClick(
@@ -329,7 +332,7 @@ class _BottomNavigationMenuState extends State<BottomNavigationMenu> {
               },
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
+              color: whiteFormatingColor.bgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

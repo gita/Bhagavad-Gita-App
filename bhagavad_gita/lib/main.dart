@@ -112,9 +112,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    firebaseInitilaize();
     super.initState();
-    //// firebase forground notification
-
+  }
+  
+  firebaseInitilaize() async {
     final AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_notification');
     var iOSSettings = DarwinInitializationSettings(
@@ -126,7 +128,7 @@ class _MyAppState extends State<MyApp> {
     final InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveBackgroundNotificationResponse: (message) async {
       print("message-----$message");
     });
@@ -179,15 +181,15 @@ class _MyAppState extends State<MyApp> {
           // accentColor: orangeColor,
           fontFamily: 'Inter',
           textTheme: TextTheme(
-            headline1: TextStyle(
+            displayLarge: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 26,
                 fontWeight: FontWeight.w700),
-            headline2: TextStyle(
+            displayMedium: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
-            subtitle1: TextStyle(
+            titleMedium: TextStyle(
                 color: appBarTitleColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w400),
