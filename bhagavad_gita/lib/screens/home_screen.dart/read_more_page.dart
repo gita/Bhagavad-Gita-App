@@ -1039,9 +1039,10 @@ class _ContinueReadingState extends State<ContinueReading> {
   _onPressedEditButton(context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          color: Color(0XFF737373),
+          color: Colors.transparent,
           height: 350,
           child: Container(
             child: BottomNavigationMenu(
@@ -1085,7 +1086,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
-              color: formatingColor.bgColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
