@@ -20,7 +20,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
