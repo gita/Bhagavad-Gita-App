@@ -26,9 +26,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    namespace = "com.gitainitiative.bhagavadgita"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
-    namespace = "com.gitainitiative.bhagavadgita"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
