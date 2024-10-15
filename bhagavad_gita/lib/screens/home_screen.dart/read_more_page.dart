@@ -20,7 +20,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../locator.dart';
 
 class ContinueReading extends StatefulWidget {
@@ -1039,9 +1039,10 @@ class _ContinueReadingState extends State<ContinueReading> {
   _onPressedEditButton(context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          color: Color(0XFF737373),
+          color: Colors.transparent,
           height: 350,
           child: Container(
             child: BottomNavigationMenu(
@@ -1085,7 +1086,7 @@ class _ContinueReadingState extends State<ContinueReading> {
               formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
-              color: formatingColor.bgColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

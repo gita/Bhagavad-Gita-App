@@ -24,7 +24,7 @@ class LineSpaceWidget extends StatelessWidget {
                 ? Colors.orange[50] ?? Colors.transparent
                 : Colors.transparent,
             width: 5),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: Container(
         width: 140,
@@ -32,7 +32,7 @@ class LineSpaceWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
               color: showBorder ? orangeColor : Colors.transparent, width: 3),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(11),
         ),
         child: Container(
           width: 100,

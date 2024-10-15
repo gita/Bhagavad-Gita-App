@@ -408,9 +408,10 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
   formatingModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          color: Color(0XFF737373),
+          color: Colors.transparent,
           height: 350,
           child: Container(
             child: BottomNavigationMenu(
@@ -457,7 +458,7 @@ class _ChapterDetailScreenState extends State<ChapterDetailScreen> {
               formatingColor: formatingColor,
             ),
             decoration: BoxDecoration(
-              color: formatingColor.bgColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

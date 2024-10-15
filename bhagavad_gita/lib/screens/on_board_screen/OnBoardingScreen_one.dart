@@ -400,7 +400,7 @@ class ExploreEachVerePageThree extends StatelessWidget {
               .toString(),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: textLightGreyColor,fontSize:height* 0.022
+                color: textLightGreyColor,/* fontSize:height* 0.022 */
               ),
         ),
         // SizedBox(height: kPadding),
